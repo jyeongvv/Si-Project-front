@@ -1,0 +1,52 @@
+/* Board.css */
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .custom-table th,
+  .custom-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+  }
+  
+  .custom-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+  }
+  
+  .custom-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .custom-table tr:hover {
+    background-color: #e6e6e6;
+  }
+  
+  .custom-table button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: #007bff;
+  }
+  
+  /* 추가된 스타일 */
+  .post-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 600px;
+    height: 400px;
+    padding: 16px;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+  }

@@ -1,0 +1,120 @@
+body {
+    padding-top: 80px; /* 네비게이션 바의 높이보다 크거나 같게 설정 */
+  }
+  
+  .nav-bg-container {
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 35px;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    z-index: 999;
+  }
+  
+  .content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px; /* 원하는 컨텐츠 최대 너비 설정 */
+  }
+  
+  #primary_nav_wrap {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  #primary_nav_wrap ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+  }
+  
+  #primary_nav_wrap ul a {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 32px;
+    padding: 0 15px;
+    font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  
+  #primary_nav_wrap ul li {
+    position: relative;
+    margin: 0;
+    padding: 0;
+  }
+  
+  #primary_nav_wrap ul li.current-menu-item {
+    background: transparent;
+  }
+  
+  #primary_nav_wrap ul li:hover {
+    background: #f6f6f6;
+  }
+  
+  #primary_nav_wrap ul ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    padding: 0;
+  }
+  
+  #primary_nav_wrap ul ul li {
+    float: none;
+    width: 200px;
+  }
+  
+  #primary_nav_wrap ul ul a {
+    line-height: 120%;
+    padding: 10px 15px;
+  }
+  
+  #primary_nav_wrap ul ul ul {
+    top: 0;
+    left: 100%;
+  }
+  
+  #primary_nav_wrap ul li:hover > ul {
+    display: block;
+  }
+  
+  .nav-auth-buttons {
+    display: flex;
+    position: absolute;
+    justify-content: flex-end;
+  }
+  
+  .nav-auth-buttons a {
+    display: inline-block;
+    color: #6AAF5F;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 5px 10px;
+    border: 1px solid #6AAF5F;
+    border-radius: 5px;
+    height: auto;
+    width: 49px;
+    text-align: center;
+  }
+  
+  .nav-auth-buttons .join-btn {
+    margin-left: 10px;
+    margin-right: 0px;
+  }
+  
+  .nav-auth-buttons a:hover {
+    background-color: #6AAF5F;
+    color: #fff;
+  }
+  
