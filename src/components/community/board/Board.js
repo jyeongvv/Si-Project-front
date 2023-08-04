@@ -4,6 +4,7 @@ import "./Board.css";
 const Board = ({ posts, addPost, updatePost, deletePost }) => {
   const [newPost, setNewPost] = useState({ title: "", content: "" });
   const [editPost, setEditPost] = useState(null);
+  const [showForm, setShowForm] = useState(false);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -27,11 +28,13 @@ const Board = ({ posts, addPost, updatePost, deletePost }) => {
       addPost(newPostWithDate);
     }
     setNewPost({ title: "", content: "" });
+    setShowForm(false);
   };
 
   const handleEdit = (post) => {
     setEditPost(post);
     setNewPost(post);
+    setShowForm(true);
   };
 
   const handleDelete = (postId) => {
@@ -44,31 +47,38 @@ const Board = ({ posts, addPost, updatePost, deletePost }) => {
     newWindow.document.write(`
       <div style="padding: 16px;">
         <h2>${post.title}</h2>
-        <p>${post.content}</p>
+        <textarea style="width:100%; height:200px;" readonly>${post.content}</textarea>
       </div>
     `);
     newWindow.document.close();
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="제목"
-          name="title"
-          value={newPost.title}
-          onChange={handleInputChange}
-        />
-        <textarea
-          placeholder="내용"
-          name="content"
-          value={newPost.content}
-          onChange={handleInputChange}
-        />
-        <button type="submit">{editPost ? "수정" : "추가"}</button>
-      </form>
-      <table className="custom-table">
+    <div className="board-container">
+      <div className="board-write-form">
+        <button onClick={() => setShowForm(true)} className="board-add-button">
+          글쓰기
+        </button>
+      </div>
+      {showForm && (
+        <form className="board-form" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="제목"
+            name="title"
+            value={newPost.title}
+            onChange={handleInputChange}
+          />
+          <textarea
+            placeholder="내용"
+            name="content"
+            value={newPost.content}
+            onChange={handleInputChange}
+          />
+          <button type="submit">{editPost ? "수정" : "추가"}</button>
+        </form>
+      )}
+      <table className="board-table">
         <thead>
           <tr>
             <th>제목</th>

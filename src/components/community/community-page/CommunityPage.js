@@ -40,6 +40,8 @@ const CommunityPage = () => {
         updatePost={updatePost}
         deletePost={deletePost}
       />
+      <br></br>
+      <br></br>
       <Pagination
         postsPerPage={postsPerPage}
         totalPosts={posts.length}
