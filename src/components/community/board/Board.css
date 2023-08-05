@@ -11,6 +11,7 @@
 .board-write-form {
   display: flex;
   justify-content: flex-end; /* 버튼을 오른쪽으로 정렬 */
+  width: 100%;
   margin-bottom: 10px;
 }
 
@@ -20,11 +21,31 @@
   color: #fff;
   cursor: pointer;
   border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .board-add-button:hover {
+  background-color: #0056b3;
+}
+
+/* board-cancel-button 클래스 스타일 추가 */
+.board-add-button,
+.board-cancel-button {
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.board-add-button:hover,
+.board-cancel-button:hover {
   background-color: #0056b3;
 }
 
@@ -35,6 +56,11 @@
   align-items: center; /* 폼 요소를 수평으로 가운데로 정렬 */
   width: 100%;
   max-width: 600px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 }
 
 /* board-form 내부 요소 스타일 */
@@ -42,6 +68,10 @@
 .board-form textarea,
 .board-form button {
   margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
 }
 
 /* board-table 클래스 스타일 */
@@ -62,16 +92,33 @@
 }
 
 .board-table tr:nth-child(even) {
-  background-color: #f9f9f9;
+  background-color: #f9fff9;
 }
 
 .board-table tr:hover {
-  background-color: #e6e6e6;
+  background-color: #eeeeee;
 }
 
 .board-table button {
   cursor: pointer;
   border: none;
   background: none;
-  color: #007bff;
+  color: #6AAF5F;
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+.board-table button:hover {
+  text-decoration: none;
+}
+
+.board-expanded-form textarea {
+  background-color: #ffffff;
+  width: 85%;
+  height: 150px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  resize: both;
+  font-size: 18px;
 }
