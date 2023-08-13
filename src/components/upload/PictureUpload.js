@@ -1,124 +1,84 @@
 import React, { useState } from 'react';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
+import axios from 'axios';
 
-function Upload() {
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [prediction, setPrediction] = useState(null);
+const UploadForm = () => {
+  const [texts, setTexts] = useState({
+    text1: '',
+    text2: '',
+    text3: ''
+  });
 
-  function handleImageChange(event) {
-    const file = event.target.files[0];
-    setSelectedImage(file);
-  }
+  const [pictures, setPictures] = useState({
+    picture1: null,
+    picture2: null,
+    picture3: null
+  });
 
-  function handleImageUpload() {
-    if (!selectedImage) {
-      alert('먼저 이미지를 선택해주세요.');
-      return;
+  const [picture1, setPicture1] = useState("");
+  const [picture2, setPicture2] = useState("");
+  const [picture3, setPicture3] = useState("");
+
+  const handleDrop = (acceptedFiles, pictureKey) => {
+    setPictures({
+      ...pictures,
+      [pictureKey]: acceptedFiles[0]
+    });
+  };
+
+  const handleTextChange = (key, event) => {
+    setTexts({
+      ...texts,
+      [key]: event.target.value
+    });
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const dataToSend = new FormData();
+      dataToSend.append('text1', texts.text1 || '');
+      dataToSend.append('text2', texts.text2 || '');
+      dataToSend.append('text3', texts.text3 || '');
+      dataToSend.append('picture1', pictures.picture1);
+      dataToSend.append('picture2', pictures.picture2);
+      dataToSend.append('picture3', pictures.picture3);
+  
+      const response = await axios.post('http://127.0.0.1:8080/upload', dataToSend);
+  
+      console.log("response:",response);
+      console.log('response.data:', response.data);
+      console.log("response.data.picture1:", response.data.picture1);
+      setPicture1(response.data.picture1);
+      setPicture2(response.data.picture2);
+      setPicture3(response.data.picture3);
+    } catch (error) {
+      console.error('Error:', error);
     }
-
-    if (
-      !selectedImage.type.includes('png') &&
-      !selectedImage.type.includes('jpg') &&
-      !selectedImage.type.includes('jpeg')
-    ) {
-      alert('이미지는 png 또는 jpg 형식이어야 합니다.');
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('image', selectedImage);
-
-    fetch('http://127.0.0.1:8080/upload', {
-      method: 'POST',
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('백엔드 응답:', data);
-        setPrediction(data.result);
-        alert('이미지 업로드가 성공적으로 완료되었습니다!');
-      })
-      .catch((error) => {
-        console.error('이미지 업로드 오류:', error);
-        alert('이미지 업로드에 실패했습니다. 다시 시도해주세요.');
-      });
-  }
-
-  const commonButtonStyle = {
-    margin: '30px',
-    width: 270,
-    height: 50,
-    background: '#6AAF5F',
-    borderRadius: 10,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    cursor: 'pointer',
   };
 
   return (
-    <Box
-      className="cate-box-container"
-      sx={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: '400px',
-      }}
-    >
-      <label htmlFor="image-input">
-        <input
-          type="file"
-          id="image-input"
-          accept="image/png, image/jpeg"
-          style={{ display: 'none' }}
-          onChange={handleImageChange}
-        />
-        <Paper
-          elevation={2}
-          className="cat-paper-item"
-          sx={{
-            ...commonButtonStyle,
-            margin: '30px',
-            background: 'white',
-            border: '2px solid #6AAF5F',
-          }}
-        >
-          {!selectedImage ? (
-            <Typography variant="h6" sx={{ fontSize: '20px', color: '#6E6E6E', textAlign: 'center' }}>
-              이미지 선택
-            </Typography>
-          ) : (
-            <Typography variant="h6" sx={{ fontSize: '16px', color: '#6E6E6E', textAlign: 'center' }}>
-              {selectedImage.name}
-            </Typography>
-          )}
-        </Paper>
-      </label>
-      <Paper
-        elevation={2}
-        className="cat-paper-item"
-        sx={{
-          ...commonButtonStyle,
-          background: 'white',
-          border: '2px solid #6AAF5F',
-        }}
-        onClick={handleImageUpload}
-      >
-        <Typography variant="h6" sx={{ fontSize: '20px', color: '#6E6E6E', textAlign: 'center' }}>
-          이미지 업로드
-        </Typography>
-      </Paper>
-      {prediction !== null && (
-        <Typography variant="h6" sx={{ fontSize: '20px', color: '#6E6E6E', textAlign: 'center' }}>
-          판별된 숫자: {prediction}
-        </Typography>
-      )}
-    </Box>
-  );
-}
+    <div>
+      <h2>Image Upload</h2>
+      <input type="file" onChange={(event) => handleDrop(event.target.files, 'picture1')} />
+      <input type="file" onChange={(event) => handleDrop(event.target.files, 'picture2')} />
+      <input type="file" onChange={(event) => handleDrop(event.target.files, 'picture3')} />
 
-export default Upload;
+      <h2>Text Input</h2>
+      {Object.keys(texts).map((key) => (
+        <input
+          key={key}
+          type="text"
+          value={texts[key]}
+          onChange={(event) => handleTextChange(key, event)}
+          placeholder={key}
+        />
+      ))}
+
+      <button onClick={handleSubmit}>전송</button>
+      <p>그림1:{picture1}</p>
+      <p>그림2:{picture2}</p>
+      <p>그림3:{picture3}</p>
+    </div>
+  );
+};
+
+export default UploadForm;

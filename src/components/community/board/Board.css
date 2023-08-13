@@ -28,13 +28,13 @@
 }
 
 .board-add-button:hover {
-  background-color: #0056b3;
+  background-color: #58914f;
 }
 
 /* board-cancel-button 클래스 스타일 추가 */
 .board-add-button,
 .board-cancel-button {
-  background-color: #007bff;
+  background-color: #6AAF5F;
   color: #fff;
   cursor: pointer;
   border: none;
@@ -46,7 +46,7 @@
 
 .board-add-button:hover,
 .board-cancel-button:hover {
-  background-color: #0056b3;
+  background-color: #58914f;
 }
 
 /* board-form 클래스 스타일 수정 */
