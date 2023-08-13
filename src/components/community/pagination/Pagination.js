@@ -1,25 +1,43 @@
-import React from "react";
+import React from 'react';
+import Pagination from '@mui/material/Pagination';
+import './Pagination.css';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
-  const pageNumbers = [];
+const CustomPagination = ({ postsPerPage, totalPosts, currentPage, paginate }) => {
+  const totalPages = Math.ceil(totalPosts / postsPerPage);
 
-  for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
-    pageNumbers.push(i);
-  }
+  const handlePageChange = (event, page) => {
+    paginate(page);
+  };
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#6AAF5F', // 버튼의 색상을 #6AAF5F로 변경
+      },
+    },
+  });
 
   return (
-    <nav>
-      <ul className="pagination">
-        {pageNumbers.map((number) => (
-          <li key={number} className="page-item">
-            <button onClick={() => paginate(number)} className="page-link">
-              {number}
-            </button>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <ThemeProvider theme={theme}>
+        <Pagination
+          count={totalPages}
+          page={currentPage}
+          onChange={handlePageChange}
+          sx={{
+            '& .MuiPaginationItem-root': {
+              color: '#6AAF5F', // 숫자의 색상을 #6AAF5F로 변경
+            },
+            '& .Mui-selected': {
+              backgroundColor: theme.palette.primary.main,
+              color: '#FFFFFF', // 선택된 페이지의 배경 색상은 #6AAF5F이고 숫자 색상은 하얀색(#FFFFFF)으로 변경
+            },
+          }}
+        />
+      </ThemeProvider>
+    </div>
   );
 };
 
-export default Pagination;
+export default CustomPagination;

@@ -1,76 +1,110 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Join.css';
+import axios from 'axios';
 
 const Join = () => {
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
+  const [userid, setUserid] = useState('');
+  const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [isEmailChecked, setIsEmailChecked] = useState(false);
-  const [isUsernameChecked, setIsUsernameChecked] = useState(false);
+  const [number, setNumber] = useState('');
+  const [isUseridChecked, setIsUseridChecked] = useState(false);
+  const [isNicknameChecked, setIsNicknameChecked] = useState(false);
 
-  const handleJoin = () => {
+  const handleJoin = async () => {
     if (password !== confirmPassword) {
-      alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+      alert("비밀번호가 일치하지 않습니다.");
       return;
     }
 
-    // 이메일과 아이디 중복 확인을 하지 않았을 경우에 대한 처리 추가
-    if (!isEmailChecked || !isUsernameChecked) {
-      alert("이메일과 아이디 중복 확인을 해주세요.");
+    if (!isUseridChecked) {
+      alert("아이디 중복 확인을 해주세요.");
       return;
     }
 
-    // 제출 처리
-    alert("회원가입이 완료되었습니다.");
+    if (!isNicknameChecked) {
+      alert("닉네임 중복 확인을 해주세요.");
+      return;
+    }
+
+    try {
+      await axios.post('http://127.0.0.1:8080/join', {
+        userid: userid,
+        nickname: nickname,
+        password: password,
+        number: number
+      });
+      alert("회원가입이 완료되었습니다.");
+    } catch (error) {
+      console.error('Error while joining:', error);
+      alert("회원가입 중 오류가 발생했습니다.");
+    }
   };
 
-  const handleEmailDuplicationCheck = () => {
-    // 이메일 중복 확인 처리
-    setIsEmailChecked(true);
-    alert("이메일을 사용할 수 있습니다.");
+  const handleUseridDuplicationCheck = async () => {
+    try {
+      const response = await axios.post(`http://127.0.0.1:8080/join/check-userid?userid=${userid}`);
+      if (response.data) {
+        setIsUseridChecked(true);
+        alert("아이디를 사용할 수 있습니다.");
+      } else {
+        alert("아이디가 이미 사용중입니다.");
+      }
+    } catch (error) {
+      console.error('Error checking userid availability:', error);
+      alert("아이디 중복 확인 중 오류가 발생했습니다.");
+    }
   };
 
-  const handleUsernameDuplicationCheck = () => {
-    // 아이디 중복 확인 처리
-    setIsUsernameChecked(true);
-    alert("아이디를 사용할 수 있습니다.");
+  const handleNicknameDuplicationCheck = async () => {
+    try {
+      const response = await axios.post(`http://127.0.0.1:8080/join/check-nickname?nickname=${nickname}`);
+      if (response.data) {
+        setIsNicknameChecked(true);
+        alert("닉네임을 사용할 수 있습니다.");
+      } else {
+        alert("닉네임이 이미 사용중입니다.");
+      }
+    } catch (error) {
+      console.error('Error checking nickname availability:', error);
+      alert("닉네임 중복 확인 중 오류가 발생했습니다.");
+    }
   };
 
   return (
     <div className="myapp-join-box">
       <h2>회원가입 페이지</h2>
 
-      <div className="myapp-input-container">
-        <button className="myapp-check-button" onClick={handleEmailDuplicationCheck}>
-          E-mail 확인
-        </button>
-        <input
-          id="email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <label htmlFor="email">이메일</label>
-      </div>
-
-      <div className="myapp-input-container">
-        <button className="myapp-check-button" onClick={handleUsernameDuplicationCheck}>
+      <div className="join-input-container">
+        <button className="join-check-button" onClick={handleUseridDuplicationCheck}>
           ID 확인
         </button>
         <input
-          id="username"
+          id="userid"
           type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={userid}
+          onChange={(e) => setUserid(e.target.value)}
           required
         />
-        <label htmlFor="username">아이디</label>
+        <label htmlFor="userid">아이디</label>
       </div>
 
-      <div className="myapp-input-container">
+      <div className="join-input-container">
+        <button className="join-check-button" onClick={handleNicknameDuplicationCheck}>
+          닉네임 확인
+        </button>
+        <input
+          id="nickname"
+          type="text"
+          value={nickname}
+          onChange={(e) => setNickname(e.target.value)}
+          required
+        />
+        <label htmlFor="nickname">닉네임</label>
+      </div>
+
+      <div className="join-input-container">
         <input
           id="password"
           type="password"
@@ -81,7 +115,7 @@ const Join = () => {
         <label htmlFor="password">비밀번호</label>
       </div>
 
-      <div className="myapp-input-container">
+      <div className="join-input-container">
         <input
           id="confirm-password"
           type="password"
@@ -92,7 +126,18 @@ const Join = () => {
         <label htmlFor="confirm-password">비밀번호 확인</label>
       </div>
 
-      <button className="myapp-submit-button" onClick={handleJoin}>
+      <div className="join-input-container">
+        <input
+          id="phone-number"
+          type="tel"
+          value={number}
+          onChange={(e) => setNumber(e.target.value)}
+          required
+        />
+        <label htmlFor="phone-number">전화번호</label>
+      </div>
+
+      <button className="join-submit-button" onClick={handleJoin}>
         제출
       </button>
       <br />
