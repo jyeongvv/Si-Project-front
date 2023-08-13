@@ -1,16 +1,34 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
+import axios from 'axios';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    console.log('Username:', username);
-    console.log('Password:', password);
+    try {
+      const response = await axios.post('http://127.0.0.1:8080/login', {
+        userid: username,
+        password: password,
+      });
+
+      // 로그인 성공 시 처리
+      console.log('로그인 성공:', response.data);
+      navigate('/'); // 홈으로
+
+    } catch (error) {
+      console.error('로그인 실패:', error);
+      alert('아이디랑 비밀번호를 다시 한번 확인해주세요.');
+    }
+  };
+
+  const goToHome = () => {
+    navigate('/');
   };
 
   return (
@@ -40,12 +58,15 @@ const Login = () => {
         <button className="myapp-submit-button" type="submit" onClick={handleLogin}>
           Submit
         </button>
+        <br />
       </form>
       <p>
         아직 회원이 아니신가요? <Link to="/join">회원가입 페이지로 이동</Link>
       </p>
       <p>
-        <Link to="/">Home</Link>
+        <button className="login-home-button" onClick={goToHome}>
+          Home
+        </button>
       </p>
     </div>
   );
