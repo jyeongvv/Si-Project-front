@@ -1,9 +1,13 @@
+// Board.js
+
 import React, { useState } from "react";
 import "./Board.css";
 
 const Board = ({ posts, addPost, updatePost, deletePost }) => {
   const [newPost, setNewPost] = useState({ title: "", content: "" });
   const [editPost, setEditPost] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+  const [expandedPostId, setExpandedPostId] = useState(null);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -13,7 +17,6 @@ const Board = ({ posts, addPost, updatePost, deletePost }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // 현재 시간을 얻어와서 게시글에 추가
     const currentDate = new Date();
     const formattedDate = `${currentDate.getFullYear()}-${
       currentDate.getMonth() + 1
@@ -27,48 +30,66 @@ const Board = ({ posts, addPost, updatePost, deletePost }) => {
       addPost(newPostWithDate);
     }
     setNewPost({ title: "", content: "" });
+    setShowForm(false);
   };
 
   const handleEdit = (post) => {
     setEditPost(post);
     setNewPost(post);
+    setShowForm(true);
   };
 
   const handleDelete = (postId) => {
     deletePost(postId);
   };
 
-  // 새로운 창으로 게시물 내용 보기
-  const openPostInNewWindow = (post) => {
-    const newWindow = window.open("", "_blank", "width=600,height=400");
-    newWindow.document.write(`
-      <div style="padding: 16px;">
-        <h2>${post.title}</h2>
-        <p>${post.content}</p>
-      </div>
-    `);
-    newWindow.document.close();
+  const handleCancel = () => {
+    setShowForm(false);
+    setEditPost(null);
+    setNewPost({ title: "", content: "" });
+  };
+
+  const togglePostContent = (postId) => {
+    if (expandedPostId === postId) {
+      setExpandedPostId(null);
+    } else {
+      setExpandedPostId(postId);
+    }
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="제목"
-          name="title"
-          value={newPost.title}
-          onChange={handleInputChange}
-        />
-        <textarea
-          placeholder="내용"
-          name="content"
-          value={newPost.content}
-          onChange={handleInputChange}
-        />
-        <button type="submit">{editPost ? "수정" : "추가"}</button>
-      </form>
-      <table className="custom-table">
+    <div className="board-container">
+      <div className="board-write-form">
+        {!showForm && (
+          <button onClick={() => setShowForm(true)} className="board-add-button">
+            글쓰기
+          </button>
+        )}
+        {showForm && (
+          <button onClick={handleCancel} className="board-cancel-button">
+            취소
+          </button>
+        )}
+      </div>
+      {showForm && (
+        <form className="board-form" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="제목"
+            name="title"
+            value={newPost.title}
+            onChange={handleInputChange}
+          />
+          <textarea
+            placeholder="내용"
+            name="content"
+            value={newPost.content}
+            onChange={handleInputChange}
+          />
+          <button type="submit">{editPost ? "수정" : "추가"}</button>
+        </form>
+      )}
+      <table className="board-table">
         <thead>
           <tr>
             <th>제목</th>
@@ -82,8 +103,7 @@ const Board = ({ posts, addPost, updatePost, deletePost }) => {
           {posts.map((post) => (
             <React.Fragment key={post.id}>
               <tr>
-                <td onClick={() => openPostInNewWindow(post)}>
-                  {/* 제목을 클릭하면 새로운 창에 게시물 내용 보기 */}
+                <td onClick={() => togglePostContent(post.id)}>
                   {post.title}
                 </td>
                 <td>{post.author}</td>
@@ -95,6 +115,18 @@ const Board = ({ posts, addPost, updatePost, deletePost }) => {
                   <button onClick={() => handleDelete(post.id)}>삭제</button>
                 </td>
               </tr>
+              {expandedPostId === post.id && (
+                <tr>
+                  <td colSpan={5}>
+                    <div className="board-expanded-form">
+                      <h2>{post.title}</h2>
+                      <textarea readOnly>
+                        {post.content}
+                      </textarea>
+                    </div>
+                  </td>
+                </tr>
+              )}
             </React.Fragment>
           ))}
         </tbody>

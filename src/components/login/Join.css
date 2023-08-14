@@ -6,7 +6,7 @@
     top: 50%;
     left: 50%;
     width: 450px;
-    height: 550px;
+    height: 580px;
     padding: 40px;
     transform: translate(-50%, -50%);
     background-color: rgba(254, 255, 251, 0.941);
@@ -22,14 +22,14 @@
     text-align: center;
   }
   
-  .myapp-input-container {
+  .join-input-container {
     position: relative;
     margin-bottom: 17px;
   }
   
-  .myapp-input-container input[type="text"],
-  .myapp-input-container input[type="password"],
-  .myapp-input-container input[type="email"] {
+  .join-input-container input[type="text"],
+  .join-input-container input[type="password"],
+  .join-input-container input[type="email"] {
     width: 100%;
     padding: 10px 0;
     font-size: 16px;
@@ -41,13 +41,13 @@
     background: transparent;
   }
   
-  .myapp-input-container input[type="text"]::placeholder,
-  .myapp-input-container input[type="password"]::placeholder,
-  .myapp-input-container input[type="email"]::placeholder {
+  .join-input-container input[type="text"]::placeholder,
+  .join-input-container input[type="password"]::placeholder,
+  .join-input-container input[type="email"]::placeholder {
     color: #433d3d;
   }
   
-  .myapp-input-container label {
+  .join-input-container label {
     position: absolute;
     top: 10px;
     left: 0;
@@ -56,15 +56,15 @@
     transition: 0.2s ease-out;
   }
   
-  .myapp-input-container input:focus + label,
-  .myapp-input-container input:valid + label {
+  .join-input-container input:focus + label,
+  .join-input-container input:valid + label {
     top: -20px;
     font-size: 12px;
     color: #6AAF5F;
   }
   
   /* 확인 버튼 스타일 */
-  .myapp-input-container button.myapp-check-button {
+  .join-input-container button.join-check-button {
     position: absolute;
     top: -20px;
     right: 0;
@@ -78,16 +78,16 @@
     transition: background 0.2s, color 0.2s; /* hover 효과를 위한 transition 추가 */
   }
   
-  .myapp-input-container button.myapp-check-button:hover {
+  .join-input-container button.join-check-button:hover {
     background: #6AAF5F; /* hover 시 배경색 변경 */
     color: #ffffff; /* hover 시 텍스트 색상 변경 */
   }
   
-  .myapp-input-container button.myapp-check-button:first-child {
+  .join-input-container button.join-check-button:first-child {
     margin-top: 25px;
   }
   
-  .myapp-submit-button {
+  .join-submit-button {
     position: relative;
     display: block;
     width: 100%;
@@ -102,7 +102,7 @@
     outline: none;
   }
   
-  .myapp-submit-button:hover {
+  .join-submit-button:hover {
     background: #6AAF5F;
     color: #ffffff;
     border-radius: 5px;
@@ -113,3 +113,25 @@
     color: #433d3d;
   }
   
+  .join-input-container input[type="tel"] {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #433d3d;
+    margin-bottom: 15px;
+    border: none;
+    border-bottom: 1px solid #d8d8d8;
+    outline: none;
+    background: transparent;
+  }
+  
+  .join-input-container input[type="tel"]::placeholder {
+    color: #433d3d;
+  }
+  
+  .join-input-container input[type="tel"]:focus + label,
+  .join-input-container input[type="tel"]:valid + label {
+    top: -20px;
+    font-size: 12px;
+    color: #6AAF5F;
+  }

@@ -3,6 +3,7 @@ import React from 'react';
 import './NavBar.css';
 import HomeIcon from '@mui/icons-material/Home';
 import { Link } from 'react-router-dom';
+import AccountMenu from '../menu/Menu';
 
 const NavBar = () => {
   return (
@@ -19,6 +20,7 @@ const NavBar = () => {
             <li><Link to="/page4">page4</Link></li>
           </ul>
         </nav>
+        <AccountMenu />
       </div>
     </div>
   );
