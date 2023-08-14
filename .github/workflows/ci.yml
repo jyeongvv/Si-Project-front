@@ -9,6 +9,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Add self-signed certificate
+        run: |
+          echo "${{ secrets.SELF_SIGNED_CERT }}" > /tmp/self-signed.crt
+          sudo cp /tmp/self-signed.crt /usr/local/share/ca-certificates/
+          sudo update-ca-certificates
+
       - name: Checkout code
         uses: actions/checkout@v2
 
