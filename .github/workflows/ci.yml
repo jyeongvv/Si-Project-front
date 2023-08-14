@@ -19,9 +19,9 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Login to Docker Registry
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login ${{ secrets.DOCKER_REGISTRY_SERVER }} -u ${{ secrets.DOCKER_USER }} --password-stdin
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login ${{ secrets.DOCKER_REGISTRY_SERVER_WITH_PROTOCOL }} -u ${{ secrets.DOCKER_USER }} --password-stdin
 
       - name: Build and Push Docker image
         run: |
           docker build -t ${{ secrets.DOCKER_REGISTRY_SERVER }}/si-project/front:latest .
-          docker push ${{ secrets.DOCKER_REGISTRY_SERVER }}/si--project/front:latest
+          docker push ${{ secrets.DOCKER_REGISTRY_SERVER }}/si-project/front:latest
