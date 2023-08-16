@@ -1,13 +1,12 @@
-// Board.js
-
 import React, { useState } from "react";
 import "./Board.css";
 
-const Board = ({ posts, addPost, updatePost, deletePost }) => {
+const Board = ({ posts, addPost, updatePost, deletePost, addComment, deleteComment }) => {
   const [newPost, setNewPost] = useState({ title: "", content: "" });
   const [editPost, setEditPost] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [expandedPostId, setExpandedPostId] = useState(null);
+  const [commentText, setCommentText] = useState("");
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -57,12 +56,19 @@ const Board = ({ posts, addPost, updatePost, deletePost }) => {
     }
   };
 
+  const handleAddComment = (postId) => {
+    if (commentText.trim() !== "") {
+      addComment(postId, commentText);
+      setCommentText("");
+    }
+  };
+
   return (
     <div className="board-container">
       <div className="board-write-form">
         {!showForm && (
           <button onClick={() => setShowForm(true)} className="board-add-button">
-            글쓰기
+            글작성
           </button>
         )}
         {showForm && (
@@ -120,9 +126,26 @@ const Board = ({ posts, addPost, updatePost, deletePost }) => {
                   <td colSpan={5}>
                     <div className="board-expanded-form">
                       <h2>{post.title}</h2>
-                      <textarea readOnly>
-                        {post.content}
-                      </textarea>
+                      <textarea readOnly>{post.content}</textarea>
+                      <div>
+                        <h3>댓글</h3>
+                        <div className="comments-section">
+                          {post.comments.map((comment) => (
+                            <div key={comment.id}>
+                              <p>{comment.text}</p>
+                              <button onClick={() => deleteComment(post.id, comment.id)}>삭제</button>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="comment-input">
+                          <textarea
+                            placeholder="댓글을 입력하세요."
+                            onChange={(e) => setCommentText(e.target.value)}
+                            value={commentText}
+                          />
+                          <button onClick={() => handleAddComment(post.id)}>댓글 추가</button>
+                        </div>
+                      </div>
                     </div>
                   </td>
                 </tr>

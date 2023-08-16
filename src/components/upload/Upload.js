@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Dropzone from 'react-dropzone';
 import './Upload.css';
 
 const UploadForm = () => {
@@ -30,17 +31,11 @@ const UploadForm = () => {
     setTextData(newTextData);
   };
 
-  const handleFileSelect = (index) => {
-    const newSelectedFiles = [...selectedFiles];
-    newSelectedFiles[index] = true;
-    setSelectedFiles(newSelectedFiles);
-  };
-
-  const handlePictureChange = (index, event) => {
+  const handlePictureChange = (acceptedFiles, index) => {
     const newPictureData = [...pictureData];
-    newPictureData[index] = event.target.files[0];
+    newPictureData[index] = acceptedFiles[0];
     setPictureData(newPictureData);
-    handleFileSelect(index);
+    setSelectedFiles([...selectedFiles.slice(0, index), true, ...selectedFiles.slice(index + 1)]);
   };
 
   const handleSubmit = async () => {
@@ -116,17 +111,24 @@ const UploadForm = () => {
       <div className="image-upload-container">
         {pictureData.map((picture, index) => (
           <div key={`picture${index}`} className="image-upload-wrapper">
-            <label htmlFor={`file${index}`} className="image-upload-label">
-              <span className="image-upload-text">
-                {selectedFiles[index] ? '파일 선택됨' : '이미지 선택'}
-              </span>
-            </label>
-            <input
-              id={`file${index}`}
-              type="file"
-              onChange={(event) => handlePictureChange(index, event)}
-              className="image-upload-input"
-            />
+            <Dropzone
+              onDrop={(acceptedFiles) => handlePictureChange(acceptedFiles, index)}
+              accept="image/*"
+              multiple={false}
+            >
+              {({ getRootProps, getInputProps }) => (
+                <div {...getRootProps()} className="dropzone">
+                  <input {...getInputProps()} />
+                  {selectedFiles[index] ? (
+                    <div className="image-preview">
+                      <img src={URL.createObjectURL(picture)} alt={`Uploaded ${index + 1}`} />
+                    </div>
+                  ) : (
+                    <p className="dropzone-text">이미지를 여기에 드래그하거나 클릭하여 선택하세요.</p>
+                  )}
+                </div>
+              )}
+            </Dropzone>
           </div>
         ))}
       </div>

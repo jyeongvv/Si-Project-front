@@ -122,3 +122,42 @@
   resize: both;
   font-size: 18px;
 }
+
+.comments-section {
+  margin-top: 20px;
+  border-top: 1px solid #ccc;
+  padding-top: 20px;
+}
+
+.comment-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  width: 1200px;
+}
+
+.comment-input textarea {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  height: 60px; /* 댓글 입력 창의 높이 조정 */
+  margin-right: 15px;
+}
+
+.comment-input button {
+  background-color: #6AAF5F;
+  color: #fff;
+  cursor: pointer;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 40px;
+}
+
+.comment-input button:hover {
+  background-color: #58914f;
+}
