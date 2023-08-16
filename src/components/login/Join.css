@@ -109,9 +109,9 @@
     box-shadow: none;
   }
   
-  p {
+  /* p {
     color: #433d3d;
-  }
+  } */
   
   .join-input-container input[type="tel"] {
     width: 100%;
