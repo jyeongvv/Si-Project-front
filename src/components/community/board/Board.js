@@ -68,7 +68,7 @@ const Board = ({ posts, addPost, updatePost, deletePost, addComment, deleteComme
       <div className="board-write-form">
         {!showForm && (
           <button onClick={() => setShowForm(true)} className="board-add-button">
-            글쓰기
+            글작성
           </button>
         )}
         {showForm && (
