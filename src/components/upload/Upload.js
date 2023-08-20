@@ -4,11 +4,11 @@ import Dropzone from 'react-dropzone';
 import './Upload.css';
 
 const UploadForm = () => {
-  const [textData, setTextData] = useState(Array(3).fill(''));
-  const [pictureData, setPictureData] = useState(Array(3).fill(null));
+  const [textData, setTextData] = useState(['']); // (Array(3).fill(''));
+  const [pictureData, setPictureData] = useState([null]); //(Array(3).fill(null));
   const [responseData, setResponseData] = useState([]);
   const [suggestedIngredients, setSuggestedIngredients] = useState([]);
-  const [selectedFiles, setSelectedFiles] = useState(Array(3).fill(false));
+  const [selectedFiles, setSelectedFiles] = useState([false]); // (Array(3).fill(false));
 
   useEffect(() => {
     const fetchIngredientsList = async () => {
@@ -106,7 +106,6 @@ const UploadForm = () => {
           </div>
         ))}
       </div>
-
       <h2>Image Upload</h2>
       <div className="image-upload-container">
         {pictureData.map((picture, index) => (
@@ -119,7 +118,7 @@ const UploadForm = () => {
               {({ getRootProps, getInputProps }) => (
                 <div {...getRootProps()} className="dropzone">
                   <input {...getInputProps()} />
-                  {selectedFiles[index] ? (
+                  {selectedFiles[index] && picture ? (
                     <div className="image-preview">
                       <img src={URL.createObjectURL(picture)} alt={`Uploaded ${index + 1}`} />
                     </div>
@@ -132,11 +131,9 @@ const UploadForm = () => {
           </div>
         ))}
       </div>
-
       <button onClick={handleSubmit} className="submit-button">
         전송
       </button>
-
       {responseData.length > 0 && (
         <div>
           <h2>Response Data</h2>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
@@ -10,9 +10,10 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import PersonIcon from '@mui/icons-material/Person';
-import Logout from '@mui/icons-material/Logout';
+import { Logout } from '@mui/icons-material';
 
 export default function AccountMenu() {
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -20,6 +21,12 @@ export default function AccountMenu() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('token'); // 클라이언트 측에서 토큰 삭제
+    navigate('/login'); // 로그인 페이지로 이동
+    handleClose();
   };
   return (
     <React.Fragment>
@@ -92,7 +99,7 @@ export default function AccountMenu() {
           </ListItemIcon>
           Join
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
