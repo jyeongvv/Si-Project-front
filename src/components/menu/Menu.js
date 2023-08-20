@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { clearTokenAction } from '../../redux/acitons/authActions';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
@@ -14,6 +16,7 @@ import { Logout } from '@mui/icons-material';
 
 export default function AccountMenu() {
   const navigate = useNavigate();
+  const dispatch = useDispatch(); // useDispatch 사용
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -24,7 +27,7 @@ export default function AccountMenu() {
   };
 
   const handleLogout = () => {
-    sessionStorage.removeItem('token'); // 클라이언트 측에서 토큰 삭제
+    dispatch(clearTokenAction()); // Redux 상태에서도 토큰 삭제
     navigate('/login'); // 로그인 페이지로 이동
     handleClose();
   };

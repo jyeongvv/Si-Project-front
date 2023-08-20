@@ -3,13 +3,15 @@ import axiosInstance from "../../../axiosInstance";
 import "./Board.css";
 import { useSelector } from "react-redux";
 
-const Board = ({ posts, setPosts, addComment, deleteComment, addPost, updatePost, deletePost }) => {
+const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addPost, updatePost, deletePost }) => {
   const [newPost, setNewPost] = useState({ title: "", content: "" });
   const [editPost, setEditPost] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [expandedPostId, setExpandedPostId] = useState(null);
   const [commentText, setCommentText] = useState("");
-  
+  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [editingCommentText, setEditingCommentText] = useState("");
+
   const auth = useSelector(state => state.auth);
 
   const handleInputChange = (event) => {
@@ -19,21 +21,19 @@ const Board = ({ posts, setPosts, addComment, deleteComment, addPost, updatePost
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
+
     if (!auth.token) {
       alert("로그인 후에 글 작성이 가능합니다.");
       return;
     }
 
     const currentDate = new Date();
-    const formattedDate = `${currentDate.getFullYear()}-${
-      currentDate.getMonth() + 1
-    }-${currentDate.getDate()}`;
+    const formattedDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
     const newPostWithDate = { ...newPost, date: formattedDate };
 
     if (editPost) {
       try {
-        await axiosInstance.put(`/board/${editPost.id}`, {
+        await axiosInstance.put(`http://127.0.0.1:8080/board/${editPost.id}`, {
           author: newPostWithDate.author,
           title: newPostWithDate.title,
           content: newPostWithDate.content,
@@ -50,7 +50,7 @@ const Board = ({ posts, setPosts, addComment, deleteComment, addPost, updatePost
       }
     } else {
       try {
-        const response = await axiosInstance.post("/board", {
+        const response = await axiosInstance.post("http://127.0.0.1:8080/board", {
           author: newPostWithDate.author,
           title: newPostWithDate.title,
           content: newPostWithDate.content,
@@ -76,18 +76,12 @@ const Board = ({ posts, setPosts, addComment, deleteComment, addPost, updatePost
 
   const handleDelete = async (postId) => {
     try {
-      await axiosInstance.delete(`/board/${postId}`);
+      await axiosInstance.delete(`http://127.0.0.1:8080/board/${postId}`);
       const updatedPosts = posts.filter((post) => post.id !== postId);
       setPosts(updatedPosts);
     } catch (error) {
       console.error("Error deleting post:", error);
     }
-  };
-
-  const handleCancel = () => {
-    setShowForm(false);
-    setEditPost(null);
-    setNewPost({ title: "", content: "" });
   };
 
   const togglePostContent = (postId) => {
@@ -103,6 +97,55 @@ const Board = ({ posts, setPosts, addComment, deleteComment, addPost, updatePost
       addComment(postId, commentText);
       setCommentText("");
     }
+  };
+
+  const handleEditComment = (postId, commentId, commentContent) => {
+    setEditingCommentId(commentId);
+    setEditingCommentText(commentContent);
+  };
+
+  const handleCancel = () => {
+    setShowForm(false);
+    setEditPost(null);
+    setNewPost({ title: "", content: "" });
+  };
+
+  const handleCommentEditChange = (event) => {
+    setEditingCommentText(event.target.value);
+  };
+
+  const handleCommentUpdate = async (postId, commentId) => {
+    if (editingCommentText.trim() !== "") {
+      try {
+        await axiosInstance.put(`http://127.0.0.1:8080/board/${postId}/comments/${commentId}`, {
+          content: editingCommentText,
+        });
+
+        const updatedPosts = posts.map((post) => {
+          if (post.id === postId) {
+            const updatedComments = post.comments.map((comment) => {
+              if (comment.id === commentId) {
+                return { ...comment, content: editingCommentText };
+              }
+              return comment;
+            });
+            return { ...post, comments: updatedComments };
+          }
+          return post;
+        });
+
+        setPosts(updatedPosts);
+        setEditingCommentId(null);
+        setEditingCommentText("");
+      } catch (error) {
+        console.error("Error updating comment:", error);
+      }
+    }
+  };
+
+  const cancelCommentEdit = () => {
+    setEditingCommentId(null);
+    setEditingCommentText("");
   };
 
   return (
@@ -174,10 +217,25 @@ const Board = ({ posts, setPosts, addComment, deleteComment, addPost, updatePost
                         <div className="comments-section">
                           {post.comments.map((comment) => (
                             <div key={comment.id}>
-                              <p>{comment.content}</p>
-                              <p>작성자: {comment.author}</p>
-                              <p>작성 시간: {new Date(comment.createdAt).toLocaleString()}</p>
-                              <button onClick={() => deleteComment(post.id, comment.id)}>삭제</button>
+                              {editingCommentId === comment.id ? (
+                                <div>
+                                  <textarea
+                                    placeholder="댓글을 수정하세요."
+                                    value={editingCommentText}
+                                    onChange={handleCommentEditChange}
+                                  />
+                                  <button onClick={() => handleCommentUpdate(post.id, comment.id)}>수정 완료</button>
+                                  <button onClick={cancelCommentEdit}>취소</button>
+                                </div>
+                              ) : (
+                                <div>
+                                  <p>{comment.content}</p>
+                                  <p>작성자: {comment.author}</p>
+                                  <p>작성 시간: {new Date(comment.createdAt).toLocaleString()}</p>
+                                  <button onClick={() => deleteComment(post.id, comment.id)}>삭제</button>
+                                  <button onClick={() => handleEditComment(post.id, comment.id, comment.content)}>수정</button>
+                                </div>
+                              )}
                             </div>
                           ))}
                         </div>

@@ -22,7 +22,7 @@ const CommunityPage = () => {
 
   const fetchPosts = async () => {
     try {
-      const response = await axiosInstance.get("/board");
+      const response = await axiosInstance.get("http://127.0.0.1:8080/board");
       setPosts(response.data);
     } catch (error) {
       console.error("Error fetching posts:", error);
@@ -32,7 +32,7 @@ const CommunityPage = () => {
   const addPost = async (newPost) => {
     if (auth.isAuthenticated) {
       try {
-        const response = await axiosInstance.post("/board", {
+        const response = await axiosInstance.post("http://127.0.0.1:8080/board", {
           author: newPost.author,
           title: newPost.title,
           content: newPost.content,
@@ -53,37 +53,51 @@ const CommunityPage = () => {
     }
   };
 
-  const updatePost = async (updatedPost) => {
-    try {
-      await axiosInstance.put(`/board/${updatedPost.id}`, {
-        author: updatedPost.author,
-        title: updatedPost.title,
-        content: updatedPost.content,
-        date: updatedPost.date,
-      });
+  const updatePost = async (postId, updatedPost) => {
+    if (auth.isAuthenticated) {
+      try {
+        const response = await axiosInstance.put(`http://127.0.0.1:8080/board/${postId}`, {
+          title: updatedPost.title,
+          content: updatedPost.content,
+        });
 
-      const updatedPosts = posts.map((post) =>
-        post.id === updatedPost.id ? updatedPost : post
-      );
-      setPosts(updatedPosts);
-    } catch (error) {
-      console.error("Error updating post:", error);
+        if (response.data) {
+          const updatedPosts = posts.map((post) =>
+            post.id === postId
+              ? { ...post, title: updatedPost.title, content: updatedPost.content }
+              : post
+          );
+          setPosts(updatedPosts);
+        }
+      } catch (error) {
+        console.error("Error updating post:", error);
+      }
+    } else {
+      alert("로그인이 필요한 기능입니다.");
     }
   };
 
   const deletePost = async (postId) => {
-    try {
-      await axiosInstance.delete(`/board/${postId}`);
-      const updatedPosts = posts.filter((post) => post.id !== postId);
-      setPosts(updatedPosts);
-    } catch (error) {
-      console.error("Error deleting post:", error);
+    if (auth.isAuthenticated) {
+      try {
+        const response = await axiosInstance.delete(`http://127.0.0.1:8080/board/${postId}`);
+
+        if (response.data) {
+          const updatedPosts = posts.filter((post) => post.id !== postId);
+          setPosts(updatedPosts);
+        }
+      } catch (error) {
+        console.error("Error deleting post:", error);
+      }
+    } else {
+      alert("로그인이 필요한 기능입니다.");
     }
   };
 
+  // 댓글 추가 함수
   const addComment = async (postId, commentText) => {
     try {
-      const response = await axiosInstance.post(`/board/${postId}/comments`, {
+      const response = await axiosInstance.post(`http://127.0.0.1:8080/board/${postId}/comments`, {
         content: commentText,
       });
 
@@ -113,9 +127,35 @@ const CommunityPage = () => {
     }
   };
 
+  const updateComment = async (postId, commentId, updatedContent) => {
+    try {
+      const response = await axiosInstance.put(
+        `http://127.0.0.1:8080/board/${postId}/comments/${commentId}`,
+        { content: updatedContent }
+      );
+
+      if (response.data) {
+        const updatedPosts = posts.map((post) => {
+          if (post.id === postId) {
+            const updatedComments = post.comments.map((comment) =>
+              comment.id === commentId ? { ...comment, content: updatedContent } : comment
+            );
+            return { ...post, comments: updatedComments };
+          }
+          return post;
+        });
+
+        setPosts(updatedPosts);
+      }
+    } catch (error) {
+      console.error("Error updating comment:", error);
+    }
+  };
+
+  // 댓글 삭제 함수
   const deleteComment = async (postId, commentId) => {
     try {
-      await axiosInstance.delete(`/board/${postId}/comments/${commentId}`);
+      await axiosInstance.delete(`http://127.0.0.1:8080/board/${postId}/comments/${commentId}`);
       const updatedPosts = posts.map((post) => {
         if (post.id === postId) {
           const updatedComments = post.comments.filter((comment) => comment.id !== commentId);
@@ -126,6 +166,7 @@ const CommunityPage = () => {
 
       setPosts(updatedPosts);
     } catch (error) {
+      console.log(error);
       console.error("Error deleting comment:", error);
     }
   };
@@ -143,6 +184,7 @@ const CommunityPage = () => {
         posts={currentPosts}
         setPosts={setPosts}
         addComment={addComment}
+        updateComment={updateComment}
         deleteComment={deleteComment}
         addPost={addPost}
         updatePost={updatePost}
