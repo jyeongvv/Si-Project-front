@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 30px;
 }
 
 .text-input-container {
@@ -108,4 +108,8 @@
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+}
+
+.upload-form-container li::marker {
+  content: none; /* 마커 숨김 */
 }

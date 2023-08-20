@@ -1,20 +1,29 @@
 import React, { useState } from "react";
+import axiosInstance from "../../../axiosInstance";
 import "./Board.css";
+import { useSelector } from "react-redux";
 
-const Board = ({ posts, addPost, updatePost, deletePost, addComment, deleteComment }) => {
+const Board = ({ posts, setPosts, addComment, deleteComment, addPost, updatePost, deletePost }) => {
   const [newPost, setNewPost] = useState({ title: "", content: "" });
   const [editPost, setEditPost] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [expandedPostId, setExpandedPostId] = useState(null);
   const [commentText, setCommentText] = useState("");
+  
+  const auth = useSelector(state => state.auth);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setNewPost({ ...newPost, [name]: value });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    
+    if (!auth.token) {
+      alert("로그인 후에 글 작성이 가능합니다.");
+      return;
+    }
 
     const currentDate = new Date();
     const formattedDate = `${currentDate.getFullYear()}-${
@@ -23,11 +32,38 @@ const Board = ({ posts, addPost, updatePost, deletePost, addComment, deleteComme
     const newPostWithDate = { ...newPost, date: formattedDate };
 
     if (editPost) {
-      updatePost({ ...editPost, ...newPostWithDate });
-      setEditPost(null);
+      try {
+        await axiosInstance.put(`/board/${editPost.id}`, {
+          author: newPostWithDate.author,
+          title: newPostWithDate.title,
+          content: newPostWithDate.content,
+          date: newPostWithDate.date,
+        });
+
+        const updatedPosts = posts.map((post) =>
+          post.id === editPost.id ? { ...editPost, ...newPostWithDate } : post
+        );
+        setPosts(updatedPosts);
+        setEditPost(null);
+      } catch (error) {
+        console.error("Error updating post:", error);
+      }
     } else {
-      addPost(newPostWithDate);
+      try {
+        const response = await axiosInstance.post("/board", {
+          author: newPostWithDate.author,
+          title: newPostWithDate.title,
+          content: newPostWithDate.content,
+        });
+
+        if (response.data) {
+          setPosts([...posts, response.data]);
+        }
+      } catch (error) {
+        console.error("Error adding post:", error);
+      }
     }
+
     setNewPost({ title: "", content: "" });
     setShowForm(false);
   };
@@ -38,8 +74,14 @@ const Board = ({ posts, addPost, updatePost, deletePost, addComment, deleteComme
     setShowForm(true);
   };
 
-  const handleDelete = (postId) => {
-    deletePost(postId);
+  const handleDelete = async (postId) => {
+    try {
+      await axiosInstance.delete(`/board/${postId}`);
+      const updatedPosts = posts.filter((post) => post.id !== postId);
+      setPosts(updatedPosts);
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
   };
 
   const handleCancel = () => {
@@ -113,7 +155,7 @@ const Board = ({ posts, addPost, updatePost, deletePost, addComment, deleteComme
                   {post.title}
                 </td>
                 <td>{post.author}</td>
-                <td>{post.date}</td>
+                <td>{new Date(post.createdAt).toLocaleDateString()}</td>
                 <td>
                   <button onClick={() => handleEdit(post)}>수정</button>
                 </td>
@@ -132,7 +174,9 @@ const Board = ({ posts, addPost, updatePost, deletePost, addComment, deleteComme
                         <div className="comments-section">
                           {post.comments.map((comment) => (
                             <div key={comment.id}>
-                              <p>{comment.text}</p>
+                              <p>{comment.content}</p>
+                              <p>작성자: {comment.author}</p>
+                              <p>작성 시간: {new Date(comment.createdAt).toLocaleString()}</p>
                               <button onClick={() => deleteComment(post.id, comment.id)}>삭제</button>
                             </div>
                           ))}

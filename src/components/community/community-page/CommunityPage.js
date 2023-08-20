@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import axiosInstance from "../../../axiosInstance";
 import Board from "../board/Board";
 import Pagination from "../pagination/Pagination";
 
@@ -7,62 +9,131 @@ const CommunityPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
 
-  // 게시글 추가
-  const addPost = (newPost) => {
-    newPost.id = posts.length + 1;
-    newPost.comments = []; // Initialize comments array
-    setPosts([...posts, newPost]);
+  const auth = useSelector(state => state.auth);
+
+  useEffect(() => {
+    fetchPosts();
+    const interval = setInterval(fetchPosts, 100);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  const fetchPosts = async () => {
+    try {
+      const response = await axiosInstance.get("/board");
+      setPosts(response.data);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    }
   };
 
-  // 게시글 수정
-  const updatePost = (updatedPost) => {
-    setPosts(posts.map((post) => (post.id === updatedPost.id ? updatedPost : post)));
-  };
+  const addPost = async (newPost) => {
+    if (auth.isAuthenticated) {
+      try {
+        const response = await axiosInstance.post("/board", {
+          author: newPost.author,
+          title: newPost.title,
+          content: newPost.content,
+        });
 
-  // 게시글 삭제
-  const deletePost = (postId) => {
-    setPosts(posts.filter((post) => post.id !== postId));
-  };
-
-  // 댓글 추가
-  const addComment = (postId, commentText) => {
-    const updatedPosts = posts.map((post) => {
-      if (post.id === postId) {
-        return {
-          ...post,
-          comments: [
-            ...post.comments,
-            { id: post.comments.length + 1, text: commentText }
-          ]
-        };
+        if (response.data) {
+          const newPostWithCreatedAt = {
+            ...response.data,
+            date: response.data.createdAt,
+          };
+          setPosts([...posts, newPostWithCreatedAt]);
+        }
+      } catch (error) {
+        console.error("Error adding post:", error);
       }
-      return post;
-    });
-
-    setPosts(updatedPosts);
+    } else {
+      alert("로그인이 필요한 기능입니다.");
+    }
   };
 
-  // 댓글 삭제
-  const deleteComment = (postId, commentId) => {
-    const updatedPosts = posts.map((post) => {
-      if (post.id === postId) {
-        return {
-          ...post,
-          comments: post.comments.filter((comment) => comment.id !== commentId)
-        };
+  const updatePost = async (updatedPost) => {
+    try {
+      await axiosInstance.put(`/board/${updatedPost.id}`, {
+        author: updatedPost.author,
+        title: updatedPost.title,
+        content: updatedPost.content,
+        date: updatedPost.date,
+      });
+
+      const updatedPosts = posts.map((post) =>
+        post.id === updatedPost.id ? updatedPost : post
+      );
+      setPosts(updatedPosts);
+    } catch (error) {
+      console.error("Error updating post:", error);
+    }
+  };
+
+  const deletePost = async (postId) => {
+    try {
+      await axiosInstance.delete(`/board/${postId}`);
+      const updatedPosts = posts.filter((post) => post.id !== postId);
+      setPosts(updatedPosts);
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
+  };
+
+  const addComment = async (postId, commentText) => {
+    try {
+      const response = await axiosInstance.post(`/board/${postId}/comments`, {
+        content: commentText,
+      });
+
+      if (response.data) {
+        const updatedPosts = posts.map((post) => {
+          if (post.id === postId) {
+            return {
+              ...post,
+              comments: [
+                ...post.comments,
+                {
+                  id: response.data.id,
+                  content: commentText,
+                  author: response.data.author,
+                  createdAt: response.data.createdAt,
+                },
+              ],
+            };
+          }
+          return post;
+        });
+
+        setPosts(updatedPosts);
       }
-      return post;
-    });
-
-    setPosts(updatedPosts);
+    } catch (error) {
+      console.error("Error adding comment:", error);
+    }
   };
 
-  // 현재 페이지에서 보여줄 게시글
+  const deleteComment = async (postId, commentId) => {
+    try {
+      await axiosInstance.delete(`/board/${postId}/comments/${commentId}`);
+      const updatedPosts = posts.map((post) => {
+        if (post.id === postId) {
+          const updatedComments = post.comments.filter((comment) => comment.id !== commentId);
+          return { ...post, comments: updatedComments };
+        }
+        return post;
+      });
+
+      setPosts(updatedPosts);
+    } catch (error) {
+      console.error("Error deleting comment:", error);
+    }
+  };
+
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
-  // 페이지 변경
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
@@ -70,11 +141,12 @@ const CommunityPage = () => {
       <h1>커뮤니티 페이지</h1>
       <Board
         posts={currentPosts}
+        setPosts={setPosts}
+        addComment={addComment}
+        deleteComment={deleteComment}
         addPost={addPost}
         updatePost={updatePost}
         deletePost={deletePost}
-        addComment={addComment} 
-        deleteComment={deleteComment}
       />
       <br />
       <br />

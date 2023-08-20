@@ -1,13 +1,9 @@
-/* Board.css */
-
-/* 변경된 스타일: board-container 클래스 스타일 추가 */
 .board-container {
   display: flex;
   flex-direction: column;
   align-items: center; /* 폼 요소를 수평으로 가운데로 정렬 */
 }
 
-/* board-write-form 클래스 스타일 수정 */
 .board-write-form {
   display: flex;
   justify-content: flex-end; /* 버튼을 오른쪽으로 정렬 */
@@ -15,7 +11,6 @@
   margin-bottom: 10px;
 }
 
-/* board-add-button 클래스 스타일 추가 */
 .board-add-button {
   background-color: #007bff;
   color: #fff;
@@ -49,7 +44,7 @@
   background-color: #58914f;
 }
 
-/* board-form 클래스 스타일 수정 */
+
 .board-form {
   display: flex;
   flex-direction: column;
