@@ -1,10 +1,14 @@
 import React from 'react';
 import './NavBar.css';
 import HomeIcon from '@mui/icons-material/Home';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import AccountMenu from '../menu/Menu';
 
-const NavBar = ({ loggedIn, nickname }) => {
+const NavBar = ({ nickname }) => {
+
+  const loggedIn = useSelector((state) => state.auth.token !== null);
+
   return (
     <div className="nav-bg-container">
       <div className="content">

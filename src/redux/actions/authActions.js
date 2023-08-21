@@ -9,3 +9,10 @@ export const setTokenAction = (token) => ({
 export const clearTokenAction = () => ({
   type: CLEAR_TOKEN,
 });
+
+export const setNicknameAction = (nickname) => {
+  return {
+    type: 'SET_NICKNAME',
+    payload: nickname,
+  };
+};

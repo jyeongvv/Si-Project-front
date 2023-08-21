@@ -3,7 +3,7 @@ import axios from 'axios';
 import Autosuggest from 'react-autosuggest';
 import './CocktailSearch.css';
 
-const MIN_SEARCH_LENGTH = 2; // 최소 검색어 길이를 설정합니다.
+const MIN_SEARCH_LENGTH = 2;
 
 function CocktailSearch() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -21,13 +21,43 @@ function CocktailSearch() {
     }
   };
 
+  const fetchImages = async () => {
+    const images = {};
+    for (const recipe of allRecipes) {
+      if (recipe.cnum) {
+        try {
+          const response = await fetch(`http://localhost:8080/images/${recipe.cnum}`);
+          if (response.ok) {
+            const imageData = await response.text();
+            images[recipe.cnum] = `data:image/jpeg;base64,${imageData}`;
+          } else {
+            console.error('Image not found');
+          }
+        } catch (error) {
+          console.error('Error fetching image:', error);
+        }
+      }
+    }
+    setCocktailImages(images);
+  };
+
+  const handleScroll = () => {
+    if (!hasMore) return;
+    if (
+      window.innerHeight + document.documentElement.scrollTop ===
+      document.documentElement.offsetHeight
+    ) {
+      setPage(prevPage => prevPage + 1);
+    }
+  };
+
   useEffect(() => {
     setLoading(true);
     axios.get('http://localhost:8080/recipes')
       .then(response => {
         const recipesWithIngredientsArray = response.data.map(recipe => ({
           ...recipe,
-          ingredientsArray: recipe.ingredients.split(', ').filter(ingredient => ingredient !== null && ingredient !== undefined)
+          ingredientsArray: recipe.ingredients.split(', ').filter(ingredient => ingredient.trim() !== "")
         }));
         setAllRecipes(recipesWithIngredientsArray);
         setLoading(false);
@@ -44,7 +74,7 @@ function CocktailSearch() {
       .then(response => {
         const newRecipes = response.data.map(recipe => ({
           ...recipe,
-          ingredientsArray: recipe.ingredients.split(', ').filter(ingredient => ingredient !== null && ingredient !== undefined)
+          ingredientsArray: recipe.ingredients.split(', ').filter(ingredient => ingredient.trim() !== "")
         }));
         setAllRecipes(prevRecipes => [...prevRecipes, ...newRecipes]);
         setHasMore(newRecipes.length > 0);
@@ -57,32 +87,16 @@ function CocktailSearch() {
   }, [page]);
 
   useEffect(() => {
-    const fetchImages = async () => {
-      const images = {};
-      for (const recipe of allRecipes) {
-        if (recipe.cnum) {
-          try {
-            const response = await fetch(`http://localhost:8080/images/${recipe.cnum}`);
-            if (response.ok) {
-              const imageData = await response.text();
-              images[recipe.cnum] = `data:image/jpeg;base64,${imageData}`;
-            } else {
-              console.error('Image not found');
-            }
-          } catch (error) {
-            console.error('Error fetching image:', error);
-          }
-        }
-      }
-      setCocktailImages(images);
-    };
-
     fetchImages();
   }, [allRecipes]);
 
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [hasMore, page]); // handleScroll 함수에서 hasMore와 page를 사용하므로 의존성 추가
+
   const handleSearch = () => {
     if (searchTerm.trim().length < MIN_SEARCH_LENGTH) {
-      // 검색어 길이가 최소 길이보다 작으면 검색을 하지 않고 종료합니다.
       return;
     }
 
@@ -142,21 +156,6 @@ function CocktailSearch() {
     onChange: (event, { newValue }) => setSearchTerm(newValue),
     onKeyPress: handleKeyPress
   };
-
-  const handleScroll = () => {
-    if (!hasMore) return;
-    if (
-      window.innerHeight + document.documentElement.scrollTop ===
-      document.documentElement.offsetHeight
-    ) {
-      setPage(page + 1);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [hasMore]);
 
   return (
     <div className="cocktailsearch-container">

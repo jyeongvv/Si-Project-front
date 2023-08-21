@@ -12,7 +12,7 @@ function Cockcard({ cocktailName, cnum }) {
   }, []);
 
   useEffect(() => {
-    console.log("cnum value in Cockcard:", cnum); // 콘솔 로그 추가
+    console.log("cnum value in Cockcard:", cnum);
     const fetchImage = async () => {
       if (cnum !== '') {
         setLoading(true);
@@ -20,7 +20,7 @@ function Cockcard({ cocktailName, cnum }) {
           const response = await fetch(`http://localhost:8080/images/${cnum}`);
           if (response.ok) {
             const imageData = await response.text();
-            setImageUrl(`data:image/jpeg;base64,${imageData}`); // Set Base64-encoded data as image URL
+            setImageUrl(`data:image/jpeg;base64,${imageData}`);
           } else {
             console.error('Image not found');
           }
@@ -38,7 +38,13 @@ function Cockcard({ cocktailName, cnum }) {
   return (
     <div className="card-container">
       <div className="card-img">
-        {loading ? <p>Loading...</p> : imageUrl && <img src={imageUrl} alt={`Image ${cnum}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
+        {loading ? <p>Loading...</p> : imageUrl && (
+          <img
+            src={imageUrl}
+            alt={`Cocktail ${cocktailName}`}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        )}
       </div>
       <div className="card-name">{cocktailName}</div>
     </div>
