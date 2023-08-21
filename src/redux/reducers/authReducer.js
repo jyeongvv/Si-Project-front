@@ -1,5 +1,5 @@
 // reducers/authReducer.js
-import { SET_TOKEN, CLEAR_TOKEN } from "../acitons/authActions";
+import { SET_TOKEN, CLEAR_TOKEN } from "../actions/authActions";
 
 const initialState = {
   token: null,
