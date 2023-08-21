@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setTokenAction } from '../../redux/acitons/authActions';
+import { setTokenAction } from '../../redux/actions/authActions';
 import './Login.css';
 import axios from 'axios';
 

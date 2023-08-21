@@ -1,0 +1,132 @@
+/* CBTI.css */
+@import url('//fonts.googleapis.com/css?family=Lato');
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+body {
+  background: #f7f7f7;
+  margin: 0;
+  overflow-x: hidden;
+  font-family: 'Lato', sans-serif;
+}
+
+#q-cont {
+  width: 400%;
+  height: 300px;
+  position: absolute;
+  top: 45%; /* 변경된 값 */
+  left: 0px;
+  transform: translateY(-150px);
+  transition: 0.5s 500ms;
+}
+
+.slide {
+  height: 100%;
+  width: 25%;
+  padding: 30px;
+  display: inline-block;
+  vertical-align: top;
+  border-left: solid 30px #ddd;
+  border-right: solid 30px #ddd;
+}
+
+.question {
+  width: 100%;
+  font-size: 2em;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* CBTI.css */
+/* 이전의 내용은 그대로 두세요 */
+
+.options {
+    width: 350px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* 가운데 정렬 */
+  }
+  
+  .op {
+    width: 45%;
+    margin: 5px; /* 각 옵션 사이의 간격을 설정합니다. */
+  }
+  
+  .op2 {
+    width: 100%;
+    margin: 5px; /* 각 옵션 사이의 간격을 설정합니다. */
+  }
+  
+  /* 이후의 내용은 그대로 두세요 */
+  
+
+.op, .re {
+  margin-top: 20px;
+  display: inline-block;
+  line-height: 3em;
+  text-align: center;
+  background: #d90;
+  border-radius: 20px;
+  color: #fff;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.op {
+    width: 45%;
+    margin: 5px; /* 각 옵션 사이의 간격을 설정합니다. */
+  }
+  
+
+
+.re {
+  font-size: 0.5em;
+  width: 200px;
+  display: block;
+  margin: 10px auto;
+}
+
+.op2 {
+  float: right;
+}
+
+#slide4 {
+  text-align: center;
+  padding-top: 30px;
+  font-size: 3em;
+}
+
+.op.button_selected,
+.op2.button_selected {
+  background-color: #5a6;
+}
+
+.selected-options {
+    margin-top: 20px;
+    text-align: center;
+}
+  
+.selected-option {
+    display: inline-block;
+    margin: 5px;
+    padding: 5px 10px;
+    background-color: #5a6;
+    color: #fff;
+    border-radius: 20px;
+}
+.matching-cocktails {
+    text-align: center; /* 가운데 정렬 */
+  }
+
+.welcome-message {
+    text-align: center;
+    margin-top: 20em; /* 원하는 만큼 조절 */
+    font-size: 1.5em; /* 원하는 크기로 조절 */
+    margin-bottom: 20em; /* 원하는 만큼 조절 */
+    top: 50%; /* 변경된 값 */
+
+
+  }

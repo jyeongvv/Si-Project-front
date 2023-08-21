@@ -1,8 +1,9 @@
 // reducers/authReducer.js
-import { SET_TOKEN, CLEAR_TOKEN } from "../acitons/authActions";
+import { SET_TOKEN, CLEAR_TOKEN } from "../actions/authActions";
 
 const initialState = {
   token: null,
+  nickname: null,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -16,6 +17,10 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         token: null,
+      };
+    case 'SET_NICKNAME': // 추가
+      return {
+       ...state, nickname: action.payload 
       };
     default:
       return state;
