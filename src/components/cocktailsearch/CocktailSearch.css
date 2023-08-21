@@ -1,0 +1,520 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+input[type="text"],
+input[type="button"] {
+  font-family: Raleway;
+}
+
+body {
+  margin: 1em 2em;
+}
+
+.cocktailsearch-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  font-size: 2em;
+  padding: 1em 0;
+  font-weight: 600;
+}
+
+input[type="text"] {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 2px solid black;
+}
+
+input[type="button"] {
+  font-size: 1em;
+  background-color: black;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  cursor: pointer;
+  margin: 1em 7em;
+  justify-items: center;
+}
+
+/* .recipieCards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+} */
+
+
+.flip-card {
+  background-color: transparent;
+  width: 300px;
+  /* height: 400px; */
+  perspective: 1000px;
+  margin: 1em;
+}
+
+.flip-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.flip-card-back {
+  background-color: black;
+  color: white;
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1em;
+  box-sizing: border-box;
+}
+
+.flip-card-back p {
+  margin-top: 1em;
+  text-align: center;
+  line-height: 1.5em;
+}
+
+table {
+  width: calc(100% - 2em);
+  border-collapse: collapse;
+  border: 1px solid white;
+  margin: 3em 3em 1em 1em;
+}
+
+.fancySearchContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; /* 추가 */
+
+}
+
+.fancySearchContainer input[type="button"] {
+  border-left: 2px solid transparent;
+  margin: 0;
+  background-color: black;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  cursor: pointer;
+  justify-items: center;
+  border-left: 2px solid white;
+  width: 15rem;
+  height: 4rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s ease;
+
+  &:hover {
+    color: white;
+    background: var(--primary);
+    box-shadow: inset 0.2rem 0.2rem 1rem var(--primary-light),
+      inset -0.2rem -0.2rem 1rem var(--primary-dark),
+      0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  &:active {
+    background: var(--primary);
+    box-shadow: inset 0.2rem 0.2rem 1rem var(--primary-dark),
+      inset -0.2rem -0.2rem 1rem var(--primary-light),
+      0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* secondary 버튼 스타일 */
+.btn__secondary {
+  width: 15rem;
+  height: 4rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s ease;
+  cursor: pointer;
+  margin: 1em 7em;
+  border: none;
+  color: var(--greyDark);
+  text-decoration: none;
+  background-color: white;
+}
+.btn__secondary:hover {
+  color: var(--white);
+  background: var(--primary);
+  box-shadow: inset 0.2rem 0.2rem 1rem var(--primary-light),
+    inset -0.2rem -0.2rem 1rem var(--primary-dark),
+    0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.btn__secondary:active {
+  background: var(--primary);
+  box-shadow: inset 0.2rem 0.2rem 1rem var(--primary-dark),
+    inset -0.2rem -0.2rem 1rem var(--primary-light),
+    0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn__secondary {
+	width: 15rem;
+	height: 4rem;
+	border-radius: 1rem;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	justify-self: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: 0.3s ease;
+	cursor: pointer;
+	margin: 1em 7em;
+	border: none;
+	color: var(--greyDark);
+	text-decoration: none;
+	background-color: white;
+  }
+  
+  /* secondary 버튼의 hover 스타일 */
+  .btn__secondary:hover {
+	color: var(--primary);
+	background: white;
+	box-shadow: inset 0.2rem 0.2rem 1rem var(--primary-light),
+	  inset -0.2rem -0.2rem 1rem var(--primary-dark),
+	  0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* secondary 버튼의 active 스타일 */
+  .btn__secondary:active {
+	background: var(--primary);
+	box-shadow: inset 0.2rem 0.2rem 1rem var(--primary-dark),
+	  inset -0.2rem -0.2rem 1rem var(--primary-light),
+	  0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  
+.fancySearchContainer {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+  }
+  
+  .fancySearchContainer input {
+	border-bottom: 2px solid black;
+	padding: 16px 32px;
+  }
+  
+  .fancySearchContainer select {
+	padding: 16px 33px;
+	background: black;
+	color: white;
+  }
+  
+  .fancySearchContainer input[type="button"] {
+	border-left: 2px solid transparent;
+	margin: 0;
+	background-color: black;
+	border: none;
+	color: white;
+	padding: 16px 32px;
+	text-decoration: none;
+	cursor: pointer;
+	justify-content: center;
+	border-left: 2px solid white;
+  }
+  
+/* Autosuggest Styles */
+.react-autosuggest__container {
+  position: relative;
+}
+
+.react-autosuggest__input {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 2px solid black;
+}
+
+.react-autosuggest__suggestions-container {
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  max-width: 400px;
+  border: 2px solid black;
+  background-color: white;
+  z-index: 1;
+}
+
+.react-autosuggest__suggestion {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.react-autosuggest__suggestion--highlighted {
+  background-color: #f1f1f1;
+  
+}
+/* Main Styles */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+  }
+
+  body {
+	margin: 1em 2em;
+  }
+  
+  .container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	width: 100%; /* 전체 너비를 차지하도록 설정 */
+  }
+  
+  
+  h1 {
+	font-size: 2em;
+	padding: 1em 0;
+	font-weight: 600;
+  }
+  
+  input[type="text"] {
+	width: 100%;
+	max-width: 400px;
+	padding: 12px 20px;
+	margin: 8px 0;
+	box-sizing: border-box;
+	border: none;
+	border-bottom: 2px solid black;
+  }
+  
+  input[type="button"] {
+	font-size: 1em;
+	background-color: black;
+	border: none;
+	color: white;
+	padding: 16px 32px;
+	text-decoration: none;
+	cursor: pointer;
+	margin: 1em 7em;
+	justify-items: center;
+  }
+  
+  /* .recipieCards {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+  }
+   */
+
+
+  
+  .flip-card-front {
+	background-color: black;
+	color: white;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 1em;
+	box-sizing: border-box;
+background-size: cover; 
+background-position: center center;
+/* position: relative;  */
+  }
+  
+  .flip-card-back {
+	background-color: black;
+	color: white;
+	transform: rotateY(180deg);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 1em;
+	box-sizing: border-box;
+  }
+  
+  .flip-card-back p {
+	margin-top: 1em;
+	text-align: center;
+	line-height: 1.5em;
+  }
+  
+  table {
+	width: calc(100% - 2em);
+	border-collapse: collapse;
+	border: 1px solid white;
+	margin: 3em 3em 1em 1em;
+	th {
+	  border-bottom: solid 1px white;
+	}
+	th,
+	td {
+	  padding: 0.3em;
+	}
+  }
+  
+  .fancySearchContainer {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	input {
+	  border-bottom: solid 2px black;
+	  padding: 16px 32px;
+	}
+	select {
+	  padding: 16px 33px;
+	  background: black;
+	  color: white;
+	}
+	input[type="button"] {
+	  border-left: solid 2px transparent;
+	  margin: 0;
+	  background-color: black;
+	  border: none;
+	  color: white;
+	  padding: 16px 32px;
+	  text-decoration: none;
+	  cursor: pointer;
+	  justify-items: center;
+	  border-left: solid 2px white;
+	}
+  }
+  
+  /* Autosuggest Styles */
+  .react-autosuggest__container {
+	position: relative;
+  }
+  
+  .react-autosuggest__input {
+	width: 100%;
+	max-width: 400px;
+	padding: 12px 20px;
+	margin: 8px 0;
+	box-sizing: border-box;
+	border: none;
+	border-bottom: 2px solid black;
+  }
+  
+  .react-autosuggest__suggestions-container {
+	position: absolute;
+	top: 100%;
+	width: 100%;
+	max-width: 400px;
+	max-height: 300px;
+	overflow-y: auto;
+	border: 2px solid black;
+	background-color: white;
+	z-index: 1;
+  }
+  
+  .react-autosuggest__suggestion {
+	padding: 8px 12px;
+	cursor: pointer;
+  }
+  
+  .react-autosuggest__suggestion--highlighted {
+	background-color: #f1f1f1;
+  }
+  
+  /* Media Query for Small Screens */
+  @media only screen and (max-width: 550px) {
+	body {
+	  display: block;
+	}
+	.container {
+	  width: 100%;
+	}
+  }
+  
+  /* .recipieCards {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	overflow-y: auto; 
+	max-height: 60vh; 
+  } */
+  .recipieCards {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	grid-auto-rows: minmax(400px, auto); /* 네 줄로 보이게 설정 */
+	gap: 20px;
+	overflow-y: auto;
+	max-height: 60vh;
+  }
+  
+  
+/* ... (기존 스타일들) */
+
+.highlight {
+	background-color: coral; /* 형광펜 색상 */
+	font-weight: bold; /* 강조된 텍스트를 두껍게 표시 */
+	color: white;
+
+  }
+  .spacer {
+	margin-top: 20px; /* 공백 크기 조정 */
+  }
+  .flip-card-front.combined {
+	-webkit-text-stroke: 0.01px black;
+	font-size: 20px; /* 원하는 폰트 크기로 조절해보세요 */
+	
+	color: white;
+	text-shadow:
+		2px  2px 0 #000,
+	   -1px -1px 0 #000,  
+		1px -1px 0 #000,
+	   -1px  1px 0 #000,
+		1px  1px 0 #000;
+  }
+  .flip-card-front.highlight {
+	box-shadow: none; /* 하이라이트될 때 box-shadow 없애기 */
+  }

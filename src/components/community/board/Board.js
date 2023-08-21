@@ -209,6 +209,7 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
                         <button onClick={() => handleEdit(post)}>수정</button>
                         <button onClick={() => handleDelete(post.id)}>삭제</button>
                       </div>
+                      <br></br>
                         <h3>댓글</h3>
                         <div className="comments-section">
                           {post.comments.map((comment) => (
@@ -228,8 +229,8 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
                                   <p>{comment.content}</p>
                                   <p>작성자: {comment.author}</p>
                                   <p>작성 시간: {new Date(comment.createdAt).toLocaleString()}</p>
-                                  <button onClick={() => deleteComment(post.id, comment.id)}>삭제</button>
                                   <button onClick={() => handleEditComment(post.id, comment.id, comment.content)}>수정</button>
+                                  <button onClick={() => deleteComment(post.id, comment.id)}>삭제</button>
                                 </div>
                               )}
                             </div>
