@@ -27,7 +27,7 @@ export default function AccountMenu() {
   };
 
   const handleLogout = () => {
-    dispatch(clearTokenAction()); // Redux 상태에서도 토큰 삭제
+    localStorage.removeItem('token');
     navigate('/login'); // 로그인 페이지로 이동
     handleClose();
   };

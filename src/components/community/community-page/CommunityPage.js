@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import axiosInstance from "../../../axiosInstance";
 import Board from "../board/Board";
 import Pagination from "../pagination/Pagination";
@@ -8,8 +7,9 @@ const CommunityPage = () => {
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
+  const [userEventCount, setUserEventCount] = useState(0);
 
-  const auth = useSelector(state => state.auth);
+  const storedToken = localStorage.getItem("token");
 
   useEffect(() => {
     fetchPosts();
@@ -29,8 +29,14 @@ const CommunityPage = () => {
     }
   };
 
+  const handleUserEvent = () => {
+    if (storedToken) {
+      setUserEventCount(userEventCount + 1);
+    }
+  };
+
   const addPost = async (newPost) => {
-    if (auth.isAuthenticated) {
+    if (storedToken) {
       try {
         const response = await axiosInstance.post("http://127.0.0.1:8080/board", {
           author: newPost.author,
@@ -44,6 +50,7 @@ const CommunityPage = () => {
             date: response.data.createdAt,
           };
           setPosts([...posts, newPostWithCreatedAt]);
+          setUserEventCount(userEventCount + 1);
         }
       } catch (error) {
         console.error("Error adding post:", error);
@@ -51,10 +58,11 @@ const CommunityPage = () => {
     } else {
       alert("로그인이 필요한 기능입니다.");
     }
+    handleUserEvent();
   };
 
   const updatePost = async (postId, updatedPost) => {
-    if (auth.isAuthenticated) {
+    if (storedToken) {
       try {
         const response = await axiosInstance.put(`http://127.0.0.1:8080/board/${postId}`, {
           title: updatedPost.title,
@@ -68,6 +76,7 @@ const CommunityPage = () => {
               : post
           );
           setPosts(updatedPosts);
+          setUserEventCount(userEventCount + 1);
         }
       } catch (error) {
         console.error("Error updating post:", error);
@@ -75,16 +84,18 @@ const CommunityPage = () => {
     } else {
       alert("로그인이 필요한 기능입니다.");
     }
+    handleUserEvent();
   };
 
   const deletePost = async (postId) => {
-    if (auth.isAuthenticated) {
+    if (storedToken) {
       try {
         const response = await axiosInstance.delete(`http://127.0.0.1:8080/board/${postId}`);
 
         if (response.data) {
           const updatedPosts = posts.filter((post) => post.id !== postId);
           setPosts(updatedPosts);
+          setUserEventCount(userEventCount + 1);
         }
       } catch (error) {
         console.error("Error deleting post:", error);
@@ -92,9 +103,9 @@ const CommunityPage = () => {
     } else {
       alert("로그인이 필요한 기능입니다.");
     }
+    handleUserEvent();
   };
 
-  // 댓글 추가 함수
   const addComment = async (postId, commentText) => {
     try {
       const response = await axiosInstance.post(`http://127.0.0.1:8080/board/${postId}/comments`, {
@@ -121,10 +132,12 @@ const CommunityPage = () => {
         });
 
         setPosts(updatedPosts);
+        setUserEventCount(userEventCount + 1);
       }
     } catch (error) {
       console.error("Error adding comment:", error);
     }
+    handleUserEvent();
   };
 
   const updateComment = async (postId, commentId, updatedContent) => {
@@ -146,13 +159,14 @@ const CommunityPage = () => {
         });
 
         setPosts(updatedPosts);
+        setUserEventCount(userEventCount + 1);
       }
     } catch (error) {
       console.error("Error updating comment:", error);
     }
+    handleUserEvent();
   };
 
-  // 댓글 삭제 함수
   const deleteComment = async (postId, commentId) => {
     try {
       await axiosInstance.delete(`http://127.0.0.1:8080/board/${postId}/comments/${commentId}`);
@@ -165,10 +179,12 @@ const CommunityPage = () => {
       });
 
       setPosts(updatedPosts);
+      setUserEventCount(userEventCount + 1);
     } catch (error) {
       console.log(error);
       console.error("Error deleting comment:", error);
     }
+    handleUserEvent();
   };
 
   const indexOfLastPost = currentPage * postsPerPage;

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axiosInstance from "../../../axiosInstance";
 import "./Board.css";
-import { useSelector } from "react-redux";
 
 const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addPost, updatePost, deletePost }) => {
   const [newPost, setNewPost] = useState({ title: "", content: "" });
@@ -12,8 +11,6 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editingCommentText, setEditingCommentText] = useState("");
 
-  const auth = useSelector(state => state.auth);
-
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setNewPost({ ...newPost, [name]: value });
@@ -22,7 +19,7 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!auth.token) {
+    if (!localStorage.getItem('token')) {
       alert("로그인 후에 글 작성이 가능합니다.");
       return;
     }
@@ -205,11 +202,11 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
                       <h2>{post.title}</h2>
                       <textarea readOnly>{post.content}</textarea>
                       <div>
-                      <div className="post-buttons">
-                        <button onClick={() => handleEdit(post)}>수정</button>
-                        <button onClick={() => handleDelete(post.id)}>삭제</button>
-                      </div>
-                      <br></br>
+                        <div className="post-buttons">
+                          <button onClick={() => handleEdit(post)}>수정</button>
+                          <button onClick={() => handleDelete(post.id)}>삭제</button>
+                        </div>
+                        <br></br>
                         <h3>댓글</h3>
                         <div className="comments-section">
                           {post.comments.map((comment) => (
