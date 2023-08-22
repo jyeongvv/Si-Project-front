@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import axiosInstance from "../../../api/axiosInstance";
-import { postBoard } from "./module/postBoard";
-import { searchBoard } from "./module/searchBoard";
-import { updateBoard } from "./module/updateBoard";
-import { deleteBoard } from "./module/deleteBoard";
+import "./Board.css";
 
-const Board = ({ posts, setPosts, addComment, updateComment, deleteComment }) => {
+const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addPost, updatePost, deletePost, searchPosts }) => {
   const [newPost, setNewPost] = useState({ title: "", content: "" });
   const [editPost, setEditPost] = useState(null);
   const [showForm, setShowForm] = useState(false);
@@ -13,15 +10,11 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment }) =>
   const [commentText, setCommentText] = useState("");
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editingCommentText, setEditingCommentText] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const fetchPosts = async () => {
-    try {
-      const response = await axiosInstance.get("http://127.0.0.1:8080/board");
-      setPosts(response.data);
-    } catch (error) {
-      console.error("Error fetching posts:", error);
-    }
+  const handleSearch = () => {
+    searchPosts(searchTerm);
+    setSearchTerm("");
   };
 
   const handleInputChange = (event) => {
@@ -42,9 +35,36 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment }) =>
     const newPostWithDate = { ...newPost, date: formattedDate };
 
     if (editPost) {
-      updateBoard(editPost, newPostWithDate, setPosts);
+      try {
+        await axiosInstance.put(`http://127.0.0.1:8080/board/${editPost.id}`, {
+          author: newPostWithDate.author,
+          title: newPostWithDate.title,
+          content: newPostWithDate.content,
+          date: newPostWithDate.date,
+        });
+
+        const updatedPosts = posts.map((post) =>
+          post.id === editPost.id ? { ...editPost, ...newPostWithDate } : post
+        );
+        setPosts(updatedPosts);
+        setEditPost(null);
+      } catch (error) {
+        console.error("Error updating post:", error);
+      }
     } else {
-      postBoard(newPostWithDate, setPosts);
+      try {
+        const response = await axiosInstance.post("http://127.0.0.1:8080/board", {
+          author: newPostWithDate.author,
+          title: newPostWithDate.title,
+          content: newPostWithDate.content,
+        });
+
+        if (response.data) {
+          setPosts([...posts, response.data]);
+        }
+      } catch (error) {
+        console.error("Error adding post:", error);
+      }
     }
 
     setNewPost({ title: "", content: "" });
@@ -58,7 +78,13 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment }) =>
   };
 
   const handleDelete = async (postId) => {
-    deleteBoard(postId, setPosts);
+    try {
+      await axiosInstance.delete(`http://127.0.0.1:8080/board/${postId}`);
+      const updatedPosts = posts.filter((post) => post.id !== postId);
+      setPosts(updatedPosts);
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
   };
 
   const togglePostContent = (postId) => {
@@ -115,7 +141,7 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment }) =>
         setEditingCommentId(null);
         setEditingCommentText("");
       } catch (error) {
-        console.error("댓글 수정 오류:", error);
+        console.error("Error updating comment:", error);
       }
     }
   };
@@ -123,16 +149,6 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment }) =>
   const cancelCommentEdit = () => {
     setEditingCommentId(null);
     setEditingCommentText("");
-  };
-
-  const [searchType, setSearchType] = useState("title");
-
-  const handleSearch = async () => {
-    if (searchQuery.trim() !== "") {
-      searchBoard(searchQuery, setPosts);
-    } else {
-      fetchPosts();
-    }
   };
 
   return (
@@ -167,17 +183,12 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment }) =>
           <button type="submit">{editPost ? "수정" : "추가"}</button>
         </form>
       )}
-      <div className="board-search">
-        <select value={searchType} onChange={(e) => setSearchType(e.target.value)}>
-          <option value="title">제목</option>
-          <option value="author">작성자</option>
-          <option value="content">내용</option>
-        </select>
+      <div className="board-search-form">
         <input
           type="text"
-          placeholder={`게시판 ${searchType} 검색`}
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="제목 검색"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
         <button onClick={handleSearch}>검색</button>
       </div>

@@ -1,51 +1,54 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import axiosInstance from "../../../api/axiosInstance";
 import Board from "../board/Board";
 import Pagination from "../pagination/Pagination";
-import { searchBoard } from "../board/module/searchBoard";
 
 const CommunityPage = () => {
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
-  const [userEventCount, setUserEventCount] = useState(0);
 
-  const storedToken = localStorage.getItem("token");
+  const auth = useSelector(state => state.auth);
 
-  const [searchQuery] = useState(""); 
-  const [searchType] = useState("title");
+  const refreshPosts = async () => {
+    try {
+      const response = await axiosInstance.get("http://127.0.0.1:8080/board");
+      const sortedPosts = response.data.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+      setPosts(sortedPosts);
+    } catch (error) {
+      console.error("포스트 불러오기 오류:", error);
+    }
+  };
 
   useEffect(() => {
     fetchPosts();
-    const interval = setInterval(fetchPosts, 1000);
-
-    return () => {
-      clearInterval(interval);
-    };
   }, []);
 
   const fetchPosts = async () => {
     try {
       const response = await axiosInstance.get("http://127.0.0.1:8080/board");
-      setPosts(response.data);
+      const sortedPosts = response.data.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+      setPosts(sortedPosts);
     } catch (error) {
       console.error("Error fetching posts:", error);
     }
   };
-
-  const handleUserEvent = () => {
-    if (storedToken) {
-      setUserEventCount(userEventCount + 1);
-    }
-  };
+  
 
   const addPost = async (newPost) => {
-    if (storedToken) {
+    if (auth.isAuthenticated) {
       try {
-        const response = await axiosInstance.post("http://127.0.0.1:8080/board", {
-          author: newPost.author,
-          title: newPost.title,
-          content: newPost.content,
+        const formData = new FormData();
+        formData.append("author", newPost.author);
+        formData.append("title", newPost.title);
+        formData.append("content", newPost.content);
+        formData.append("image", newPost.image); // Add image file to the form data
+
+        const response = await axiosInstance.post("http://127.0.0.1:8080/board", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data", // Set content type for form data
+          },
         });
 
         if (response.data) {
@@ -54,7 +57,7 @@ const CommunityPage = () => {
             date: response.data.createdAt,
           };
           setPosts([...posts, newPostWithCreatedAt]);
-          setUserEventCount(userEventCount + 1);
+          refreshPosts();
         }
       } catch (error) {
         console.error("Error adding post:", error);
@@ -62,11 +65,10 @@ const CommunityPage = () => {
     } else {
       alert("로그인이 필요한 기능입니다.");
     }
-    handleUserEvent();
   };
-
+  
   const updatePost = async (postId, updatedPost) => {
-    if (storedToken) {
+    if (auth.isAuthenticated) {
       try {
         const response = await axiosInstance.put(`http://127.0.0.1:8080/board/${postId}`, {
           title: updatedPost.title,
@@ -80,7 +82,7 @@ const CommunityPage = () => {
               : post
           );
           setPosts(updatedPosts);
-          setUserEventCount(userEventCount + 1);
+          refreshPosts();
         }
       } catch (error) {
         console.error("Error updating post:", error);
@@ -88,18 +90,17 @@ const CommunityPage = () => {
     } else {
       alert("로그인이 필요한 기능입니다.");
     }
-    handleUserEvent();
   };
 
   const deletePost = async (postId) => {
-    if (storedToken) {
+    if (auth.isAuthenticated) {
       try {
         const response = await axiosInstance.delete(`http://127.0.0.1:8080/board/${postId}`);
 
         if (response.data) {
           const updatedPosts = posts.filter((post) => post.id !== postId);
           setPosts(updatedPosts);
-          setUserEventCount(userEventCount + 1);
+          refreshPosts();
         }
       } catch (error) {
         console.error("Error deleting post:", error);
@@ -107,9 +108,9 @@ const CommunityPage = () => {
     } else {
       alert("로그인이 필요한 기능입니다.");
     }
-    handleUserEvent();
   };
 
+  // 댓글 추가 함수
   const addComment = async (postId, commentText) => {
     try {
       const response = await axiosInstance.post(`http://127.0.0.1:8080/board/${postId}/comments`, {
@@ -134,14 +135,12 @@ const CommunityPage = () => {
           }
           return post;
         });
-
         setPosts(updatedPosts);
-        setUserEventCount(userEventCount + 1);
+        refreshPosts();
       }
     } catch (error) {
       console.error("Error adding comment:", error);
     }
-    handleUserEvent();
   };
 
   const updateComment = async (postId, commentId, updatedContent) => {
@@ -161,16 +160,15 @@ const CommunityPage = () => {
           }
           return post;
         });
-
         setPosts(updatedPosts);
-        setUserEventCount(userEventCount + 1);
+        refreshPosts();
       }
     } catch (error) {
       console.error("Error updating comment:", error);
     }
-    handleUserEvent();
   };
 
+  // 댓글 삭제 함수
   const deleteComment = async (postId, commentId) => {
     try {
       await axiosInstance.delete(`http://127.0.0.1:8080/board/${postId}/comments/${commentId}`);
@@ -181,21 +179,11 @@ const CommunityPage = () => {
         }
         return post;
       });
-
       setPosts(updatedPosts);
-      setUserEventCount(userEventCount + 1);
+      refreshPosts();
     } catch (error) {
       console.log(error);
       console.error("Error deleting comment:", error);
-    }
-    handleUserEvent();
-  };
-
-  const handleSearch = async () => {
-    if (searchQuery.trim() !== "") {
-      searchBoard(searchType, searchQuery, setPosts);
-    } else {
-      fetchPosts();
     }
   };
 
@@ -217,7 +205,6 @@ const CommunityPage = () => {
         addPost={addPost}
         updatePost={updatePost}
         deletePost={deletePost}
-        searchBoard={handleSearch}
       />
       <br />
       <br />
