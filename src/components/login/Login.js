@@ -27,16 +27,18 @@ const Login = () => {
       );
 
       const token = response.data;
-
-      // Redux 스토어에 토큰 저장
-      dispatch(setTokenAction(token));
-      console.log('로그인 성공:', response.data);
-
-      navigate('/'); // 홈으로 이동
+      // 로그인 성공 시
+      if (response.status === 200) {
+        dispatch(setTokenAction(token)); // Redux
+        console.log('로그인 성공:', response.data);
+        // 로컬 스토리지
+        localStorage.setItem('token', token);
+        navigate('/'); // 홈으로 이동
+      }
 
     } catch (error) {
       console.error('로그인 실패:', error);
-      alert('아이디 또는 비밀번호를 다시 확인해주세요.');
+      alert(error.message);
     }
   };
 

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import axiosInstance from "../../../axiosInstance";
-import "./Board.css";
-import { useSelector } from "react-redux";
+import axiosInstance from "../../../api/axiosInstance";
+import { postBoard } from "./module/postBoard";
+import { searchBoard } from "./module/searchBoard";
+import { updateBoard } from "./module/updateBoard";
+import { deleteBoard } from "./module/deleteBoard";
 
-const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addPost, updatePost, deletePost }) => {
+const Board = ({ posts, setPosts, addComment, updateComment, deleteComment }) => {
   const [newPost, setNewPost] = useState({ title: "", content: "" });
   const [editPost, setEditPost] = useState(null);
   const [showForm, setShowForm] = useState(false);
@@ -11,8 +13,16 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
   const [commentText, setCommentText] = useState("");
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editingCommentText, setEditingCommentText] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const auth = useSelector(state => state.auth);
+  const fetchPosts = async () => {
+    try {
+      const response = await axiosInstance.get("http://127.0.0.1:8080/board");
+      setPosts(response.data);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    }
+  };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -22,7 +32,7 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!auth.token) {
+    if (!localStorage.getItem('token')) {
       alert("로그인 후에 글 작성이 가능합니다.");
       return;
     }
@@ -32,36 +42,9 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
     const newPostWithDate = { ...newPost, date: formattedDate };
 
     if (editPost) {
-      try {
-        await axiosInstance.put(`http://127.0.0.1:8080/board/${editPost.id}`, {
-          author: newPostWithDate.author,
-          title: newPostWithDate.title,
-          content: newPostWithDate.content,
-          date: newPostWithDate.date,
-        });
-
-        const updatedPosts = posts.map((post) =>
-          post.id === editPost.id ? { ...editPost, ...newPostWithDate } : post
-        );
-        setPosts(updatedPosts);
-        setEditPost(null);
-      } catch (error) {
-        console.error("Error updating post:", error);
-      }
+      updateBoard(editPost, newPostWithDate, setPosts);
     } else {
-      try {
-        const response = await axiosInstance.post("http://127.0.0.1:8080/board", {
-          author: newPostWithDate.author,
-          title: newPostWithDate.title,
-          content: newPostWithDate.content,
-        });
-
-        if (response.data) {
-          setPosts([...posts, response.data]);
-        }
-      } catch (error) {
-        console.error("Error adding post:", error);
-      }
+      postBoard(newPostWithDate, setPosts);
     }
 
     setNewPost({ title: "", content: "" });
@@ -75,13 +58,7 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
   };
 
   const handleDelete = async (postId) => {
-    try {
-      await axiosInstance.delete(`http://127.0.0.1:8080/board/${postId}`);
-      const updatedPosts = posts.filter((post) => post.id !== postId);
-      setPosts(updatedPosts);
-    } catch (error) {
-      console.error("Error deleting post:", error);
-    }
+    deleteBoard(postId, setPosts);
   };
 
   const togglePostContent = (postId) => {
@@ -138,7 +115,7 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
         setEditingCommentId(null);
         setEditingCommentText("");
       } catch (error) {
-        console.error("Error updating comment:", error);
+        console.error("댓글 수정 오류:", error);
       }
     }
   };
@@ -146,6 +123,16 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
   const cancelCommentEdit = () => {
     setEditingCommentId(null);
     setEditingCommentText("");
+  };
+
+  const [searchType, setSearchType] = useState("title");
+
+  const handleSearch = async () => {
+    if (searchQuery.trim() !== "") {
+      searchBoard(searchQuery, setPosts);
+    } else {
+      fetchPosts();
+    }
   };
 
   return (
@@ -180,6 +167,20 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
           <button type="submit">{editPost ? "수정" : "추가"}</button>
         </form>
       )}
+      <div className="board-search">
+        <select value={searchType} onChange={(e) => setSearchType(e.target.value)}>
+          <option value="title">제목</option>
+          <option value="author">작성자</option>
+          <option value="content">내용</option>
+        </select>
+        <input
+          type="text"
+          placeholder={`게시판 ${searchType} 검색`}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <button onClick={handleSearch}>검색</button>
+      </div>
       <table className="board-table">
         <thead>
           <tr>
@@ -205,11 +206,11 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
                       <h2>{post.title}</h2>
                       <textarea readOnly>{post.content}</textarea>
                       <div>
-                      <div className="post-buttons">
-                        <button onClick={() => handleEdit(post)}>수정</button>
-                        <button onClick={() => handleDelete(post.id)}>삭제</button>
-                      </div>
-                      <br></br>
+                        <div className="post-buttons">
+                          <button onClick={() => handleEdit(post)}>수정</button>
+                          <button onClick={() => handleDelete(post.id)}>삭제</button>
+                        </div>
+                        <br></br>
                         <h3>댓글</h3>
                         <div className="comments-section">
                           {post.comments.map((comment) => (
