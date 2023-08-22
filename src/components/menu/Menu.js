@@ -25,7 +25,7 @@ export default function AccountMenu() {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    navigate('/login'); // 로그인 페이지로 이동
+    navigate('/login'); // 로그인 페이지로
     handleClose();
   };
   return (

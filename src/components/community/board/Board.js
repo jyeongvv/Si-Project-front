@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import axiosInstance from "../../../axiosInstance";
 import "./Board.css";
+import { postBoard } from "./module/postBoard";
+import { deleteBoard } from "./module/deleteBoard";
+import { updateBoard } from "./module/updateBoard";
+import axiosInstance from "../../../api/axiosInstance";
 
-const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addPost, updatePost, deletePost }) => {
+const Board = ({ posts, setPosts, addComment, updateComment, deleteComment }) => {
   const [newPost, setNewPost] = useState({ title: "", content: "" });
   const [editPost, setEditPost] = useState(null);
   const [showForm, setShowForm] = useState(false);
@@ -29,36 +32,9 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
     const newPostWithDate = { ...newPost, date: formattedDate };
 
     if (editPost) {
-      try {
-        await axiosInstance.put(`http://127.0.0.1:8080/board/${editPost.id}`, {
-          author: newPostWithDate.author,
-          title: newPostWithDate.title,
-          content: newPostWithDate.content,
-          date: newPostWithDate.date,
-        });
-
-        const updatedPosts = posts.map((post) =>
-          post.id === editPost.id ? { ...editPost, ...newPostWithDate } : post
-        );
-        setPosts(updatedPosts);
-        setEditPost(null);
-      } catch (error) {
-        console.error("Error updating post:", error);
-      }
+      updateBoard(editPost, newPostWithDate, setPosts);
     } else {
-      try {
-        const response = await axiosInstance.post("http://127.0.0.1:8080/board", {
-          author: newPostWithDate.author,
-          title: newPostWithDate.title,
-          content: newPostWithDate.content,
-        });
-
-        if (response.data) {
-          setPosts([...posts, response.data]);
-        }
-      } catch (error) {
-        console.error("Error adding post:", error);
-      }
+      postBoard(newPostWithDate, setPosts);
     }
 
     setNewPost({ title: "", content: "" });
@@ -72,13 +48,7 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
   };
 
   const handleDelete = async (postId) => {
-    try {
-      await axiosInstance.delete(`http://127.0.0.1:8080/board/${postId}`);
-      const updatedPosts = posts.filter((post) => post.id !== postId);
-      setPosts(updatedPosts);
-    } catch (error) {
-      console.error("Error deleting post:", error);
-    }
+    deleteBoard(postId, setPosts);
   };
 
   const togglePostContent = (postId) => {
@@ -135,7 +105,7 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
         setEditingCommentId(null);
         setEditingCommentText("");
       } catch (error) {
-        console.error("Error updating comment:", error);
+        console.error("댓글 수정 오류:", error);
       }
     }
   };
