@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import "./Board.css";
-import { postBoard } from "./module/postBoard";
-import { deleteBoard } from "./module/deleteBoard";
-import { updateBoard } from "./module/updateBoard";
 import axiosInstance from "../../../api/axiosInstance";
+import { postBoard } from "./module/postBoard";
+import { searchBoard } from "./module/searchBoard";
+import { updateBoard } from "./module/updateBoard";
+import { deleteBoard } from "./module/deleteBoard";
 
 const Board = ({ posts, setPosts, addComment, updateComment, deleteComment }) => {
   const [newPost, setNewPost] = useState({ title: "", content: "" });
@@ -13,6 +13,16 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment }) =>
   const [commentText, setCommentText] = useState("");
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editingCommentText, setEditingCommentText] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const fetchPosts = async () => {
+    try {
+      const response = await axiosInstance.get("http://127.0.0.1:8080/board");
+      setPosts(response.data);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    }
+  };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -115,6 +125,16 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment }) =>
     setEditingCommentText("");
   };
 
+  const [searchType, setSearchType] = useState("title");
+
+  const handleSearch = async () => {
+    if (searchQuery.trim() !== "") {
+      searchBoard(searchQuery, setPosts);
+    } else {
+      fetchPosts();
+    }
+  };
+
   return (
     <div className="board-container">
       <div className="board-write-form">
@@ -147,6 +167,20 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment }) =>
           <button type="submit">{editPost ? "수정" : "추가"}</button>
         </form>
       )}
+      <div className="board-search">
+        <select value={searchType} onChange={(e) => setSearchType(e.target.value)}>
+          <option value="title">제목</option>
+          <option value="author">작성자</option>
+          <option value="content">내용</option>
+        </select>
+        <input
+          type="text"
+          placeholder={`게시판 ${searchType} 검색`}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <button onClick={handleSearch}>검색</button>
+      </div>
       <table className="board-table">
         <thead>
           <tr>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axiosInstance from "../../../api/axiosInstance";
 import Board from "../board/Board";
 import Pagination from "../pagination/Pagination";
+import { searchBoard } from "../board/module/searchBoard";
 
 const CommunityPage = () => {
   const [posts, setPosts] = useState([]);
@@ -11,9 +12,12 @@ const CommunityPage = () => {
 
   const storedToken = localStorage.getItem("token");
 
+  const [searchQuery] = useState(""); 
+  const [searchType] = useState("title");
+
   useEffect(() => {
     fetchPosts();
-    const interval = setInterval(fetchPosts, 3000);
+    const interval = setInterval(fetchPosts, 1000);
 
     return () => {
       clearInterval(interval);
@@ -187,6 +191,14 @@ const CommunityPage = () => {
     handleUserEvent();
   };
 
+  const handleSearch = async () => {
+    if (searchQuery.trim() !== "") {
+      searchBoard(searchType, searchQuery, setPosts);
+    } else {
+      fetchPosts();
+    }
+  };
+
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
@@ -205,6 +217,7 @@ const CommunityPage = () => {
         addPost={addPost}
         updatePost={updatePost}
         deletePost={deletePost}
+        searchBoard={handleSearch}
       />
       <br />
       <br />
