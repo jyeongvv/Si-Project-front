@@ -29,9 +29,10 @@ const Login = () => {
       const token = response.data;
       // 로그인 성공 시
       if (response.status === 200) {
-        // 로컬 스토리지에 토큰 저장
-        localStorage.setItem('token', token);
+        dispatch(setTokenAction(token)); // Redux
         console.log('로그인 성공:', response.data);
+        // 로컬 스토리지
+        localStorage.setItem('token', token);
         navigate('/'); // 홈으로 이동
       }
 

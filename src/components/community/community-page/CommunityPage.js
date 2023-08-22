@@ -13,7 +13,7 @@ const CommunityPage = () => {
 
   useEffect(() => {
     fetchPosts();
-    const interval = setInterval(fetchPosts, 100);
+    const interval = setInterval(fetchPosts, 3000);
 
     return () => {
       clearInterval(interval);
