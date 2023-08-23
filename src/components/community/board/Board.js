@@ -10,12 +10,6 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
   const [commentText, setCommentText] = useState("");
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editingCommentText, setEditingCommentText] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const handleSearch = () => {
-    searchPosts(searchTerm);
-    setSearchTerm("");
-  };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -183,15 +177,6 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
           <button type="submit">{editPost ? "수정" : "추가"}</button>
         </form>
       )}
-      <div className="board-search-form">
-        <input
-          type="text"
-          placeholder="제목 검색"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <button onClick={handleSearch}>검색</button>
-      </div>
       <table className="board-table">
         <thead>
           <tr>

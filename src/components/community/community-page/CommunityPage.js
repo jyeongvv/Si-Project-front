@@ -4,12 +4,35 @@ import axiosInstance from "../../../api/axiosInstance";
 import Board from "../board/Board";
 import Pagination from "../pagination/Pagination";
 
+
 const CommunityPage = () => {
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
-
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredPosts, setFilteredPosts] = useState([]);
+  const [searchOption, setSearchOption] = useState('all');
   const auth = useSelector(state => state.auth);
+
+  const handleSearch = () => {
+    const filtered = posts.filter(post => {
+      if (searchOption === 'all') {
+        // 전체 검색 옵션일 경우 제목, 작성자, 내용 모두에서 검색
+        return (
+          post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          post.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          post.content.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      } else {
+        // 다른 검색 옵션일 경우 해당 필드에서 검색
+        const fieldValue = post[searchOption] || ''; // 필드가 없을 경우 빈 문자열로 초기화
+        return fieldValue.toLowerCase().includes(searchTerm.toLowerCase());
+      }
+    });
+
+    setFilteredPosts(filtered);
+  };
+
 
   const refreshPosts = async () => {
     try {
@@ -189,13 +212,29 @@ const CommunityPage = () => {
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = searchTerm ? filteredPosts.slice(indexOfFirstPost, indexOfLastPost) : posts.slice(indexOfFirstPost, indexOfLastPost);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div>
       <h1>커뮤니티 페이지</h1>
+      <select
+        value={searchOption}
+        onChange={e => setSearchOption(e.target.value)}
+      >
+        <option value="all">전체</option>
+        <option value="title">제목</option>
+        <option value="author">작성자</option>
+        <option value="content">내용</option>
+      </select>
+      <input
+        type="text"
+        placeholder="검색어 입력..."
+        value={searchTerm}
+        onChange={e => setSearchTerm(e.target.value)}
+      />
+      <button onClick={handleSearch}>검색</button>
       <Board
         posts={currentPosts}
         setPosts={setPosts}
@@ -205,12 +244,13 @@ const CommunityPage = () => {
         addPost={addPost}
         updatePost={updatePost}
         deletePost={deletePost}
+        searchPosts={handleSearch} // 추가: 검색 함수 전달
       />
       <br />
       <br />
       <Pagination
         postsPerPage={postsPerPage}
-        totalPosts={posts.length}
+        totalPosts={searchTerm ? filteredPosts.length : posts.length}
         paginate={paginate}
       />
     </div>
