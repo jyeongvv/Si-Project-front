@@ -9,9 +9,10 @@ const Join = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [number, setNumber] = useState('');
-  const [email, setEmail] = useState(''); // Add email state
+  const [email, setEmail] = useState('');
   const [isUsernameChecked, setIsUsernameChecked] = useState(false);
   const [isNicknameChecked, setIsNicknameChecked] = useState(false);
+  const [passwordMatchError, setPasswordMatchError] = useState(false); // New state for password match error
 
   const handleJoin = async () => {
     if (password !== confirmPassword) {
@@ -35,7 +36,7 @@ const Join = () => {
         nickname: nickname,
         password: password,
         number: number,
-        email: email, // Include email in the request
+        email: email,
       });
       alert("회원가입이 완료되었습니다.");
     } catch (error) {
@@ -130,10 +131,14 @@ const Join = () => {
           id="confirm-password"
           type="password"
           value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
+          onChange={(e) => {
+            setConfirmPassword(e.target.value);
+            setPasswordMatchError(password !== e.target.value);
+          }}
           required
         />
         <label htmlFor="confirm-password">비밀번호 확인</label>
+        {passwordMatchError && <p className="error-message">비밀번호와 비밀번호 확인 입력값이 다릅니다.</p>}
       </div>
 
       <div className="join-input-container">
@@ -149,7 +154,7 @@ const Join = () => {
 
       <div className="join-input-container">
         <input
-          id="email" // Add email input field
+          id="email"
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}

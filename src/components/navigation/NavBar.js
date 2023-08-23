@@ -1,13 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './NavBar.css';
 import HomeIcon from '@mui/icons-material/Home';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import AccountMenu from '../menu/Menu';
+import jwtDecode from 'jwt-decode';
 
-const NavBar = ({ nickname }) => {
+const NavBar = () => {
+  const [decodedToken, setDecodedToken] = useState(null);
+  const location = useLocation();
 
-  const loggedIn = useSelector((state) => state.auth.token !== null);
+  useEffect(() => {
+    const localToken = localStorage.getItem('token'); // 로컬 스토리지에서 토큰 가져오기
+
+    if (localToken) {
+      try {
+        const decoded = jwtDecode(localToken);
+        setDecodedToken(decoded);
+        console.log('Decoded Token:', decoded); // 디코딩된 토큰 콘솔 출력
+      } catch (error) {
+        console.error('Error decoding token:', error);
+      }
+    }
+  }, [location.pathname]); // location.pathname에 변경이 있을 때마다 실행
 
   return (
     <div className="nav-bg-container">
@@ -24,8 +38,10 @@ const NavBar = ({ nickname }) => {
           </ul>
         </nav>
         <div className="user-info">
-          {loggedIn && (
-            <div className="user-nickname">{nickname}</div>
+          {decodedToken && decodedToken.nickname && (
+            <div className="user-info-wrapper">
+              <div className="user-id">{`환영합니다, ${decodedToken.nickname}님!`}</div>
+            </div>
           )}
           <AccountMenu />
         </div>
