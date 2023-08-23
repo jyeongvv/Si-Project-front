@@ -1,100 +1,255 @@
 import React, { useState } from "react";
-import "./Board.css";
+import axiosInstance from "../../../api/axiosInstance";
+import { postBoard } from "./module/postBoard";
+import { searchBoard } from "./module/searchBoard";
+import { updateBoard } from "./module/updateBoard";
+import { deleteBoard } from "./module/deleteBoard";
 
-const Board = ({ posts, addPost, updatePost, deletePost }) => {
+const Board = ({ posts, setPosts, addComment, updateComment, deleteComment }) => {
   const [newPost, setNewPost] = useState({ title: "", content: "" });
   const [editPost, setEditPost] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+  const [expandedPostId, setExpandedPostId] = useState(null);
+  const [commentText, setCommentText] = useState("");
+  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [editingCommentText, setEditingCommentText] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const fetchPosts = async () => {
+    try {
+      const response = await axiosInstance.get("http://127.0.0.1:8080/board");
+      setPosts(response.data);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    }
+  };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setNewPost({ ...newPost, [name]: value });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // 현재 시간을 얻어와서 게시글에 추가
+    if (!localStorage.getItem('token')) {
+      alert("로그인 후에 글 작성이 가능합니다.");
+      return;
+    }
+
     const currentDate = new Date();
-    const formattedDate = `${currentDate.getFullYear()}-${
-      currentDate.getMonth() + 1
-    }-${currentDate.getDate()}`;
+    const formattedDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
     const newPostWithDate = { ...newPost, date: formattedDate };
 
     if (editPost) {
-      updatePost({ ...editPost, ...newPostWithDate });
-      setEditPost(null);
+      updateBoard(editPost, newPostWithDate, setPosts);
     } else {
-      addPost(newPostWithDate);
+      postBoard(newPostWithDate, setPosts);
     }
+
     setNewPost({ title: "", content: "" });
+    setShowForm(false);
   };
 
   const handleEdit = (post) => {
     setEditPost(post);
     setNewPost(post);
+    setShowForm(true);
   };
 
-  const handleDelete = (postId) => {
-    deletePost(postId);
+  const handleDelete = async (postId) => {
+    deleteBoard(postId, setPosts);
   };
 
-  // 새로운 창으로 게시물 내용 보기
-  const openPostInNewWindow = (post) => {
-    const newWindow = window.open("", "_blank", "width=600,height=400");
-    newWindow.document.write(`
-      <div style="padding: 16px;">
-        <h2>${post.title}</h2>
-        <p>${post.content}</p>
-      </div>
-    `);
-    newWindow.document.close();
+  const togglePostContent = (postId) => {
+    if (expandedPostId === postId) {
+      setExpandedPostId(null);
+    } else {
+      setExpandedPostId(postId);
+    }
+  };
+
+  const handleAddComment = (postId) => {
+    if (commentText.trim() !== "") {
+      addComment(postId, commentText);
+      setCommentText("");
+    }
+  };
+
+  const handleEditComment = (postId, commentId, commentContent) => {
+    setEditingCommentId(commentId);
+    setEditingCommentText(commentContent);
+  };
+
+  const handleCancel = () => {
+    setShowForm(false);
+    setEditPost(null);
+    setNewPost({ title: "", content: "" });
+  };
+
+  const handleCommentEditChange = (event) => {
+    setEditingCommentText(event.target.value);
+  };
+
+  const handleCommentUpdate = async (postId, commentId) => {
+    if (editingCommentText.trim() !== "") {
+      try {
+        await axiosInstance.put(`http://127.0.0.1:8080/board/${postId}/comments/${commentId}`, {
+          content: editingCommentText,
+        });
+
+        const updatedPosts = posts.map((post) => {
+          if (post.id === postId) {
+            const updatedComments = post.comments.map((comment) => {
+              if (comment.id === commentId) {
+                return { ...comment, content: editingCommentText };
+              }
+              return comment;
+            });
+            return { ...post, comments: updatedComments };
+          }
+          return post;
+        });
+
+        setPosts(updatedPosts);
+        setEditingCommentId(null);
+        setEditingCommentText("");
+      } catch (error) {
+        console.error("댓글 수정 오류:", error);
+      }
+    }
+  };
+
+  const cancelCommentEdit = () => {
+    setEditingCommentId(null);
+    setEditingCommentText("");
+  };
+
+  const [searchType, setSearchType] = useState("title");
+
+  const handleSearch = async () => {
+    if (searchQuery.trim() !== "") {
+      searchBoard(searchQuery, setPosts);
+    } else {
+      fetchPosts();
+    }
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className="board-container">
+      <div className="board-write-form">
+        {!showForm && (
+          <button onClick={() => setShowForm(true)} className="board-add-button">
+            글작성
+          </button>
+        )}
+        {showForm && (
+          <button onClick={handleCancel} className="board-cancel-button">
+            취소
+          </button>
+        )}
+      </div>
+      {showForm && (
+        <form className="board-form" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="제목"
+            name="title"
+            value={newPost.title}
+            onChange={handleInputChange}
+          />
+          <textarea
+            placeholder="내용"
+            name="content"
+            value={newPost.content}
+            onChange={handleInputChange}
+          />
+          <button type="submit">{editPost ? "수정" : "추가"}</button>
+        </form>
+      )}
+      <div className="board-search">
+        <select value={searchType} onChange={(e) => setSearchType(e.target.value)}>
+          <option value="title">제목</option>
+          <option value="author">작성자</option>
+          <option value="content">내용</option>
+        </select>
         <input
           type="text"
-          placeholder="제목"
-          name="title"
-          value={newPost.title}
-          onChange={handleInputChange}
+          placeholder={`게시판 ${searchType} 검색`}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <textarea
-          placeholder="내용"
-          name="content"
-          value={newPost.content}
-          onChange={handleInputChange}
-        />
-        <button type="submit">{editPost ? "수정" : "추가"}</button>
-      </form>
-      <table className="custom-table">
+        <button onClick={handleSearch}>검색</button>
+      </div>
+      <table className="board-table">
         <thead>
           <tr>
             <th>제목</th>
             <th>작성자</th>
             <th>작성 일자</th>
-            <th>수정</th>
-            <th>삭제</th>
           </tr>
         </thead>
         <tbody>
           {posts.map((post) => (
             <React.Fragment key={post.id}>
               <tr>
-                <td onClick={() => openPostInNewWindow(post)}>
-                  {/* 제목을 클릭하면 새로운 창에 게시물 내용 보기 */}
+                <td onClick={() => togglePostContent(post.id)}>
                   {post.title}
                 </td>
                 <td>{post.author}</td>
-                <td>{post.date}</td>
-                <td>
-                  <button onClick={() => handleEdit(post)}>수정</button>
-                </td>
-                <td>
-                  <button onClick={() => handleDelete(post.id)}>삭제</button>
-                </td>
+                <td>{new Date(post.createdAt).toLocaleDateString()}</td>
               </tr>
+              {expandedPostId === post.id && (
+                <tr>
+                  <td colSpan={5}>
+                    <div className="board-expanded-form">
+                      <h2>{post.title}</h2>
+                      <textarea readOnly>{post.content}</textarea>
+                      <div>
+                        <div className="post-buttons">
+                          <button onClick={() => handleEdit(post)}>수정</button>
+                          <button onClick={() => handleDelete(post.id)}>삭제</button>
+                        </div>
+                        <br></br>
+                        <h3>댓글</h3>
+                        <div className="comments-section">
+                          {post.comments.map((comment) => (
+                            <div key={comment.id}>
+                              {editingCommentId === comment.id ? (
+                                <div>
+                                  <textarea
+                                    placeholder="댓글을 수정하세요."
+                                    value={editingCommentText}
+                                    onChange={handleCommentEditChange}
+                                  />
+                                  <button onClick={() => handleCommentUpdate(post.id, comment.id)}>수정 완료</button>
+                                  <button onClick={cancelCommentEdit}>취소</button>
+                                </div>
+                              ) : (
+                                <div>
+                                  <p>{comment.content}</p>
+                                  <p>작성자: {comment.author}</p>
+                                  <p>작성 시간: {new Date(comment.createdAt).toLocaleString()}</p>
+                                  <button onClick={() => handleEditComment(post.id, comment.id, comment.content)}>수정</button>
+                                  <button onClick={() => deleteComment(post.id, comment.id)}>삭제</button>
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                        <div className="comment-input">
+                          <textarea
+                            placeholder="댓글을 입력하세요."
+                            onChange={(e) => setCommentText(e.target.value)}
+                            value={commentText}
+                          />
+                          <button onClick={() => handleAddComment(post.id)}>댓글 추가</button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              )}
             </React.Fragment>
           ))}
         </tbody>
