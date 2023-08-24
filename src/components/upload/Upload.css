@@ -60,7 +60,7 @@
 .submit-button {
   margin-top: 15px;
   padding: 10px 20px;
-  background-color: #7BA0E2;
+  background-color: #6AAF5F;
   color: white;
   border: none;
   border-radius: 5px;
@@ -70,7 +70,7 @@
 }
 
 .submit-button:hover {
-  background-color: #7395cf;
+  background-color: #4d8f40;
 }
 
 .dropzone {
@@ -80,7 +80,7 @@
   justify-content: center;
   width: 200px;
   height: 200px;
-  border: 2px dashed #7BA0E2;
+  border: 2px dashed #6AAF5F;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -113,3 +113,24 @@
 .upload-form-container li::marker {
   content: none; /* 마커 숨김 */
 }
+/* ... */
+
+.response-card-container {
+  margin-top: 20px;
+  justify-content: center; /* Center-align cards horizontally */
+
+}
+
+.response-card-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Center-align cards horizontally */
+  gap: -40px; /* Adjust the gap between cards */
+}
+
+.response-card {
+  width: calc(33.33% - 20px); /* Adjust the width of each card (3 cards per row) */
+  margin-bottom: 20px;
+}
+
+/* ... */

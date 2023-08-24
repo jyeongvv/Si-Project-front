@@ -4,11 +4,11 @@ import Dropzone from 'react-dropzone';
 import './Upload.css';
 
 const UploadForm = () => {
-  const [textData, setTextData] = useState(['']); // (Array(3).fill(''));
-  const [pictureData, setPictureData] = useState([null]); //(Array(3).fill(null));
+  const [textData, setTextData] = useState(Array(1).fill(''));
+  const [pictureData, setPictureData] = useState(Array(1).fill(null));
   const [responseData, setResponseData] = useState([]);
   const [suggestedIngredients, setSuggestedIngredients] = useState([]);
-  const [selectedFiles, setSelectedFiles] = useState([false]); // (Array(3).fill(false));
+  const [selectedFiles, setSelectedFiles] = useState(Array(1).fill(false));
 
   useEffect(() => {
     const fetchIngredientsList = async () => {
@@ -25,9 +25,9 @@ const UploadForm = () => {
     fetchIngredientsList();
   }, []);
 
-  const handleTextChange = (index, event) => {
+  const handleTextChange = (index, value) => {
     const newTextData = [...textData];
-    newTextData[index] = event.target.value;
+    newTextData[index] = value;
     setTextData(newTextData);
   };
 
@@ -59,7 +59,7 @@ const UploadForm = () => {
       });
 
       console.log('Response:', response);
-
+      console.log("리스폰스 데이터 : ", response.data);
       if (response.status === 200 && Array.isArray(response.data)) {
         setResponseData(response.data);
       } else {
@@ -86,23 +86,23 @@ const UploadForm = () => {
             <input
               type="text"
               value={text}
-              onChange={(event) => handleTextChange(index, event)}
+              onChange={(event) => handleTextChange(index, event.target.value)}
               placeholder={`Text ${index + 1}`}
               className="text-input"
             />
-            {suggestedIngredients.length > 0 && (
+            {/* {suggestedIngredients.length > 0 && (
               <ul className="suggested-ingredients">
                 {suggestedIngredients.slice(index * 10, (index + 1) * 10).map((ingredient, i) => (
                   <li
                     key={i}
-                    onClick={() => handleTextChange(index, { target: { value: ingredient } })}
+                    onClick={() => handleTextChange(index, ingredient.ingredientType)}
                     className="suggested-ingredient"
                   >
-                    {ingredient}
+                    {`${ingredient.ingredientType} - ${ingredient.ingredientEnglish}`}
                   </li>
                 ))}
               </ul>
-            )}
+            )} */}
           </div>
         ))}
       </div>
@@ -141,15 +141,13 @@ const UploadForm = () => {
             <thead>
               <tr>
                 <th>Cocktail Name</th>
-                <th>Amount</th>
                 <th>Ingredients</th>
               </tr>
             </thead>
             <tbody>
               {responseData.map((row, index) => (
                 <tr key={index}>
-                  <td>{row.cocktailName}</td>
-                  <td>{row.amount}</td>
+                  <td>{row.coktailName}</td>
                   <td>{row.ingredients}</td>
                 </tr>
               ))}

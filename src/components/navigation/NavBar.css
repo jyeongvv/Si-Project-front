@@ -5,8 +5,8 @@ body {
   .nav-bg-container {
     width: 100%;
     padding-top: 10px;
-    padding-bottom: 35px;
-    background-color: #f7f7f7;
+    padding-bottom: 5px;
+    background-color: #618fb7;
     display: flex;
     left: 0;
     position: fixed;
@@ -37,7 +37,7 @@ body {
   
   #primary_nav_wrap ul a {
     display: block;
-    color: #333;
+    color: #ffffff;
     text-decoration: none;
     font-weight: 700;
     font-size: 16px;
@@ -57,7 +57,7 @@ body {
   }
   
   #primary_nav_wrap ul li:hover {
-    background: #f6f6f6;
+    background: #5d82a3;
   }
   
   #primary_nav_wrap ul ul {
@@ -133,4 +133,10 @@ body {
     font-size: 16px;
     font-weight: 700;
     white-space: nowrap;
+    color: #ffffff;
   }
+
+  #primary_nav_wrap ul li.current-menu-item a {
+    border-bottom: 2px solid #6AAF5F; /* 밑줄 스타일 추가 */
+  }
+  

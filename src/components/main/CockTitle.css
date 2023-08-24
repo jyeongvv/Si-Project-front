@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Tangerine&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #EEE;
+}
+
+#str {
+    width: 800px;
+    padding-top: 100px;
+    font-family: 'Tangerine', cursive;
+    font-size: 150px;
+    margin: 10px auto -450px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.small-font {
+    font-size: 40px;
+    margin-top: -200px; /* 텍스트 간격 조절 */
+}

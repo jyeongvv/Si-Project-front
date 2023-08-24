@@ -18,7 +18,7 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
     if (!localStorage.getItem('token')) {
       alert("로그인 후에 글 작성이 가능합니다.");
       return;
@@ -47,6 +47,7 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
       }
     } else {
       try {
+        
         const response = await axiosInstance.post("http://127.0.0.1:8080/board", {
           author: newPostWithDate.author,
           title: newPostWithDate.title,
