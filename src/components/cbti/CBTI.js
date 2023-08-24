@@ -28,7 +28,7 @@ function CBTI() {
     const fetchMatchingCocktails = async () => {
       try {
         if (selectedOptions.length === 3) {
-          const endpoint = 'http://localhost:8080/search';
+          const endpoint = 'http://localhost:8080/cbti';
           const [taste, clevel, place] = selectedOptions;
 
           const response = await fetch(`${endpoint}?taste=${taste}&clevel=${clevel}&place=${place}`);

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Dropzone from 'react-dropzone';
 import './Upload.css';
+import CustomCard from './ReturnCard'; // ReturnCard 컴포넌트를 임포트합니다.
+import Cocktail from './CockLoad'; // Cocktail 컴포넌트를 임포트합니다.
 
 const UploadForm = () => {
   const [textData, setTextData] = useState(Array(1).fill(''));
@@ -9,6 +11,7 @@ const UploadForm = () => {
   const [responseData, setResponseData] = useState([]);
   const [suggestedIngredients, setSuggestedIngredients] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState(Array(1).fill(false));
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchIngredientsList = async () => {
@@ -40,6 +43,7 @@ const UploadForm = () => {
 
   const handleSubmit = async () => {
     try {
+      setIsLoading(true);
       const formData = new FormData();
 
       textData.forEach((text, index) => {
@@ -58,13 +62,15 @@ const UploadForm = () => {
         },
       });
 
-      console.log('Response:', response);
-      console.log("리스폰스 데이터 : ", response.data);
+      console.log(response.data);
+
       if (response.status === 200 && Array.isArray(response.data)) {
         setResponseData(response.data);
       } else {
         setResponseData([]);
       }
+
+      setIsLoading(false);
     } catch (error) {
       console.error('Error:', error);
       if (error.response && error.response.data) {
@@ -74,11 +80,17 @@ const UploadForm = () => {
           alert('업로드 실패: 알 수 없는 오류가 발생했습니다.');
         }
       }
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="upload-form-container">
+      {isLoading && (
+        <div className="loading-overlay">
+          <Cocktail /> {/* 로딩 애니메이션을 넣어줍니다 */}
+        </div>
+      )}
       <h2>Text Input</h2>
       <div className="text-input-container">
         {textData.map((text, index) => (
@@ -90,19 +102,6 @@ const UploadForm = () => {
               placeholder={`Text ${index + 1}`}
               className="text-input"
             />
-            {/* {suggestedIngredients.length > 0 && (
-              <ul className="suggested-ingredients">
-                {suggestedIngredients.slice(index * 10, (index + 1) * 10).map((ingredient, i) => (
-                  <li
-                    key={i}
-                    onClick={() => handleTextChange(index, ingredient.ingredientType)}
-                    className="suggested-ingredient"
-                  >
-                    {`${ingredient.ingredientType} - ${ingredient.ingredientEnglish}`}
-                  </li>
-                ))}
-              </ul>
-            )} */}
           </div>
         ))}
       </div>
@@ -137,22 +136,9 @@ const UploadForm = () => {
       {responseData.length > 0 && (
         <div>
           <h2>Response Data</h2>
-          <table className="response-table">
-            <thead>
-              <tr>
-                <th>Cocktail Name</th>
-                <th>Ingredients</th>
-              </tr>
-            </thead>
-            <tbody>
-              {responseData.map((row, index) => (
-                <tr key={index}>
-                  <td>{row.coktailName}</td>
-                  <td>{row.ingredients}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          {responseData.map((row, index) => (
+            <CustomCard key={index} recipeData={row} />
+          ))}
         </div>
       )}
     </div>
