@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './NavBar.css';
-import HomeIcon from '@mui/icons-material/Home';
 import { Link, useLocation } from 'react-router-dom';
 import AccountMenu from '../menu/Menu';
 import jwtDecode from 'jwt-decode';
+import homeIconImage from '../../img/KakaoTalk_Image_2023-08-24-15-08-30.png';
 
 const NavBar = () => {
   const [decodedToken, setDecodedToken] = useState(null);
@@ -28,19 +28,20 @@ const NavBar = () => {
       <div className="content">
         <nav id="primary_nav_wrap">
           <ul>
-            <li><Link to="/board">커뮤니티</Link></li>
-            <li><Link to="/cocktailsearch">검색</Link></li>
-            <a href='/'>
-              <li><HomeIcon fontSize="large" style={{ color: '#6AAF5F' }} /></li>
-            </a>
-            <li><Link to="/CBTI">CockBTI</Link></li>
-            <li><Link to="/page4">페이지4</Link></li>
+            <li>
+              <Link to="/">
+                <img src={homeIconImage} alt="Home" style={{ width: '45px', height: '45px', color: '#7BA0E2' }} />
+              </Link>
+            </li>
+            <li><Link to="/cocktailsearch">Search</Link></li>
+            <li><Link to="/CBTI">CBTI</Link></li>
+            <li><Link to="/board">Board</Link></li>
           </ul>
         </nav>
         <div className="user-info">
           {decodedToken && decodedToken.nickname && (
             <div className="user-info-wrapper">
-              <div className="user-id">{`환영합니다, ${decodedToken.nickname}님!`}</div>
+              <div className="user-id">{`${decodedToken.nickname}`}</div>
             </div>
           )}
           <AccountMenu />

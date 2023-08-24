@@ -60,7 +60,7 @@
 .submit-button {
   margin-top: 15px;
   padding: 10px 20px;
-  background-color: #6AAF5F;
+  background-color: #7BA0E2;
   color: white;
   border: none;
   border-radius: 5px;
@@ -70,7 +70,7 @@
 }
 
 .submit-button:hover {
-  background-color: #4d8f40;
+  background-color: #7395cf;
 }
 
 .dropzone {
@@ -80,7 +80,7 @@
   justify-content: center;
   width: 200px;
   height: 200px;
-  border: 2px dashed #6AAF5F;
+  border: 2px dashed #7BA0E2;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;

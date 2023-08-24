@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  background-color: 4a4a4a;
 }
 
 .footer-container {
@@ -8,7 +9,7 @@ body {
   bottom: -40%;
   left: 0;
   padding: 20px;
-  background-color: #575757;
+  background-color: #f0f0f0;
   overflow-x: hidden;
   transition: bottom 0.3s ease;
   max-width: 1396px; /* 최대 너비 제한 설정 */
@@ -21,12 +22,12 @@ body {
   
   .footer-section1 h2 {
     font-size: 20px;
-    color: #f4f4f4;
+    color: #4a4a4a;
   }
   
   .footer-section1 p {
     font-size: 16px;
-    color: #f4f4f4;
+    color: #4a4a4a;
   }
   
 
@@ -36,12 +37,12 @@ body {
   
   .footer-section2 h2 {
     font-size: 20px;
-    color: #f4f4f4;
+    color: #4a4a4a;
   }
   
   .footer-section2 p {
     font-size: 16px;
-    color: #f4f4f4;
+    color: #4a4a4a;
   }
   
 
@@ -51,11 +52,11 @@ body {
   
   .footer-section3 h2 {
     font-size: 20px;
-    color: #f4f4f4;
+    color: #4a4a4a;
   }
   
   .footer-section3 p {
     font-size: 16px;
-    color: #f4f4f4;
+    color: #4a4a4a;
   }
   

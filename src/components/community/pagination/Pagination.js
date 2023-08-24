@@ -13,7 +13,7 @@ const CustomPagination = ({ postsPerPage, totalPosts, currentPage, paginate }) =
   const theme = createTheme({
     palette: {
       primary: {
-        main: '#6AAF5F', // 버튼의 색상을 #6AAF5F로 변경
+        main: '#7BA0E2', // 버튼의 색상을 #6AAF5F로 변경
       },
     },
   });
@@ -27,7 +27,7 @@ const CustomPagination = ({ postsPerPage, totalPosts, currentPage, paginate }) =
           onChange={handlePageChange}
           sx={{
             '& .MuiPaginationItem-root': {
-              color: '#6AAF5F', // 숫자의 색상을 #6AAF5F로 변경
+              color: '#7BA0E2', // 숫자의 색상을 #6AAF5F로 변경
             },
             '& .Mui-selected': {
               backgroundColor: theme.palette.primary.main,
