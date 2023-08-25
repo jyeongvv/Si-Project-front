@@ -12,7 +12,7 @@
 }
 
 .board-add-button {
-  background-color: #007bff;
+  background-color: #7BA0E2;
   color: #fff;
   cursor: pointer;
   border: none;
@@ -23,13 +23,13 @@
 }
 
 .board-add-button:hover {
-  background-color: #58914f;
+  background-color: #7BA0E2;
 }
 
 /* board-cancel-button 클래스 스타일 추가 */
 .board-add-button,
 .board-cancel-button {
-  background-color: #6AAF5F;
+  background-color: #7BA0E2;
   color: #fff;
   cursor: pointer;
   border: none;
@@ -41,7 +41,7 @@
 
 .board-add-button:hover,
 .board-cancel-button:hover {
-  background-color: #58914f;
+  background-color: #7BA0E2;
 }
 
 
@@ -52,7 +52,7 @@
   width: 100%;
   max-width: 600px;
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: #f3f8fb;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
@@ -87,7 +87,7 @@
 }
 
 .board-table tr:nth-child(even) {
-  background-color: #f9fff9;
+  background-color: #f3f8fb;
 }
 
 .board-table tr:hover {
@@ -98,7 +98,7 @@
   cursor: pointer;
   border: none;
   background: none;
-  color: #6AAF5F;
+  color: #7BA0E2;
   font-size: 14px;
   text-decoration: underline;
 }
@@ -142,7 +142,7 @@
 }
 
 .comment-input button {
-  background-color: #6AAF5F;
+  background-color: #7BA0E2;
   color: #fff;
   cursor: pointer;
   border: none;
@@ -154,5 +154,5 @@
 }
 
 .comment-input button:hover {
-  background-color: #58914f;
+  background-color: #7BA0E2;
 }

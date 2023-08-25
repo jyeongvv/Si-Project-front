@@ -5,6 +5,7 @@
   padding: 30px;
 }
 
+
 .text-input-container {
   display: flex;
   flex-wrap: wrap;
@@ -113,3 +114,24 @@
 .upload-form-container li::marker {
   content: none; /* 마커 숨김 */
 }
+/* ... */
+
+.response-card-container {
+  margin-top: 20px;
+  justify-content: center; /* Center-align cards horizontally */
+
+}
+
+.response-card-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Center-align cards horizontally */
+  gap: -40px; /* Adjust the gap between cards */
+}
+
+.response-card {
+  width: calc(33.33% - 20px); /* Adjust the width of each card (3 cards per row) */
+  margin-bottom: 20px;
+}
+
+/* ... */

@@ -5,10 +5,10 @@ body {
   .nav-bg-container {
     width: 100%;
     padding-top: 10px;
-    padding-bottom: 35px;
-    background-color: transparent;
+    padding-bottom: 5px;
+    background-color: #618fb7;
     display: flex;
-    justify-content: center;
+    left: 0;
     position: fixed;
     top: 0;
     z-index: 999;
@@ -16,16 +16,16 @@ body {
   
   .content {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     width: 100%;
-    max-width: 1200px; /* 원하는 컨텐츠 최대 너비 설정 */
+    /* max-width: 1200px; 원하는 컨텐츠 최대 너비 설정 */
   }
   
   #primary_nav_wrap {
     display: flex;
-    justify-content: center;
     width: 100%;
+    padding-left: 10px;
+    padding-top: 10px;
   }
   
   #primary_nav_wrap ul {
@@ -37,7 +37,7 @@ body {
   
   #primary_nav_wrap ul a {
     display: block;
-    color: #333;
+    color: #ffffff;
     text-decoration: none;
     font-weight: 700;
     font-size: 16px;
@@ -57,7 +57,7 @@ body {
   }
   
   #primary_nav_wrap ul li:hover {
-    background: #f6f6f6;
+    background: #6192be;
   }
   
   #primary_nav_wrap ul ul {
@@ -116,5 +116,27 @@ body {
   .nav-auth-buttons a:hover {
     background-color: #6AAF5F;
     color: #fff;
+  }
+
+  .user-info {
+    display: flex;
+    margin-right: 30px; /* 오른쪽 여백 조절 */
+  }
+  
+  .user-info-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+  }
+  
+  .user-id {
+    font-size: 16px;
+    font-weight: 700;
+    white-space: nowrap;
+    color: #ffffff;
+  }
+
+  #primary_nav_wrap ul li.current-menu-item a {
+    border-bottom: 2px solid #6AAF5F; /* 밑줄 스타일 추가 */
   }
   

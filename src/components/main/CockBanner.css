@@ -1,0 +1,211 @@
+html {
+    height: 100%;
+  }
+  
+  body {
+    position: relative;
+    margin: 0;
+    height: 100%;
+    background: linear-gradient(steelblue, beige);
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    text-align: center;
+  }
+  
+  .container {
+    position: relative;
+    margin: 10 auto;
+    margin-top: 50px;
+    width: 60%;
+    height: 90%;
+  }
+  
+  .table {
+    position: absolute;
+    background-color: #6b1b1b;
+    bottom: 10px;
+    height: 20px;
+    width: 100%;
+    border-radius: 20%;
+    transform: translateY(50%); /* 칵테일 잔 위치 조절 */
+  }
+  
+  /* 나머지 CSS 코드는 동일하게 유지 */
+  
+  .glassFoot {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 12px;
+    border-radius: 60% 60% 10% 10%;
+    background: linear-gradient(to left top, #eee, #dcd0d0); 
+  }
+  .glassBar {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 70px;
+    background: linear-gradient(to left top, #eee, #dcd0d0); 
+  }
+  .glassHead {
+    position: absolute;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 100px 100px 0 100px;
+    border-color: #dcd0d0 transparent #eee transparent;
+  }
+  
+  .liquid {
+     position: absolute;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 50px 50px 0 50px;
+    border-color: #a6d1ff transparent #eee transparent;
+    animation-duration: 3s;
+    animation-name: changeBorderWidth;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+  
+  .liquid2 {
+    position: absolute;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-color: #fff17c transparent #eee transparent;
+    animation-duration: 3s;
+    animation-name: changeBorderWidth2;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+  
+  .strawContainer {
+    position: relative;
+    width: 20px;
+    height: 20px;
+  }
+  
+  .straw {
+    position: absolute;
+    bottom: 90px;
+    right: 300%;
+    bottom: 100%;
+    width: 10px;
+    height: 150px;
+    transform: rotate(-45deg);
+    background: linear-gradient(to left top, #eee, #dcd0d0);
+  }
+  
+  .straw::before {
+      position: absolute;
+      width: 10px;
+      content: "";
+      height: 70px;
+      border-radius: 70% 70% 0% 0%;
+      transform: rotate(80deg);
+      background: linear-gradient(to left top, #eee, #dcd0d0);
+      right: 30px;
+      top: -30px;
+  }
+  
+  .ice {
+    position: absolute;
+    bottom: 350%;
+    right: 30%;
+    transform: rotate(30deg);
+    box-shadow: 5px 0px 49px 0px rgba(170, 169, 169, 0.3);
+    width: 40px;
+    height: 40px;
+    background-color: rgb(242, 241, 227);
+    opacity: 0.4;
+    border-radius: 30%;
+    animation-duration: 3s;
+    animation-name: changeRotateIce2;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+  
+  .ice.ice2 {
+    left: 70%;
+    transform: rotate(10deg);
+  }
+  
+  .ice.ice3 {
+    left: 0%;
+    bottom: 500%;
+    transform: rotate(-20deg);
+    animation-duration: 3s;
+    animation-name: changeRotateIce;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+  
+  @keyframes changeBorderWidth {
+    from {
+       border-width: 70px 70px 0 70px;
+    }
+  
+    to {
+       border-width: 30px 30px 0 30px;
+    }
+  }
+  
+  @keyframes changeBorderWidth2 {
+    from {
+       border-width: 90px 90px 0 90px;
+    }
+  
+    to {
+       border-width: 50px 50px 0 50px;
+    }
+  }
+  
+  .lemon {
+      border: 5px solid #dbdb00;
+      width: 50px;
+      height: 20px;
+      background: #ff0;
+      border-radius: 0 0 100px 100px;
+      z-index: 1;
+      margin: 0 auto;
+      position: relative;
+      left: 60px;
+      bottom: 120px;
+      -webkit-transform: rotate(230deg);
+      transform: rotate(230deg);
+  }
+  
+  @keyframes changeRotateIce {
+    from {
+       transform: rotate(-20deg);
+    }
+  
+    to {
+       transform: rotate(-40deg);
+    }
+  }
+  
+  @keyframes changeRotateIce2 {
+    from {
+       transform: rotate(-30deg);
+    }
+  
+    to {
+       transform: rotate(30deg);
+    }
+  }
