@@ -6,8 +6,8 @@ body, html {
 
 .footer-container {
   width: 100%;
-  padding: 50px;
-  height: 150px;
+  padding: 10px;
+  height: 40px;
   background-color: #efecd1;
   margin: 0 auto;
   position: relative; /* Add this to establish positioning context */
@@ -18,12 +18,13 @@ body, html {
   margin-bottom: 20px;
 }
 
-.footer-section h2 {
-  font-size: 20px;
-  color: #f4f4f4;
-}
-
-.footer-section p {
-  font-size: 16px;
-  color: #f4f4f4;
+.button-link {
+  display: inline-block;
+  background-color: transparent;
+  color: rgb(101, 116, 167);
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
