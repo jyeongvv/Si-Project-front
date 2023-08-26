@@ -105,11 +105,11 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
     setEditingCommentText(commentContent);
   };
 
-  const handleCancel = () => {
-    setShowForm(false);
-    setEditPost(null);
-    setNewPost({ title: "", content: "" });
-  };
+  // const handleCancel = () => {
+  //   setShowForm(false);
+  //   setEditPost(null);
+  //   setNewPost({ title: "", content: "" });
+  // };
 
   const handleCommentEditChange = (event) => {
     setEditingCommentText(event.target.value);
@@ -203,7 +203,7 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
                 <tr>
                   <td colSpan={5}>
                     <div className="board-expanded-form">
-                      <h2>{post.title}</h2>
+                      <h3>제목: {post.title}</h3>
                       <textarea readOnly>{post.content}</textarea>
                       <div>
                         <div className="post-buttons">
@@ -211,7 +211,7 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
                           <button onClick={() => handleDelete(post.id)}>삭제</button>
                         </div>
                         <br></br>
-                        <h3>댓글</h3>
+                        <h4>댓글</h4>
                         <div className="comments-section">
                           {post.comments.map((comment) => (
                             <div key={comment.id}>

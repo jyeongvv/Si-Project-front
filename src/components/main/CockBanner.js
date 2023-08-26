@@ -8,8 +8,8 @@ const CockBanner = () => {
     <div>
       <Cocktitle />
       <div className="container">
-        <Link to="/main">
           <div className="table">
+          <Link to="/main">
             <div className="glassHead">
               <div className="strawContainer">
                 <div className="straw"></div>
@@ -23,11 +23,10 @@ const CockBanner = () => {
             </div>
             <div className="liquid2"></div>
             <div className="liquid"> </div>
-            {/* <div className='gradient-liquid'></div> */}
             <div className="glassBar"></div>
             <div className="glassFoot"></div>
+            </Link>
           </div>
-        </Link>
       </div>
     </div>
   );

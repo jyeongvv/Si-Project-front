@@ -2,20 +2,28 @@
 body, html {
   margin: 0;
   padding: 0;
+  height: 100%;
 }
+
+.wrapper {
+  position: relative;
+  padding-bottom: 40px;
+  box-sizing: border-box; /* 패딩을 전체 높이에 포함 */
+}
+
 
 .footer-container {
   width: 100%;
-  padding: 10px;
   height: 40px;
   background-color: #efecd1;
-  margin: 0 auto;
-  position: relative; /* Add this to establish positioning context */
-  bottom: 0; /* Ensure that the footer starts at the bottom */
+  position: absolute;
+  left: 0;
+  align-items: center;
+  z-index: 9999; 
 }
 
 .footer-section1 {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .button-link {

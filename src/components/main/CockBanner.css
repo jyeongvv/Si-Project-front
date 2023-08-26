@@ -30,6 +30,8 @@ html {
     height: 20px;
     border-radius: 20%;
     transform: translateY(50%); /* 칵테일 잔 위치 조절 */
+    overflow: visible;
+    z-index: 1;
   }
   
   /* 나머지 CSS 코드는 동일하게 유지 */

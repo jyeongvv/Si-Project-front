@@ -15,7 +15,7 @@ const CommunityPage = () => {
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [searchOption, setSearchOption] = useState('all');
   const auth = useSelector(state => state.auth);
-  const [showWriteForm, setShowWriteForm] = useState(false); 
+  // const [showWriteForm, setShowWriteForm] = useState(false); 
 
   const handleSearch = () => {
     const filtered = posts.filter(post => {
@@ -219,9 +219,6 @@ const CommunityPage = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const toggleWriteForm = () => {
-    setShowWriteForm(!showWriteForm);
-  };
 
   return (
     <div className="search-community" style={{ backgroundColor: '#eeeeee'}}>
