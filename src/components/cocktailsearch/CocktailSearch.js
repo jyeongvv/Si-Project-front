@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Autosuggest from 'react-autosuggest';
 import './CocktailSearch.css';
+import Info from '../footer/Info';
 
 const MIN_SEARCH_LENGTH = 2;
 
@@ -228,6 +229,7 @@ function CocktailSearch() {
           )}
         </div>
       </div>
+      <Info />
     </div>
   );
 }

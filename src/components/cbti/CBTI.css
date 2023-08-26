@@ -1,15 +1,16 @@
 /* CBTI.css */
 @import url('//fonts.googleapis.com/css?family=Lato');
 
-*, *:before, *:after {
+.cocktail-search-page * {
   box-sizing: border-box;
 }
 
-body {
-  background: linear-gradient(steelblue, beige);  margin: 0;
+.cocktail-search-page body {
+  background-color: rgb(220, 251, 255);
   margin: 0;
-  overflow-x: hidden;
   font-family: 'Lato', sans-serif;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 #q-cont {

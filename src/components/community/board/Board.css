@@ -1,14 +1,19 @@
 .board-container {
-  display: flex;
+  font-family: sans-serif;
   flex-direction: column;
   align-items: center; /* 폼 요소를 수평으로 가운데로 정렬 */
+  display: flex;
+  justify-content: center; 
+  background-color: #eeeeee;
+  overflow-y: auto;
 }
 
 .board-write-form {
   display: flex;
-  justify-content: flex-end; /* 버튼을 오른쪽으로 정렬 */
-  width: 100%;
-  margin-bottom: 10px;
+  justify-content: center;
+  align-items: center;
+  width: 87%;
+  margin-bottom: -30px;
 }
 
 .board-add-button {
@@ -17,7 +22,7 @@
   cursor: pointer;
   border: none;
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 10px;
   font-size: 16px;
   font-weight: bold;
 }
@@ -26,7 +31,7 @@
   background-color: #7BA0E2;
 }
 
-/* board-cancel-button 클래스 스타일 추가 */
+
 .board-add-button,
 .board-cancel-button {
   background-color: #7BA0E2;
@@ -46,16 +51,15 @@
 
 
 .board-form {
-  display: flex;
   flex-direction: column;
   align-items: center; /* 폼 요소를 수평으로 가운데로 정렬 */
+  justify-content: center;
   width: 100%;
-  max-width: 600px;
+  width: 700px;
   padding: 20px;
   background-color: #f3f8fb;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+  border-radius: 15px;
+  box-shadow: 0 2px 4px #00000049;
 }
 
 /* board-form 내부 요소 스타일 */
@@ -67,12 +71,15 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   width: 100%;
+  align-content: center;
+  justify-content: center;
 }
 
 /* board-table 클래스 스타일 */
 .board-table {
-  width: 100%;
+  width: 70%; 
   border-collapse: collapse;
+  background-color: #f2f2f2;
 }
 
 .board-table th,
@@ -82,8 +89,9 @@
 }
 
 .board-table th {
-  background-color: #f2f2f2;
-  text-align: left;
+  background-color: #95bbdd;
+  text-align: center;
+  color:#ffffff;
 }
 
 .board-table tr:nth-child(even) {
@@ -125,11 +133,9 @@
 }
 
 .comment-input {
-  display: flex;
   align-items: center;
   justify-content: space-between;
   margin-top: 20px;
-  width: 1200px;
 }
 
 .comment-input textarea {

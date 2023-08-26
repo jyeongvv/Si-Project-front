@@ -1,10 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Tangerine&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
 body {
     background: #EEE;
@@ -16,11 +11,25 @@ body {
     font-family: 'Tangerine', cursive;
     font-size: 150px;
     margin: 10px auto -450px;
-    color: #fff;
+    color: #ffffff;
     font-weight: bold;
 }
 
 .small-font {
-    font-size: 40px;
-    margin-top: -200px; /* 텍스트 간격 조절 */
+    font-size: 50px;
+    margin-top: -200px;
+}
+
+@keyframes bounceUp {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.small-font .bounce {
+    display: inline-block;
+    animation: bounceUp 0.5s ease-in-out infinite alternate;
 }

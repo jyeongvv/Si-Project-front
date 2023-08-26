@@ -12,20 +12,22 @@ html {
     text-align: center;
   }
   
-  .container {
-    position: relative;
-    margin: 10 auto;
-    margin-top: 50px;
-    width: 60%;
-    height: 90%;
-  }
+.container {
+  position: relative;
+  margin: 10 auto;
+  margin-top: 50px;      
+  height: 90%;
+  display: flex;
+  justify-content: center; /* 가로 중앙 정렬 */
+  align-items: flex-end; /* 아래쪽 정렬 */
+}
+
   
   .table {
     position: absolute;
-    background-color: #6b1b1b;
+    background-color: rgb(223, 203, 182);
     bottom: 10px;
     height: 20px;
-    width: 100%;
     border-radius: 20%;
     transform: translateY(50%); /* 칵테일 잔 위치 조절 */
   }
@@ -72,7 +74,7 @@ html {
     height: 0;
     border-style: solid;
     border-width: 50px 50px 0 50px;
-    border-color: #a6d1ff transparent #eee transparent;
+    border-color: #ff736f transparent #eee transparent;
     animation-duration: 3s;
     animation-name: changeBorderWidth;
     animation-iteration-count: infinite;
@@ -87,13 +89,14 @@ html {
     width: 0;
     height: 0;
     border-style: solid;
-    border-color: #fff17c transparent #eee transparent;
+    border-color: #ff8480 transparent #eee transparent;
     animation-duration: 3s;
     animation-name: changeBorderWidth2;
     animation-iteration-count: infinite;
     animation-direction: alternate;
   }
   
+
   .strawContainer {
     position: relative;
     width: 20px;
@@ -108,7 +111,7 @@ html {
     width: 10px;
     height: 150px;
     transform: rotate(-45deg);
-    background: linear-gradient(to left top, #eee, #dcd0d0);
+    background: linear-gradient(to left top, #fbf6e4, #f9efc8);
   }
   
   .straw::before {
@@ -118,7 +121,7 @@ html {
       height: 70px;
       border-radius: 70% 70% 0% 0%;
       transform: rotate(80deg);
-      background: linear-gradient(to left top, #eee, #dcd0d0);
+      background: linear-gradient(to left top, #fbf6e4, #f9efc8);
       right: 30px;
       top: -30px;
   }
@@ -131,7 +134,7 @@ html {
     box-shadow: 5px 0px 49px 0px rgba(170, 169, 169, 0.3);
     width: 40px;
     height: 40px;
-    background-color: rgb(242, 241, 227);
+    background-color: rgb(211, 252, 255);
     opacity: 0.4;
     border-radius: 30%;
     animation-duration: 3s;
@@ -175,20 +178,43 @@ html {
     }
   }
   
-  .lemon {
-      border: 5px solid #dbdb00;
-      width: 50px;
-      height: 20px;
-      background: #ff0;
-      border-radius: 0 0 100px 100px;
-      z-index: 1;
-      margin: 0 auto;
-      position: relative;
-      left: 60px;
-      bottom: 120px;
-      -webkit-transform: rotate(230deg);
-      transform: rotate(230deg);
-  }
+  /* 체리 줄기 스타일 */
+.stem {
+  width: 5px;
+  height: 60px;
+  background: brown;
+  position: absolute;
+  left: 230%;
+  bottom: 100px;
+  transform: translateX(-50%);
+  z-index: 0;
+}
+
+/* 체리 스타일 */
+.cherry {
+  width: 30px;
+  height: 30px;
+  background: red;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 100px;
+  left: 230%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+/* 원 스타일 */
+.circle {
+  width: 50px;
+  height: 50px;
+  background: #f67745;
+  border-radius: 50%;
+  bottom: 100px;
+  position: relative;
+  margin: 0 auto;
+  z-index: 2;
+}
+
   
   @keyframes changeRotateIce {
     from {

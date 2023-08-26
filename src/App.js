@@ -10,6 +10,7 @@ import Page4 from './components/page/page4';
 import Login from './components/login/Login';
 import Join from './components/login/Join';
 import TEAM from './components/team/Team';
+import UploadForm from './components/upload/Upload';
 
 const App = () => {
   const [setLoggedIn] = useState(false);
@@ -29,6 +30,7 @@ const App = () => {
           <Route path='/login' element={<Login setLoggedIn={setLoggedIn} setNickname={setUserNickname} />} />
           <Route path='/join' element={<Join />} />
           <Route path='/team' element={<TEAM />} />
+          <Route path='/main' element={<UploadForm />} />
         </Routes>
       </div>
     </Router>

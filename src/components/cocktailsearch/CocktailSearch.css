@@ -37,12 +37,12 @@ input[type="text"] {
   margin: 8px 0;
   box-sizing: border-box;
   border: none;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid rgb(135, 135, 135);
 }
 
 input[type="button"] {
   font-size: 1em;
-  background-color: black;
+  background-color: rgb(98, 105, 148);
   border: none;
   color: white;
   padding: 16px 32px;
@@ -98,7 +98,7 @@ input[type="button"] {
 }
 
 .flip-card-back {
-  background-color: black;
+  background-color: rgb(98, 105, 148);
   color: white;
   transform: rotateY(180deg);
   display: flex;
@@ -132,7 +132,7 @@ table {
 .fancySearchContainer input[type="button"] {
   border-left: 2px solid transparent;
   margin: 0;
-  background-color: black;
+  background-color: rgb(98, 105, 148);
   border: none;
   color: white;
   padding: 16px 32px;
@@ -241,20 +241,22 @@ table {
   }
   
   .fancySearchContainer input {
-	border-bottom: 2px solid black;
+	border-bottom: 2px solid rgb(94, 129, 178);
 	padding: 16px 32px;
   }
   
   .fancySearchContainer select {
-	padding: 16px 33px;
-	background: black;
+	padding: 15px 10px;
+	background: rgb(94, 129, 178);
 	color: white;
+  font-size: 16px;
+  border-radius: 1rem;
   }
   
   .fancySearchContainer input[type="button"] {
 	border-left: 2px solid transparent;
 	margin: 0;
-	background-color: black;
+	background-color: rgb(94, 129, 178);
 	border: none;
 	color: white;
 	padding: 16px 32px;
@@ -276,7 +278,7 @@ table {
   margin: 8px 0;
   box-sizing: border-box;
   border: none;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid rgb(98, 105, 148);
 }
 
 .react-autosuggest__suggestions-container {
@@ -284,9 +286,10 @@ table {
   top: 100%;
   width: 100%;
   max-width: 400px;
-  border: 2px solid black;
+  border: 2px solid rgb(98, 105, 148);
   background-color: white;
   z-index: 1;
+  border-radius: 1rem;
 }
 
 .react-autosuggest__suggestion {
@@ -332,12 +335,12 @@ table {
 	margin: 8px 0;
 	box-sizing: border-box;
 	border: none;
-	border-bottom: 2px solid black;
+	border-bottom: 2px solid rgb(98, 105, 148);
   }
   
   input[type="button"] {
 	font-size: 1em;
-	background-color: black;
+	background-color: rgb(98, 105, 148);
 	border: none;
 	color: white;
 	padding: 16px 32px;
@@ -358,7 +361,7 @@ table {
 
   
   .flip-card-front {
-	background-color: black;
+	background-color: rgb(98, 105, 148);
 	color: white;
 	display: flex;
 	flex-direction: column;
@@ -406,7 +409,7 @@ background-position: center center;
 	flex-direction: row;
 	align-items: center;
 	input {
-	  border-bottom: solid 2px black;
+	  border-bottom: solid 2px rgb(119, 118, 118);
 	  padding: 16px 32px;
 	}
 	select {

@@ -3,7 +3,7 @@ import './NavBar.css';
 import { Link, useLocation } from 'react-router-dom';
 import AccountMenu from '../menu/Menu';
 import jwtDecode from 'jwt-decode';
-import homeIconImage from '../../img/KakaoTalk_Image_2023-08-24-15-08-30.png';
+import homeIconImage from '../../img/KakaoTalk_Photo_2023-08-25-15-19-42.png';
 
 const NavBar = () => {
   const [decodedToken, setDecodedToken] = useState(null);
@@ -30,7 +30,7 @@ const NavBar = () => {
           <ul>
             <li>
               <Link to="/">
-                <img src={homeIconImage} alt="Home" style={{ width: '45px', height: '45px', color: '#7BA0E2' }} />
+                <img src={homeIconImage} alt="Home" style={{ width: '60px', height: '60px', color: '#7BA0E2' }} />
               </Link>
             </li>
             <li><Link to="/cocktailsearch">Search</Link></li>

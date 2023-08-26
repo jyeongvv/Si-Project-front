@@ -16,6 +16,9 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
     setNewPost({ ...newPost, [name]: value });
   };
 
+  // Board.js 파일 내부에 추가
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
   
@@ -149,7 +152,7 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
   return (
     <div className="board-container">
       <div className="board-write-form">
-        {!showForm && (
+        {/* {!showForm && (
           <button onClick={() => setShowForm(true)} className="board-add-button">
             글작성
           </button>
@@ -158,7 +161,7 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
           <button onClick={handleCancel} className="board-cancel-button">
             취소
           </button>
-        )}
+        )} */}
       </div>
       {showForm && (
         <form className="board-form" onSubmit={handleSubmit}>
@@ -183,7 +186,7 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
           <tr>
             <th>제목</th>
             <th>작성자</th>
-            <th>작성 일자</th>
+            <th>작성일</th>
           </tr>
         </thead>
         <tbody>
@@ -194,7 +197,7 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
                   {post.title}
                 </td>
                 <td>{post.author}</td>
-                <td>{new Date(post.createdAt).toLocaleDateString()}</td>
+                <td>{new Date(post.createdAt).toLocaleString()}</td>
               </tr>
               {expandedPostId === post.id && (
                 <tr>
