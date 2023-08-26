@@ -16,6 +16,9 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
     setNewPost({ ...newPost, [name]: value });
   };
 
+  // Board.js 파일 내부에 추가
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
   
@@ -102,11 +105,11 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
     setEditingCommentText(commentContent);
   };
 
-  const handleCancel = () => {
-    setShowForm(false);
-    setEditPost(null);
-    setNewPost({ title: "", content: "" });
-  };
+  // const handleCancel = () => {
+  //   setShowForm(false);
+  //   setEditPost(null);
+  //   setNewPost({ title: "", content: "" });
+  // };
 
   const handleCommentEditChange = (event) => {
     setEditingCommentText(event.target.value);
@@ -149,7 +152,7 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
   return (
     <div className="board-container">
       <div className="board-write-form">
-        {!showForm && (
+        {/* {!showForm && (
           <button onClick={() => setShowForm(true)} className="board-add-button">
             글작성
           </button>
@@ -158,7 +161,7 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
           <button onClick={handleCancel} className="board-cancel-button">
             취소
           </button>
-        )}
+        )} */}
       </div>
       {showForm && (
         <form className="board-form" onSubmit={handleSubmit}>
@@ -183,7 +186,7 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
           <tr>
             <th>제목</th>
             <th>작성자</th>
-            <th>작성 일자</th>
+            <th>작성일</th>
           </tr>
         </thead>
         <tbody>
@@ -194,13 +197,13 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
                   {post.title}
                 </td>
                 <td>{post.author}</td>
-                <td>{new Date(post.createdAt).toLocaleDateString()}</td>
+                <td>{new Date(post.createdAt).toLocaleString()}</td>
               </tr>
               {expandedPostId === post.id && (
                 <tr>
                   <td colSpan={5}>
                     <div className="board-expanded-form">
-                      <h2>{post.title}</h2>
+                      <h3>제목: {post.title}</h3>
                       <textarea readOnly>{post.content}</textarea>
                       <div>
                         <div className="post-buttons">
@@ -208,7 +211,7 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
                           <button onClick={() => handleDelete(post.id)}>삭제</button>
                         </div>
                         <br></br>
-                        <h3>댓글</h3>
+                        <h4>댓글</h4>
                         <div className="comments-section">
                           {post.comments.map((comment) => (
                             <div key={comment.id}>

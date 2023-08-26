@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './CBTI.css';
 import Cockcard from './Cockcard'; // Cockcard 컴포넌트를 임포트합니다.
+import Info from '../footer/Info';
 
 function CBTI() {
   const [slideIndex, setSlideIndex] = useState(0);
@@ -28,10 +29,10 @@ function CBTI() {
     const fetchMatchingCocktails = async () => {
       try {
         if (selectedOptions.length === 3) {
-          const endpoint = 'http://localhost:8080/cbti';
-          const [taste, clevel, place] = selectedOptions;
+          const endpoint = 'http://127.0.0.1:8080/cbti';
+          const [taste, level, place] = selectedOptions;
 
-          const response = await fetch(`${endpoint}?taste=${taste}&clevel=${clevel}&place=${place}`);
+          const response = await fetch(`${endpoint}?taste=${taste}&level=${level}&place=${place}`);
           const data = await response.json();
           if (data.length === 0) {
             setNoMatchingCocktails(true);
@@ -73,7 +74,7 @@ function CBTI() {
   const left = `${-slideIndex * (slideWidth + (slideIndex === slides.length - 1 && selectedOptions.length === 3 ? 50 : 0))}%`;
 
   return (
-    <div>
+    <div className="cocktail-search-page">
       <div id="q-cont" style={{ left: left }}>
         {slides.map((slide, index) => (
           <div
@@ -118,8 +119,8 @@ function CBTI() {
                 <div className="matching-cocktails">
                   <div className="card-grid">
                       {matchingCocktails.map(cocktail => (
-                      <div key={cocktail.cnum}>
-                          <Cockcard cocktailName={cocktail.name} cnum={cocktail.cnum} /> {/* cnum 전달 */}
+                      <div key={cocktail.id}>
+                          <Cockcard cocktailName={cocktail.name} id={cocktail.id} /> {/* cnum 전달 */}
                       </div>
                       ))}
                   </div>
@@ -130,6 +131,7 @@ function CBTI() {
         )}
       </div>
       {!showResult && <h1 style={{ textAlign: 'center', marginBottom: '200em' }}>당신의 CBTI(Cocktail MBTI)를 찾아보세요!</h1>}
+      <Info />
     </div>
   );
                       }  

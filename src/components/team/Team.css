@@ -1,7 +1,7 @@
 body {
     font-family: tahoma;
     height: 100vh;
-    background: linear-gradient(steelblue, beige);  margin: 0;
+    background: linear-gradient(rgb(153, 198, 234), beige);  margin: 0;
     background-size: cover;
     background-position: center;
     /* display: flex; */
@@ -18,7 +18,6 @@ body {
     margin: 0 15px; /* 좌우 마진을 추가하여 카드 간격을 조정 */
     background-color: #f7f5ec;
     text-align: center;
-    overflow: hidden;
     position: relative;
   }
   

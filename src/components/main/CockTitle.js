@@ -6,7 +6,7 @@ function Cocktitle() {
 
   useEffect(() => {
     const string1 = "Chalcock "; // First line of text
-    const string2 = "찰칵 찍어서 나오는 칵테일 "; // Second line of text
+    const string2 = "찰칵✨ 찍어서 나오는 칵테일 "; // Second line of text
 
     let currentIndex1 = 0;
     let currentIndex2 = 0;

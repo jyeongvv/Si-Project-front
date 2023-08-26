@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import axiosInstance from "../../../api/axiosInstance";
 import Board from "../board/Board";
 import Pagination from "../pagination/Pagination";
+import Info from "../../footer/Info";
+import WriteFormPopup from "../board/popup/Popup";
 
 
 const CommunityPage = () => {
@@ -13,6 +15,7 @@ const CommunityPage = () => {
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [searchOption, setSearchOption] = useState('all');
   const auth = useSelector(state => state.auth);
+  // const [showWriteForm, setShowWriteForm] = useState(false); 
 
   const handleSearch = () => {
     const filtered = posts.filter(post => {
@@ -60,6 +63,7 @@ const CommunityPage = () => {
   
 
   const addPost = async (newPost) => {
+    console.log(auth.isAuthenticated);
     if (auth.isAuthenticated) {
       try {
         const formData = new FormData();
@@ -73,7 +77,6 @@ const CommunityPage = () => {
             "Content-Type": "multipart/form-data", // Set content type for form data
           },
         });
-
         if (response.data) {
           const newPostWithCreatedAt = {
             ...response.data,
@@ -216,8 +219,9 @@ const CommunityPage = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+
   return (
-    <div>
+    <div className="search-community" style={{ backgroundColor: '#eeeeee'}}>
       <br />
       <br />
       <br />
@@ -239,6 +243,7 @@ const CommunityPage = () => {
         onChange={e => setSearchTerm(e.target.value)}
       />
       <button onClick={handleSearch}>검색</button>
+      <WriteFormPopup addPost={addPost} /> 
       <Board
         posts={currentPosts}
         setPosts={setPosts}
@@ -257,6 +262,7 @@ const CommunityPage = () => {
         totalPosts={searchTerm ? filteredPosts.length : posts.length}
         paginate={paginate}
       />
+      <Info />
     </div>
   );
 };

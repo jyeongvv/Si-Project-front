@@ -8,7 +8,7 @@
 }
 
 body {
-  background: linear-gradient(to left, #FF5F6D , #FFC371);
+  background: linear-gradient(rgb(153, 198, 234), beige);
   font-family: sans-serif;
   margin: 0;
   width: 100vw;
@@ -70,7 +70,6 @@ header { cursor: pointer; }
 
 article {
   padding: 25px 30px;
-  overflow: hidden;
   max-height: 400px;
 } 
 
