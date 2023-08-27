@@ -60,7 +60,7 @@
   .join-input-container input:valid + label {
     top: -20px;
     font-size: 12px;
-    color: #7BA0E2;
+    color: #82745e;
   }
   
   /* 확인 버튼 스타일 */
@@ -70,7 +70,7 @@
     right: 0;
     padding: 5px 10px;
     font-size: 14px;
-    color: #7BA0E2;
+    color: #82745e;
     background: transparent;
     border: none;
     border-radius: 5px;
@@ -79,7 +79,7 @@
   }
   
   .join-input-container button.join-check-button:hover {
-    background: #7BA0E2; /* hover 시 배경색 변경 */
+    background: #beac92; /* hover 시 배경색 변경 */
     color: #ffffff; /* hover 시 텍스트 색상 변경 */
   }
   
@@ -92,7 +92,7 @@
     display: block;
     width: 100%;
     padding: 10px 20px;
-    color: #7BA0E2;
+    color: #82745e;
     font-size: 16px;
     text-decoration: none;
     text-transform: uppercase;
@@ -103,7 +103,7 @@
   }
   
   .join-submit-button:hover {
-    background: #7BA0E2;
+    background: #beac92;
     color: #ffffff;
     border-radius: 5px;
     box-shadow: none;
@@ -133,5 +133,27 @@
   .join-input-container input[type="tel"]:valid + label {
     top: -20px;
     font-size: 12px;
-    color: #7BA0E2;
+    color: #82745e;
   }
+
+  .double-input {
+  display: flex;
+  justify-content: space-between;
+}
+
+.double-input-inner {
+  width: 48%;
+  position: relative;
+  margin-bottom: 17px;
+}
+
+.double-input-inner input {
+  width: 100%;
+}
+
+.input-description {
+  font-size: 13px;
+  color: #a9a9a9;
+  margin-right: 185px;
+  font-weight: 100;
+}

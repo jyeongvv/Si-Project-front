@@ -12,7 +12,7 @@ const Join = () => {
   const [email, setEmail] = useState('');
   const [isUsernameChecked, setIsUsernameChecked] = useState(false);
   const [isNicknameChecked, setIsNicknameChecked] = useState(false);
-  const [passwordMatchError, setPasswordMatchError] = useState(false); // New state for password match error
+  const [passwordMatchError, setPasswordMatchError] = useState(false);
 
   const handleJoin = async () => {
     if (password !== confirmPassword) {
@@ -126,41 +126,28 @@ const Join = () => {
         <label htmlFor="password">비밀번호</label>
       </div>
 
-      <div className="join-input-container">
-        <input
-          id="confirm-password"
-          type="password"
-          value={confirmPassword}
-          onChange={(e) => {
-            setConfirmPassword(e.target.value);
-            setPasswordMatchError(password !== e.target.value);
-          }}
-          required
-        />
-        <label htmlFor="confirm-password">비밀번호 확인</label>
-        {passwordMatchError && <p className="error-message">비밀번호와 비밀번호 확인 입력값이 다릅니다.</p>}
-      </div>
-
-      <div className="join-input-container">
-        <input
-          id="phone-number"
-          type="tel"
-          value={number}
-          onChange={(e) => setNumber(e.target.value)}
-          required
-        />
-        <label htmlFor="phone-number">전화번호</label>
-      </div>
-
-      <div className="join-input-container">
-        <input
-          id="email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <label htmlFor="email">이메일</label>
+      <div className="join-input-container double-input">
+        <div className="double-input-inner">
+          <input
+            id="number"
+            type="tel"
+            value={number}
+            onChange={(e) => setNumber(e.target.value)}
+            required
+          />
+          <label htmlFor="number">전화번호</label>
+          <p className="input-description">ex) 010-1234-5678</p>
+        </div>
+        <div className="double-input-inner">
+          <input
+            id="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <label htmlFor="email">이메일</label>
+        </div>
       </div>
 
       <button className="join-submit-button" onClick={handleJoin}>
