@@ -194,7 +194,12 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
             <React.Fragment key={post.id}>
               <tr>
                 <td onClick={() => togglePostContent(post.id)}>
-                  {post.title}
+                <div className="post-title">
+                  <span>{post.title}</span>
+                  {post.comments.length > 0 && (
+                    <span className="comment-count">   {post.comments.length}</span>
+                  )}
+                </div>
                 </td>
                 <td>{post.author}</td>
                 <td>{new Date(post.createdAt).toLocaleString()}</td>
@@ -203,15 +208,19 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
                 <tr>
                   <td colSpan={5}>
                     <div className="board-expanded-form">
-                      <h3>제목: {post.title}</h3>
+                      <div className="post-section">
+                      <h3>{post.title}</h3>
                       <textarea readOnly>{post.content}</textarea>
                       <div>
                         <div className="post-buttons">
                           <button onClick={() => handleEdit(post)}>수정</button>
                           <button onClick={() => handleDelete(post.id)}>삭제</button>
+                          </div>
                         </div>
-                        <br></br>
-                        <h4>댓글</h4>
+                        <br />
+                        <br />
+                        <br />
+                        <h4>▪️ Comment</h4>
                         <div className="comments-section">
                           {post.comments.map((comment) => (
                             <div key={comment.id}>
@@ -227,16 +236,25 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addP
                                 </div>
                               ) : (
                                 <div>
-                                  <p>{comment.content}</p>
-                                  <p>작성자: {comment.author}</p>
-                                  <p>작성 시간: {new Date(comment.createdAt).toLocaleString()}</p>
+                                  <p>
+                                    <span class="author-name">{comment.author}</span>
+                                  </p>
+                                  <p>
+                                    <span class="content-name">{comment.content}</span>
+                                  </p>
+                                  <p>
+                                    <span class="date-name" >{new Date(comment.createdAt).toLocaleString()}</span>
+                                  </p>
+                                  <div className="comment-buttons">
                                   <button onClick={() => handleEditComment(post.id, comment.id, comment.content)}>수정</button>
                                   <button onClick={() => deleteComment(post.id, comment.id)}>삭제</button>
+                                  </div>
                                 </div>
                               )}
                             </div>
                           ))}
                         </div>
+                        <h4>Add Comment</h4>
                         <div className="comment-input">
                           <textarea
                             placeholder="댓글을 입력하세요."
