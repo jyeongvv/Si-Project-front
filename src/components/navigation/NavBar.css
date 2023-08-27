@@ -39,7 +39,7 @@ body {
   }
   
   #primary_nav_wrap ul a {
-    display: block;
+    /* display: block; */
     color: #ffffff;
     text-decoration: none;
     font-weight: 700;
@@ -60,7 +60,7 @@ body {
   }
   
   #primary_nav_wrap ul li:hover {
-    background: #6192be;
+    background: #bccddd;
   }
   
   #primary_nav_wrap ul ul {
@@ -124,6 +124,15 @@ body {
   .user-info {
     display: flex;
     margin-right: 30px; /* 오른쪽 여백 조절 */
+  }
+
+  .user-info-image {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    background-image: url('https://img.icons8.com/?size=512&id=34670&format=png');
+    background-size: cover; /* 이미지를 영역에 맞게 조절 */
+    background-repeat: no-repeat;
   }
   
   .user-info-wrapper {

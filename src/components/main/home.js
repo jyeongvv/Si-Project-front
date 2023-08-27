@@ -7,7 +7,7 @@ import Info from '../footer/Info';
 
 const Home = () => {
     return (
-        <div>
+        <div className='home'>
             {/* <CockTitle/> */}
             <CockBanner/>
             {/* <UploadForm /> */}

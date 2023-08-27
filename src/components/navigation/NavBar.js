@@ -10,18 +10,18 @@ const NavBar = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const localToken = localStorage.getItem('token'); // 로컬 스토리지에서 토큰 가져오기
+    const localToken = localStorage.getItem('token');
 
     if (localToken) {
       try {
         const decoded = jwtDecode(localToken);
         setDecodedToken(decoded);
-        console.log('Decoded Token:', decoded); // 디코딩된 토큰 콘솔 출력
+        console.log('Decoded Token:', decoded);
       } catch (error) {
         console.error('Error decoding token:', error);
       }
     }
-  }, [location.pathname]); // location.pathname에 변경이 있을 때마다 실행
+  }, [location.pathname]);
 
   return (
     <div className="nav-bg-container">
@@ -30,7 +30,7 @@ const NavBar = () => {
           <ul>
             <li>
               <Link to="/">
-                <img src={homeIconImage} alt="Home" style={{ width: '60px', height: '60px', color: '#7BA0E2' }} />
+                <img src={homeIconImage} alt="Home" style={{ width: '45px', height: '45px', color: '#7BA0E2' }} />
               </Link>
             </li>
             <li><Link to="/cocktailsearch">Search</Link></li>
@@ -41,6 +41,7 @@ const NavBar = () => {
         <div className="user-info">
           {decodedToken && decodedToken.nickname && (
             <div className="user-info-wrapper">
+              <div className="user-info-image"></div> {/* 이미지 표시 */}
               <div className="user-id">{`${decodedToken.nickname}`}</div>
             </div>
           )}

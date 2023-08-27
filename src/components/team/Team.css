@@ -1,12 +1,13 @@
-body {
-    font-family: tahoma;
-    height: 100vh;
-    background: linear-gradient(rgb(153, 198, 234), beige);  margin: 0;
-    background-size: cover;
-    background-position: center;
-    /* display: flex; */
-    align-items: center;
-  }
+.our-team-body {
+  font-family: tahoma;
+  height: 100vh;
+  background: linear-gradient(rgb(153, 198, 234), beige);
+  margin: 0;
+  background-size: cover;
+  background-position: center;
+  /* display: flex; */
+  align-items: center;
+}
   
   .row {
     display: flex; /* 가로로 나열되도록 변경 */

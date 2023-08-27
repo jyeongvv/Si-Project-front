@@ -1,8 +1,9 @@
 /* Reset default margin and padding */
-body, html {
+.home body, html {
   margin: 0;
   padding: 0;
   height: 100%;
+  background: linear-gradient(rgb(153, 198, 234), beige);
 }
 
 .wrapper {

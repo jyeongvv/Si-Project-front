@@ -126,6 +126,14 @@
   margin-bottom: 10px;
 }
 
+.board-expanded-form {
+  margin-top: 20px;
+}
+
+.board-expanded-form h3 {
+  margin-bottom: 10px; /* 원하는 간격으로 조절 */
+}
+
 .board-expanded-form textarea {
   background-color: #ffffff;
   width: 98%;
@@ -184,6 +192,7 @@
   border-radius: 10px;
   font-size: 14px;
   font-weight: bold;
+  text-decoration: none;
 }
 
 .comment-input button:hover {
@@ -192,7 +201,7 @@
 
 .post-buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   padding-top: 10px;
 }
@@ -208,6 +217,7 @@
   font-weight: bold;
   margin-right: 5px;
   text-decoration: none;
+  justify-content: flex-end;
 }
 
 .post-buttons button:hover {

@@ -1,0 +1,235 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@300;400;700&display=swap');
+
+.r-title{
+    margin-top: var(--rTitleMarginTop, 0) !important;
+    margin-bottom: var(--rTitleMarginBottom, 0) !important;
+  }
+  
+  /* 
+  helper to hide elements that are available only for screen readers. 
+  */
+  
+  .screen-reader{
+  width: var(--screenReaderWidth, 1px) !important;
+  height: var(--screenReaderHeight, 1px) !important;
+  padding: var(--screenReaderPadding, 0) !important;
+  border: var(--screenReaderBorder, none) !important;
+  
+  position: var(--screenReaderPosition, absolute) !important;
+  clip: var(--screenReaderClip, rect(1px, 1px, 1px, 1px)) !important;
+  overflow: var(--screenReaderOverflow, hidden) !important;
+  }
+  
+  /*
+  =====
+  POPUP
+  =====
+  */
+  
+  /*
+  1. Creating the top and bottom gaps for the modal so that content doesn't touches window's edges
+  */
+  
+  .modal:not(:target){
+  display: none;
+  }
+  
+  .modal:target{
+  width: 100%;
+  height: 100vh;
+  
+  display: flex;
+  
+  position: fixed;
+  top: 0;
+  right: 0;  
+  }
+  
+  .modal::before{
+  content: "";
+  box-sizing: border-box;
+  width: 100%;
+  background-color: #fff;
+  
+  position: fixed;
+  left: 0;
+  top: 50%;
+  }
+  
+  .modal::after{
+  content: "";
+  width: 0;
+  height: 2px;
+  background-color: #f0f0f0;
+  
+  position: absolute;
+  top: 50%;
+  left: 0;
+  margin-top: -1px;
+  }
+  
+  .modal__container {
+    box-sizing: border-box;
+    padding: 10% 0%; /* 수정된 부분: 패딩 값을 조정 */
+    max-width: 1200px; /* 수정된 부분: 팝업의 최대 너비를 조정 */
+    margin: auto;
+    overflow: auto;
+
+    overscroll-behavior: contain;
+      /* height: 90vh;  */
+      width: 1000px;
+
+  }
+  
+
+  .modal__text {
+    margin-bottom: 100px;
+    line-height: 40px; /* 텍스트 줄 사이 간격을 조정 (예: 1.5) */
+    text-align: left; /* 왼쪽 정렬 추가 */
+    font-family: 'Nanum Gothic', sans-serif; /* 나눔 고딕 폰트 지정 */
+
+      
+  }
+   
+  .modal__title{
+  --rTitleMarginBottom: 1.5rem;
+  font-size: 1.5rem;
+  }
+  
+  .modal__close{
+  width: 2rem;
+  height: 2rem;
+  
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMDAwMDAwIiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSIyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4gICAgPHBhdGggZD0iTTE5IDYuNDFMMTcuNTkgNSAxMiAxMC41OSA2LjQxIDUgNSA2LjQxIDEwLjU5IDEyIDUgMTcuNTkgNi40MSAxOSAxMiAxMy40MSAxNy41OSAxOSAxOSAxNy41OSAxMy40MSAxMnoiLz4gICAgPHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSIvPjwvc3ZnPg==);
+  }
+  
+  /*
+  animation
+  */
+  
+  .modal::before{
+  will-change: height, top;
+  animation: open-animation .6s cubic-bezier(0.83, 0.04, 0, 1.16) .65s both;
+  }
+  
+  .modal::after{
+  will-change: width, opacity;
+  animation: line-animation .6s cubic-bezier(0.83, 0.04, 0, 1.16) both;
+  }
+  .modal__content {
+    width: 100%; /* 원하는 가로 너비 값으로 조정 */
+    margin: 0 auto; /* 가운데 정렬을 위해 auto 마진 사용 */
+  }
+  
+  @keyframes line-animation{
+  
+  0%{
+    width: 0;
+    opacity: 1;
+  }
+  
+  99%{
+    width: 100%;
+    opacity: 1;
+  }
+  
+  100%{
+    width: 100%;
+    opacity: 0;
+  }  
+  }
+  
+  @keyframes open-animation{
+  
+  0%{
+    height: 0;
+    top: 50%;
+  }
+  
+  100%{
+    height: 90vh;
+    top: 0;
+  }
+  }
+  
+  .modal__container{
+  animation: fade .5s ease-out 1.3s both;
+  }
+  
+  @keyframes fade{
+  
+  0%{
+    opacity: 0;
+  }
+  
+  100%{
+    opacity: 1;
+  }
+  }
+  
+  /*
+  =====
+  DEMO
+  =====
+  */
+  
+  .modal-page body{
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Open Sans, Ubuntu, Fira Sans, Helvetica Neue, sans-serif;
+  font-size: 1rem;
+  color: #222;
+  background: linear-gradient(rgb(153, 198, 234), beige);  margin: 0;
+  margin: 0;
+  }
+  
+  .modal-page p{
+  margin: 100px;
+  line-height: 1.5;
+  }
+  
+  .modal-page p:nth-child(n+2){
+  margin-top: 2rem;
+  }
+  
+  .open-modal {
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    padding: .75rem 1.25rem;
+    font-size: 20px;
+    border: 4px solid; /* 테두리의 선 굵기를 조정 */
+    border-radius: 50%; /* 원형 모양을 위한 border-radius 속성 */
+    display: inline-block; /* 인라인 블록 요소로 변경하여 가로 크기가 컨텐츠에 맞게 조절되도록 함 */
+    line-height: 1; /* 텍스트 수직 가운데 정렬을 위해 line-height 조정 */
+  }
+  
+  
+  .modal-page {
+  /* min-height: 100vh; */
+  display: flex;
+  }
+  
+  .modal-page__container{
+  max-width: 1200px;
+  padding-left: .75rem;
+  padding-right: .75rem;  
+  margin: auto;
+  }
+  .modal__close-button {
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  .modal__content {
+    text-align: center; /* 내용을 가운데 정렬 */
+  }
