@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axiosInstance from "../../../api/axiosInstance";
 import "./Board.css";
 
-const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addPost, updatePost, deletePost, searchPosts }) => {
+const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addPost, updatePost, deletePost, searchPosts,  }) => {
   const [newPost, setNewPost] = useState({ title: "", content: "" });
   const [editPost, setEditPost] = useState(null);
   const [showForm, setShowForm] = useState(false);

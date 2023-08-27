@@ -50,7 +50,7 @@
 .image-upload-label {
   display: inline-block;
   padding: 10px 15px;
-  background-color: #6AAF5F;
+  background-color: #d4b98e;
   color: white;
   cursor: pointer;
   border-radius: 5px;
@@ -108,7 +108,7 @@
   justify-content: center;
   width: 200px;
   height: 200px;
-  border: 2px dashed #6AAF5F;
+  border: 2px dashed #d4b98e;
   border-radius: 5px;
   cursor: pointer;
   background-image: url('https://img.icons8.com/?size=512&id=wTPklC56KJRN&format=png');

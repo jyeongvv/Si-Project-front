@@ -8,7 +8,7 @@
   background: rgba(189, 189, 189, 0.912);
   transition: opacity 200ms;
   visibility: hidden;
-  opacity: 0;
+  opacity: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,7 +51,7 @@
   width: 70px;
   height: 70px;
   top: 20px;
-  right: 20px;
+  left: 20px;
   opacity: 0.8;
   transition: all 200ms;
   font-size: 40px;
@@ -59,6 +59,7 @@
   text-decoration: none;
   color: #666;
   cursor: pointer;
+  justify-content: center;
 }
 
 .popup-close:hover {
@@ -68,7 +69,7 @@
 .popup-content {
   height: 500px;
   overflow: auto;
-  background-color: aliceblue;
+  background-color: #f8f5ee;
   align-content: center;
   justify-content: center;
 }
@@ -111,22 +112,23 @@
 }
 
 .popup-content button {
-  background-color: #7BA0E2;
+  background-color: #e1cfaa;
   color: #fff;
   border: none;
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
   transition: background-color 0.2s ease-in-out;
 }
 
 .popup-content button:hover {
-  background-color: #91b1e7;
+  background-color: #f3ead7;
 }
 
 /* 추가한 스타일 */
 .popup-button {
-  background-color: #7BA0E2;
+  background-color: #d3c099;
   color: #fff;
   cursor: pointer;
   border: none;
@@ -134,10 +136,11 @@
   border-radius: 5px;
   font-size: 16px;
   font-weight: bold;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
 .popup-button:hover {
-  background-color: #7BA0E2;
+  background-color: #e4ded3;
 }
 
 .popup-submit-button {

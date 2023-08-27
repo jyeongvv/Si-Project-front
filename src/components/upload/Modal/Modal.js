@@ -22,26 +22,26 @@ function Modal() {
 
   return (
     <div className='modal-page'>
-      <div className="modal-page-1">
-        <div className="modal-page__container">
-          <a href="#modal-article" className="open-modal" onClick={openModal}>
+      <div className="page">
+        <div className="page__container">
+          <a href="#popup-article" className="open-popup" onClick={openModal}>
             ?
           </a>
         </div>
       </div>
       {isModalOpen && (
         <div
-          id="modal-article"
-          className="modal"
+          id="popup-article"
+          className="popup"
           onClick={handleModalClick}
         >
-          <div className="modal__container">
-            <a href="#" className="modal__close" onClick={closeModal}>
+          <div className="popup__container">
+            <a href="#" className="popup__close" onClick={closeModal}>
               <span className="screen-reader">close</span>
             </a>
-            <div className="modal__content" onClick={handleContentClick}>
-              <h1 className="modal__title r-title">ChalCock Service Manual</h1>
-              <p className="modal__text">
+            <div className="popup__content" onClick={handleContentClick}>
+              <h1 className="popup__title r-title">ChalCock Service Manual</h1>
+              <p className="popup__text">
                 1. 가지고 있는 술의 사진을 칵테일 모양의 Dropzone을 클릭해 업로드 합니다.
                 <br />
                 2. 아래 버튼을 클릭해 가지고 있는 술로 만들 수 있는 칵테일을 분석해 올때까지 기다립니다.
@@ -50,7 +50,7 @@ function Modal() {
               </p>
             </div>
             {/* 닫기 버튼을 맨 아래로 이동시킵니다 */}
-            <button className="modal__close-button" onClick={closeModal}>
+            <button className="popup__close-button" onClick={closeModal}>
               Close
             </button>
           </div>

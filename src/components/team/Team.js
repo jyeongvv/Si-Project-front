@@ -5,7 +5,7 @@ import { faGoogle, faGithub } from '@fortawesome/free-brands-svg-icons';
 
 const TeamMember = ({ name, title, imageUrl, githubUsername, googleEmail }) => (
   <div className="col-12 col-sm-6 col-md-4 col-lg-3">
-    <div className="our-team our-team-body">
+    <div className="our-team">
       <div className="picture">
         <img className="img-fluid" src={imageUrl} alt={name} />
       </div>
