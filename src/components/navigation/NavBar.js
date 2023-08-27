@@ -3,25 +3,25 @@ import './NavBar.css';
 import { Link, useLocation } from 'react-router-dom';
 import AccountMenu from '../menu/Menu';
 import jwtDecode from 'jwt-decode';
-import homeIconImage from '../../img/KakaoTalk_Photo_2023-08-25-15-19-42.png';
+import homeIconImage from '../../img/KakaoTalk_Image_2023-08-27-23-38-29.png';
 
 const NavBar = () => {
   const [decodedToken, setDecodedToken] = useState(null);
   const location = useLocation();
 
   useEffect(() => {
-    const localToken = localStorage.getItem('token'); // 로컬 스토리지에서 토큰 가져오기
+    const localToken = localStorage.getItem('token');
 
     if (localToken) {
       try {
         const decoded = jwtDecode(localToken);
         setDecodedToken(decoded);
-        console.log('Decoded Token:', decoded); // 디코딩된 토큰 콘솔 출력
+        console.log('Decoded Token:', decoded);
       } catch (error) {
         console.error('Error decoding token:', error);
       }
     }
-  }, [location.pathname]); // location.pathname에 변경이 있을 때마다 실행
+  }, [location.pathname]);
 
   return (
     <div className="nav-bg-container">
@@ -30,7 +30,7 @@ const NavBar = () => {
           <ul>
             <li>
               <Link to="/">
-                <img src={homeIconImage} alt="Home" style={{ width: '60px', height: '60px', color: '#7BA0E2' }} />
+                <img src={homeIconImage} alt="Home" style={{ width: '40px'}} />
               </Link>
             </li>
             <li><Link to="/cocktailsearch">Search</Link></li>
@@ -41,6 +41,7 @@ const NavBar = () => {
         <div className="user-info">
           {decodedToken && decodedToken.nickname && (
             <div className="user-info-wrapper">
+              <div className="user-info-image"></div> {/* 이미지 표시 */}
               <div className="user-id">{`${decodedToken.nickname}`}</div>
             </div>
           )}

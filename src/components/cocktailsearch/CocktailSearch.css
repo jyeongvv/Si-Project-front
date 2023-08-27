@@ -335,7 +335,7 @@ table {
 	margin: 8px 0;
 	box-sizing: border-box;
 	border: none;
-	border-bottom: 2px solid rgb(98, 105, 148);
+	border-bottom: 3px solid #ac9e81;
   }
   
   input[type="button"] {

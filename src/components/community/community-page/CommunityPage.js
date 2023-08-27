@@ -5,6 +5,7 @@ import Board from "../board/Board";
 import Pagination from "../pagination/Pagination";
 import Info from "../../footer/Info";
 import WriteFormPopup from "../board/popup/Popup";
+import './CommunityPage.css';
 
 
 const CommunityPage = () => {
@@ -16,6 +17,7 @@ const CommunityPage = () => {
   const [searchOption, setSearchOption] = useState('all');
   const auth = useSelector(state => state.auth);
   // const [showWriteForm, setShowWriteForm] = useState(false); 
+  const [postToEdit, setPostToEdit] = useState(null);
 
   const handleSearch = () => {
     const filtered = posts.filter(post => {
@@ -59,6 +61,11 @@ const CommunityPage = () => {
     } catch (error) {
       console.error("Error fetching posts:", error);
     }
+  };
+
+  const handleEdit = (post) => {
+    setPostToEdit(post);
+    // Open the edit popup here
   };
   
 
@@ -221,13 +228,13 @@ const CommunityPage = () => {
 
 
   return (
-    <div className="search-community" style={{ backgroundColor: '#eeeeee'}}>
+    <div className="search-community" style={{ backgroundColor: '#f4f4f4'}}>
       <br />
       <br />
       <br />
       <br />
       <br />
-      <select
+      <select className="search-option"
         value={searchOption}
         onChange={e => setSearchOption(e.target.value)}
       >
@@ -236,14 +243,14 @@ const CommunityPage = () => {
         <option value="author">작성자</option>
         <option value="content">내용</option>
       </select>
-      <input
+      <input className="board-search"
         type="text"
         placeholder="검색어 입력..."
         value={searchTerm}
         onChange={e => setSearchTerm(e.target.value)}
       />
-      <button onClick={handleSearch}>검색</button>
-      <WriteFormPopup addPost={addPost} /> 
+      <button className="search-button" onClick={handleSearch}>검색</button>
+      <WriteFormPopup addPost={addPost} updatePost={updatePost} postToEdit={postToEdit}/> 
       <Board
         posts={currentPosts}
         setPosts={setPosts}
@@ -254,6 +261,7 @@ const CommunityPage = () => {
         updatePost={updatePost}
         deletePost={deletePost}
         searchPosts={handleSearch} // 추가: 검색 함수 전달
+        handleEdit={handleEdit} 
       />
       <br />
       <br />

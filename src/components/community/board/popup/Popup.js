@@ -49,7 +49,7 @@ function WriteFormPopup({ addPost }) {
       <div id="wrapper">
         <p>
           <button className="board-add-button" onClick={openPopup}>
-            Open Write Form
+            글 작성
           </button>
         </p>
       </div>
@@ -57,7 +57,7 @@ function WriteFormPopup({ addPost }) {
       {isOpen && (
         <div className={`custom-overlay visible`}>
           <div className="board-modal-content">
-            <span className="modal-close" onClick={closePopup}>
+            <span className="popup-close" onClick={closePopup}>
               &times;
             </span>
             <div className="popup-content board-form">
@@ -75,7 +75,7 @@ function WriteFormPopup({ addPost }) {
                   value={newPost.content}
                   onChange={handleInputChange}
                 ></textarea>
-                <button className="board-add-button" type="submit">Submit</button>
+                <button className="popup-button" type="submit">Submit</button>
               </form>
             </div>
           </div>
