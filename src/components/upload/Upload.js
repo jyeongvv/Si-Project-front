@@ -5,6 +5,7 @@ import './Upload.css';
 import Cocktail from './CockLoad'; // Cocktail 컴포넌트를 임포트합니다.
 import Product from './Product'; // Product 컴포넌트를 임포트합니다.
 import Modal from './Modal/Modal'; // Modal 컴포넌트를 임포트합니다.
+import Animation from './Animation/Animation'
 
 const UploadForm = () => {
   const [textData, setTextData] = useState(Array(1).fill(''));
@@ -94,11 +95,11 @@ const UploadForm = () => {
         <div className="loading-overlay">
           <Cocktail />
         </div>
-      )}
+      )}         
+       <Modal />
       {/* <h2>Text Input</h2> */}
-      <div className="text-input-container">
+      {/* <div className="text-input-container">
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Modal /> {/* 모달 버튼 추가 */}
           {textData.map((text, index) => (
             <div key={index} className="text-input-wrapper">
               <input
@@ -111,7 +112,7 @@ const UploadForm = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
       <div className="image-upload-container">
         {pictureData.map((picture, index) => (
           <div key={`picture${index}`} className="image-upload-wrapper">
@@ -138,6 +139,8 @@ const UploadForm = () => {
       </div>
       <button onClick={handleSubmit} className="submit-button">
       </button>
+      <Animation />
+
       {responseData.length > 0 && (
         <div>
           {/* <h2>Response Data</h2> */}

@@ -6,6 +6,7 @@
   width: 75%;
   text-align: center;
   padding-bottom: 3em;
+  max-height: 400px; /* 스크롤을 생성하도록 설정 */
   overflow-y: auto; /* 내용이 넘칠 경우 스크롤 생성 */
   justify-content: center;
 }

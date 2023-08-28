@@ -18,7 +18,7 @@ const CustomPagination = ({ postsPerPage, totalPosts, currentPage, paginate }) =
   });
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', marginRight: '20px' }}>
       <ThemeProvider theme={theme}>
         <Pagination
           count={totalPages}

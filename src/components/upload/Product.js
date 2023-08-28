@@ -12,6 +12,16 @@ const Product = ({ responseData }) => {
     setActiveIndex(0); // 페이지가 변경될 때 마다 첫 번째 이미지로 activeIndex를 초기화합니다.
   }, [currentPage]);
 
+  useEffect(() => {
+    setActiveIndex(0); // 새로운 응답 데이터가 들어올 때마다 0번 인덱스의 product를 보여줍니다.
+    setCurrentPage(1); // 페이지를 첫 페이지로 초기화합니다.
+  }, [responseData]);
+
+  // 새로운 응답 데이터가 들어올 때마다 페이지를 1페이지로 설정합니다.
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [responseData]);
+
   const handleImageItemClick = (index) => {
     setActiveIndex(index);
   };
@@ -46,13 +56,13 @@ const Product = ({ responseData }) => {
                 </div>
               </div>
               <div className="column-xs-12 column-md-5">
-                <h1 className="nps-h1">{visibleImages[activeIndex]?.cocktailKorean}</h1>
-                <h2 className="tangerine-h2">{visibleImages[activeIndex]?.cocktailEnglish}</h2>
+                <h1 className="nps-h1">{visibleImages[activeIndex]?.koreanCocktailName}</h1>
+                <h2 className="tangerine-h2">{visibleImages[activeIndex]?.englishCocktailName}</h2>
                 <div className="description">
                   <div className="info-container">
                     <div>
                       <h2 className="nps-h2">베이스 술</h2>
-                      <p className="nps-p">{visibleImages[activeIndex]?.ingredientType}</p>
+                      <p className="nps-p">{visibleImages[activeIndex]?.koreanIngredient}</p>
                     </div>
                     <div>
                       <h2 className="nps-h2">인식 결과</h2>
@@ -91,7 +101,7 @@ const Product = ({ responseData }) => {
       <footer>
         <div className="grid">
           <div className="column-xs-12">
-          <p className="nps-p" >추천 칵테일은 총 : {responseData.length}개!</p> {/* 추가된 부분 */}
+            <p className="nps-p">추천 칵테일은 총 : {responseData.length}개!</p>
             <ul className="image-list">
               {visibleImages.map((row, index) => (
                 <li key={startIndex + index} className="image-item">
