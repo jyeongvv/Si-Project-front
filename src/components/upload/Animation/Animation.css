@@ -1,0 +1,111 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  .animation-marquee {
+    display: flex;
+    overflow: hidden;
+    user-select: none;
+    gap: 30px;
+    position: relative;
+    align-items: center;
+    justify-content: space-around;
+  }
+  
+  .animation-marquee-group {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 30px;
+    min-width: 100%;
+    animation: animation-scroll 300s infinite linear;
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .animation-marquee-group {
+      animation-play-state: paused;
+    }
+  }
+  
+  .animation-marquee-group .animation-card {
+    width: 300px;
+    height: 300px;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border: none; /* 테두리 제거 */
+    border-radius: 30px; /* 둥근 사각형 형태 */
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: transparent; /* 배경 색상 투명으로 설정 */
+  }
+  
+  .animation-marquee-group .animation-card-image {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    border-radius: 30px; /* 둥근 사각형 형태 */
+  }
+  
+  .animation-marquee-group .animation-card .animation-overlay {
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .animation-marquee-group .animation-card .animation-cardh4 {
+    font-size: 30px;
+    margin: 0;
+    padding: 0;
+    border-radius: 8px;
+    padding: 5px 10px;
+    -webkit-text-stroke: 0.01px black;
+    color: white;
+    text-shadow:
+      2px 2px 0 #000,
+      -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+      1px 1px 0 #000;
+  }
+  
+  .animation-marquee-group .animation-card .animation-cardp {
+    font-size: 30px;
+    margin: 0;
+    padding: 0;
+    border-radius: 8px;
+    padding: 5px 10px;
+    margin-top: 150px;
+    -webkit-text-stroke: 0.01px black;
+    color: white;
+    text-shadow:
+      2px 2px 0 #000,
+      -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+      1px 1px 0 #000;
+  }
+  
+  @keyframes animation-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - 10px));
+    }
+  }
+  

@@ -125,6 +125,20 @@ const Join = () => {
         />
         <label htmlFor="password">비밀번호</label>
       </div>
+      <div className="join-input-container">
+        <input
+          id="confirm-password"
+          type="password"
+          value={confirmPassword}
+          onChange={(e) => {
+            setConfirmPassword(e.target.value);
+            setPasswordMatchError(password !== e.target.value);
+          }}
+          required
+        />
+        <label htmlFor="confirm-password">비밀번호 확인</label>
+        {passwordMatchError && <p className="error-message">비밀번호와 비밀번호 확인 입력값이 다릅니다.</p>}
+      </div>
 
       <div className="join-input-container double-input">
         <div className="double-input-inner">

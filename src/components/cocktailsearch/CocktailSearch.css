@@ -17,17 +17,23 @@ body {
 }
 
 .cocktailsearch-container {
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
-  flex-wrap: wrap;
+  margin-top: 5rem;
+  flex-wrap: wrap; /* 여러 줄로 나타낼 수 있게 wrap으로 설정 */
   justify-content: center;
   align-items: center;
+  width: 100%; /* 전체 너비를 차지하도록 설정 */
+  padding: 0 1em; /* 좌우 여백을 줄임 */
+
 }
 
 h1 {
   font-size: 2em;
   padding: 1em 0;
   font-weight: 600;
+  text-align: center; /* 가운데 정렬을 추가 */
+
 }
 
 input[type="text"] {
@@ -37,12 +43,12 @@ input[type="text"] {
   margin: 8px 0;
   box-sizing: border-box;
   border: none;
-  border-bottom: 2px solid rgb(135, 135, 135);
+  border-bottom: 2px solid black;
 }
 
 input[type="button"] {
   font-size: 1em;
-  background-color: rgb(98, 105, 148);
+  background-color: black;
   border: none;
   color: white;
   padding: 16px 32px;
@@ -98,8 +104,10 @@ input[type="button"] {
 }
 
 .flip-card-back {
-  background-color: rgb(98, 105, 148);
-  color: white;
+    background-image: url('https://cdn.pixabay.com/photo/2018/06/05/22/21/ice-cubes-3456598_1280.jpg');
+    background-size: cover; /* 배경 이미지 크기 조절 */
+    background-position: center center; /* 배경 이미지 가운데 정렬 */
+   color: white;
   transform: rotateY(180deg);
   display: flex;
   flex-direction: column;
@@ -126,13 +134,15 @@ table {
   flex-direction: row;
   align-items: center;
   justify-content: center; /* 추가 */
+  margin-top: em; /* 원하는 만큼 조절하여 "fancySearchContainer"를 위로 옮김 */
+
 
 }
 
 .fancySearchContainer input[type="button"] {
   border-left: 2px solid transparent;
   margin: 0;
-  background-color: rgb(98, 105, 148);
+  background-color: black;
   border: none;
   color: white;
   padding: 16px 32px;
@@ -166,10 +176,9 @@ table {
   }
 }
 
-/* secondary 버튼 스타일 */
 .btn__secondary {
-  width: 15rem;
-  height: 4rem;
+  width: 50px;
+  height: 50px;
   border-radius: 1rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   justify-self: center;
@@ -178,61 +187,36 @@ table {
   justify-content: center;
   transition: 0.3s ease;
   cursor: pointer;
-  margin: 1em 7em;
+  margin: 1em 1em;
   border: none;
   color: var(--greyDark);
   text-decoration: none;
-  background-color: white;
+  background-color: transparent; /* 배경을 투명색으로 설정 */
+  background-image: url('https://img.icons8.com/?size=512&id=132&format=png');
+  background-repeat: no-repeat; /* 이미지 반복 방지 */
+  background-size: 30px; /* 이미지 크기 조절 */
+  background-position: center center; /* 이미지 가운데 정렬 */
 }
+
+  
 .btn__secondary:hover {
-  color: var(--white);
-  background: var(--primary);
+  color: var(--primary);
+  background-color: transparent;
+  background-image: url('https://img.icons8.com/?size=512&id=12773&format=png'); /* 다른 이미지 URL로 변경 */
+  background-repeat: no-repeat;
+  background-size: 30px;
+  background-position: center center;
   box-shadow: inset 0.2rem 0.2rem 1rem var(--primary-light),
     inset -0.2rem -0.2rem 1rem var(--primary-dark),
     0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
 .btn__secondary:active {
   background: var(--primary);
   box-shadow: inset 0.2rem 0.2rem 1rem var(--primary-dark),
     inset -0.2rem -0.2rem 1rem var(--primary-light),
     0 4px 6px rgba(0, 0, 0, 0.1);
 }
-
-.btn__secondary {
-	width: 15rem;
-	height: 4rem;
-	border-radius: 1rem;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	justify-self: center;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	transition: 0.3s ease;
-	cursor: pointer;
-	margin: 1em 7em;
-	border: none;
-	color: var(--greyDark);
-	text-decoration: none;
-	background-color: white;
-  }
-  
-  /* secondary 버튼의 hover 스타일 */
-  .btn__secondary:hover {
-	color: var(--primary);
-	background: white;
-	box-shadow: inset 0.2rem 0.2rem 1rem var(--primary-light),
-	  inset -0.2rem -0.2rem 1rem var(--primary-dark),
-	  0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* secondary 버튼의 active 스타일 */
-  .btn__secondary:active {
-	background: var(--primary);
-	box-shadow: inset 0.2rem 0.2rem 1rem var(--primary-dark),
-	  inset -0.2rem -0.2rem 1rem var(--primary-light),
-	  0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
   
 .fancySearchContainer {
 	display: flex;
@@ -241,22 +225,24 @@ table {
   }
   
   .fancySearchContainer input {
-	border-bottom: 2px solid rgb(94, 129, 178);
-	padding: 16px 32px;
+	border-bottom: 2px solid black;
+	padding: 16px 20px;
   }
   
   .fancySearchContainer select {
-	padding: 15px 10px;
-	background: rgb(94, 129, 178);
-	color: white;
-  font-size: 16px;
-  border-radius: 1rem;
+    padding: 16px 20px;
+    background: black;
+    color: white;
+    border-radius: 10px; /* 추가된 부분 */
+    text-align: center; /* 추가된 부분 */
+
   }
+  
   
   .fancySearchContainer input[type="button"] {
 	border-left: 2px solid transparent;
 	margin: 0;
-	background-color: rgb(94, 129, 178);
+	background-color: black;
 	border: none;
 	color: white;
 	padding: 16px 32px;
@@ -278,7 +264,7 @@ table {
   margin: 8px 0;
   box-sizing: border-box;
   border: none;
-  border-bottom: 2px solid rgb(98, 105, 148);
+  border-bottom: 2px solid black;
 }
 
 .react-autosuggest__suggestions-container {
@@ -286,10 +272,9 @@ table {
   top: 100%;
   width: 100%;
   max-width: 400px;
-  border: 2px solid rgb(98, 105, 148);
+  border: 2px solid black;
   background-color: white;
   z-index: 1;
-  border-radius: 1rem;
 }
 
 .react-autosuggest__suggestion {
@@ -298,7 +283,7 @@ table {
 }
 
 .react-autosuggest__suggestion--highlighted {
-  background-color: #f1f1f1;
+  background-color: #20e8c6;
   
 }
 /* Main Styles */
@@ -317,7 +302,7 @@ table {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	height: 100vh;
+	height: 102vh;
 	width: 100%; /* 전체 너비를 차지하도록 설정 */
   }
   
@@ -331,16 +316,16 @@ table {
   input[type="text"] {
 	width: 100%;
 	max-width: 400px;
-	padding: 12px 20px;
+	padding: 12px 100px;
 	margin: 8px 0;
 	box-sizing: border-box;
 	border: none;
-	border-bottom: 3px solid #ac9e81;
+	border-bottom: 2px solid black;
   }
   
   input[type="button"] {
 	font-size: 1em;
-	background-color: rgb(98, 105, 148);
+	background-color: black;
 	border: none;
 	color: white;
 	padding: 16px 32px;
@@ -350,18 +335,8 @@ table {
 	justify-items: center;
   }
   
-  /* .recipieCards {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: space-around;
-  }
-   */
-
-
-  
   .flip-card-front {
-	background-color: rgb(98, 105, 148);
+	background-color: black;
 	color: white;
 	display: flex;
 	flex-direction: column;
@@ -404,33 +379,7 @@ background-position: center center;
 	}
   }
   
-  .fancySearchContainer {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	input {
-	  border-bottom: solid 2px rgb(119, 118, 118);
-	  padding: 16px 32px;
-	}
-	select {
-	  padding: 16px 33px;
-	  background: black;
-	  color: white;
-	}
-	input[type="button"] {
-	  border-left: solid 2px transparent;
-	  margin: 0;
-	  background-color: black;
-	  border: none;
-	  color: white;
-	  padding: 16px 32px;
-	  text-decoration: none;
-	  cursor: pointer;
-	  justify-items: center;
-	  border-left: solid 2px white;
-	}
-  }
-  
+  */
   /* Autosuggest Styles */
   .react-autosuggest__container {
 	position: relative;
@@ -464,7 +413,7 @@ background-position: center center;
   }
   
   .react-autosuggest__suggestion--highlighted {
-	background-color: #f1f1f1;
+	background-color: #35d5ab;
   }
   
   /* Media Query for Small Screens */
@@ -477,14 +426,6 @@ background-position: center center;
 	}
   }
   
-  /* .recipieCards {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: space-around;
-	overflow-y: auto; 
-	max-height: 60vh; 
-  } */
   .recipieCards {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -492,13 +433,12 @@ background-position: center center;
 	gap: 20px;
 	overflow-y: auto;
 	max-height: 60vh;
+  margin-left: 0; /* 여백 제거 */
+
   }
-  
-  
-/* ... (기존 스타일들) */
 
 .highlight {
-	background-color: coral; /* 형광펜 색상 */
+	/* background-color: coral;  */
 	font-weight: bold; /* 강조된 텍스트를 두껍게 표시 */
 	color: white;
 
@@ -521,3 +461,81 @@ background-position: center center;
   .flip-card-front.highlight {
 	box-shadow: none; /* 하이라이트될 때 box-shadow 없애기 */
   }
+  .cockp {
+    /* display: flex; */
+    /* justify-content: flex-end;  */
+    text-align: center; /* 세로 가운데 정렬 */
+    margin-top: 100px;
+    font-size : 20px;
+    /* height: 100vh;  */
+  }
+  /* 모달 스타일 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 80%;
+  max-height: 80%;
+  overflow-y: auto;
+  text-align: center; /* 가운데 정렬을 추가 */
+  line-height: 50px; /* 텍스트 사이 간격을 추가 */
+  
+
+}
+
+.modal-close {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+modalh3{
+  font-size: 20px;
+}
+cardh2,
+.flip-card-back p
+  {
+
+-webkit-text-stroke: 0.01px black;
+font-size: 30px; /* 원하는 폰트 크기로 조절해보세요 */
+
+color: white;
+text-shadow:
+  2px  2px 0 #000,
+    -1px -1px 0 #000,  
+  1px -1px 0 #000,
+    -1px  1px 0 #000,
+  1px  1px 0 #000;
+    
+}
+.flip-card-back .ingredients 
+  {
+
+-webkit-text-stroke: 0.01px black;
+font-size: 20px; /* 원하는 폰트 크기로 조절해보세요 */
+
+color: white;
+text-shadow:
+  2px  2px 0 #000,
+    -1px -1px 0 #000,  
+  1px -1px 0 #000,
+    -1px  1px 0 #000,
+  1px  1px 0 #000;
+    
+}
