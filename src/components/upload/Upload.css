@@ -1,9 +1,12 @@
 .upload-form-container {
+  margin-top : 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 30px;
+  
 }
+
 
 .text-input-container {
   display: flex;
@@ -17,10 +20,11 @@
   padding: 8px;
   border: 2px solid #6AAF5F;
   border-radius: 5px;
-  min-width: 200px;
+  min-width: 300px;
 }
 
 .image-upload-container {
+  margin-top: 100px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -46,7 +50,7 @@
 .image-upload-label {
   display: inline-block;
   padding: 10px 15px;
-  background-color: #6AAF5F;
+  background-color: #d4b98e;
   color: white;
   cursor: pointer;
   border-radius: 5px;
@@ -58,19 +62,44 @@
 }
 
 .submit-button {
-  margin-top: 15px;
-  padding: 10px 20px;
-  background-color: #6AAF5F;
-  color: white;
+  margin-top: 20px;
+  padding: 20px 20px;
+  /* color: #8abce9; */
   border: none;
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  background-color: transparent;
+  background-image: url('https://img.icons8.com/?size=512&id=oZ1zFlxIGRV8&format=png');
+  background-size: cover;
+  background-repeat: no-repeat; /* 이미지 반복 제거 */
+  margin-bottom: 50px;
+
+}
+
+.submit-button::before {
+  content: "";
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  transition: opacity 0.3s ease;
 }
 
 .submit-button:hover {
-  background-color: #4d8f40;
+  /* background-color: #7ebaef; */
+  color: #8abce9;
+  background-image: url('https://img.icons8.com/?size=512&id=eZkcQrKqQCMg&format=png');
+}
+
+.submit-button:hover::before {
+  opacity: 0.8;
 }
 
 .dropzone {
@@ -78,16 +107,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 200px;
-  height: 200px;
-  border: 2px dashed #6AAF5F;
+  width: 250px;
+  height: 250px;
+  border: 2px dashed #d4b98e;
   border-radius: 5px;
   cursor: pointer;
+  background-image: url('https://img.icons8.com/?size=512&id=wTPklC56KJRN&format=png');
+  background-size : cover;
   transition: background-color 0.3s ease;
 }
 
 .dropzone:hover {
-  background-color: #f5f5f5;
+  /* background-color: #f5f5f5; */
+  background-image: url('https://img.icons8.com/?size=512&id=0ZKY2jHYYeMk&format=png');
+
 }
 
 .dropzone-text {
@@ -107,9 +140,19 @@
 .image-preview img {
   max-width: 100%;
   max-height: 100%;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .upload-form-container li::marker {
   content: none; /* 마커 숨김 */
 }
+/* ... */
+
+
+.dropzone img {
+  /* 이미지가 드롭존에 꽉 차도록 설정합니다. */
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: fill; /* 또는 "cover" 사용 가능 */
+}
+/* ... */

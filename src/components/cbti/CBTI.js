@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './CBTI.css';
-import Cockcard from './Cockcard'; // Cockcard 컴포넌트를 임포트합니다.
+import Cockcard from './Cockcard';
+import axios from 'axios';
 
 function CBTI() {
   const [slideIndex, setSlideIndex] = useState(0);
@@ -24,28 +25,32 @@ function CBTI() {
     }
   ];
 
-  useEffect(() => {
-    const fetchMatchingCocktails = async () => {
-      try {
-        if (selectedOptions.length === 3) {
-          const endpoint = 'http://localhost:8080/search';
-          const [taste, clevel, place] = selectedOptions;
+  const fetchMatchingCocktails = async () => {
+    try {
+      if (selectedOptions.length === 3) {
+        const endpoint = 'http://localhost:8080/cbti';
+        const [taste, level, place] = selectedOptions;
 
-          const response = await fetch(`${endpoint}?taste=${taste}&clevel=${clevel}&place=${place}`);
-          const data = await response.json();
-          if (data.length === 0) {
-            setNoMatchingCocktails(true);
-            setShowResult(true);
-          } else {
-            setMatchingCocktails(data);
-            setShowResult(true);
-          }
+        const response = await axios.post(endpoint, null, {
+          params: { level, taste, place },
+        });
+
+        const data = response.data;
+
+        if (data.length === 0) {
+          setNoMatchingCocktails(true);
+        } else {
+          setMatchingCocktails(data);
         }
-      } catch (error) {
-        console.error('Error fetching matching cocktails:', error);
+        setShowResult(true);
+        console.log('Response:', data);
       }
-    };
+    } catch (error) {
+      console.error('Error fetching matching cocktails:', error);
+    }
+  };
 
+  useEffect(() => {
     fetchMatchingCocktails();
   }, [selectedOptions]);
 
@@ -75,6 +80,8 @@ function CBTI() {
   return (
     <div>
       <div id="q-cont" style={{ left: left }}>
+        {/* {showResult ? null : <qconth2 style={{ textAlign: 'center', marginBottom: '1em' }}>당신의 CBTi를 찾아보세요</qconth2>} */}
+
         {slides.map((slide, index) => (
           <div
             key={index}
@@ -99,7 +106,7 @@ function CBTI() {
             <div className="question">선택하신 옵션입니다!</div>
             <div className="selected-options">
               {selectedOptions.map((option, index) => (
-                  <p key={index}>{option}</p>
+                <p key={index}>{option}</p>
               ))}
               <div className="re" onClick={reset}>
                 Reset
@@ -112,16 +119,16 @@ function CBTI() {
               </div>
             ) : (
               <div>
-                  <br/>
+                <br/>
                 <div className="question">당신의 CBTI에 맞는 칵테일입니다!</div>
                 <br/>
                 <div className="matching-cocktails">
                   <div className="card-grid">
-                      {matchingCocktails.map(cocktail => (
-                      <div key={cocktail.cnum}>
-                          <Cockcard cocktailName={cocktail.name} cnum={cocktail.cnum} /> {/* cnum 전달 */}
+                    {matchingCocktails.map(cocktail => (
+                      <div key={cocktail.id}>
+                        <Cockcard englishName={cocktail.englishName} image={cocktail.image} />
                       </div>
-                      ))}
+                    ))}
                   </div>
                 </div>
               </div>
@@ -129,8 +136,9 @@ function CBTI() {
           </div>
         )}
       </div>
-      {!showResult && <h1 style={{ textAlign: 'center', marginBottom: '200em' }}>당신의 CBTI(Cocktail MBTI)를 찾아보세요!</h1>}
+      {!showResult && <h1 style={{ textAlign: 'center', marginTop: '4rem' }}>당신의 CBTI(Cocktail MBTI)를 찾아보세요!</h1>}
     </div>
   );
-                      }  
+}
+
 export default CBTI;

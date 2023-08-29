@@ -1,0 +1,243 @@
+html {
+  height: 100%;
+}
+
+body {
+  position: relative;
+  margin: 0;
+  height: 100%;
+  /* background: linear-gradient(steelblue, beige); */
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+}
+
+.container {
+position: relative;
+margin: 10 auto;
+margin-top: 50px;      
+height: 90%;
+display: flex;
+justify-content: center;
+align-items: flex-end; /* 아래쪽 정렬 */
+}
+
+
+.table {
+  position: absolute;
+  background-color: rgb(223, 203, 182);
+  bottom: 10px;
+  height: 20px;
+  border-radius: 20%;
+  transform: translateY(50%); /* 칵테일 잔 위치 조절 */
+  overflow: visible;
+  z-index: 1;
+}
+
+/* 나머지 CSS 코드는 동일하게 유지 */
+
+.glassFoot {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 12px;
+  border-radius: 60% 60% 10% 10%;
+  background: linear-gradient(to left top, #eee, #dcd0d0); 
+}
+.glassBar {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 70px;
+  background: linear-gradient(to left top, #eee, #dcd0d0); 
+}
+.glassHead {
+  position: absolute;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 100px 100px 0 100px;
+  border-color: #dcd0d0 transparent #eee transparent;
+}
+
+.liquid {
+   position: absolute;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 50px 50px 0 50px;
+  border-color: #ff736f transparent #eee transparent;
+  animation-duration: 3s;
+  animation-name: changeBorderWidth;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.liquid2 {
+  position: absolute;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-color: #ff8480 transparent #eee transparent;
+  animation-duration: 3s;
+  animation-name: changeBorderWidth2;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+
+.strawContainer {
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+
+.straw {
+  position: absolute;
+  bottom: 90px;
+  right: 300%;
+  bottom: 100%;
+  width: 10px;
+  height: 150px;
+  transform: rotate(-45deg);
+  background: linear-gradient(to left top, #fbf6e4, #f9efc8);
+}
+
+.straw::before {
+    position: absolute;
+    width: 10px;
+    content: "";
+    height: 70px;
+    border-radius: 70% 70% 0% 0%;
+    transform: rotate(80deg);
+    background: linear-gradient(to left top, #fbf6e4, #f9efc8);
+    right: 30px;
+    top: -30px;
+}
+
+.ice {
+  position: absolute;
+  bottom: 350%;
+  right: 30%;
+  transform: rotate(30deg);
+  box-shadow: 5px 0px 49px 0px rgba(170, 169, 169, 0.3);
+  width: 40px;
+  height: 40px;
+  background-color: rgb(211, 252, 255);
+  opacity: 0.4;
+  border-radius: 30%;
+  animation-duration: 3s;
+  animation-name: changeRotateIce2;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.ice.ice2 {
+  left: 70%;
+  transform: rotate(10deg);
+}
+
+.ice.ice3 {
+  left: 0%;
+  bottom: 500%;
+  transform: rotate(-20deg);
+  animation-duration: 3s;
+  animation-name: changeRotateIce;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes changeBorderWidth {
+  from {
+     border-width: 70px 70px 0 70px;
+  }
+
+  to {
+     border-width: 30px 30px 0 30px;
+  }
+}
+
+@keyframes changeBorderWidth2 {
+  from {
+     border-width: 90px 90px 0 90px;
+  }
+
+  to {
+     border-width: 50px 50px 0 50px;
+  }
+}
+
+/* 체리 줄기 스타일 */
+.stem {
+width: 5px;
+height: 60px;
+background: brown;
+position: absolute;
+left: 230%;
+bottom: 100px;
+transform: translateX(-50%);
+z-index: 0;
+}
+
+/* 체리 스타일 */
+.cherry {
+width: 30px;
+height: 30px;
+background: red;
+border-radius: 50%;
+position: absolute;
+bottom: 100px;
+left: 230%;
+transform: translateX(-50%);
+z-index: 1;
+}
+
+/* 원 스타일 */
+.circle {
+width: 50px;
+height: 50px;
+background: #f67745;
+border-radius: 50%;
+bottom: 100px;
+position: relative;
+margin: 0 auto;
+z-index: 2;
+}
+
+
+@keyframes changeRotateIce {
+  from {
+     transform: rotate(-20deg);
+  }
+
+  to {
+     transform: rotate(-40deg);
+  }
+}
+
+@keyframes changeRotateIce2 {
+  from {
+     transform: rotate(-30deg);
+  }
+
+  to {
+     transform: rotate(30deg);
+  }
+}
+.additional-text{
+  text-align: center;
+  font-size : 30px;
+  margin-top: 15%;
+}

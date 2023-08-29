@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import axiosInstance from "../../../api/axiosInstance";
-import { postBoard } from "./module/postBoard";
-import { searchBoard } from "./module/searchBoard";
-import { updateBoard } from "./module/updateBoard";
-import { deleteBoard } from "./module/deleteBoard";
+import "./Board.css";
 
-const Board = ({ posts, setPosts, addComment, updateComment, deleteComment }) => {
+const Board = ({ posts, setPosts, addComment, updateComment, deleteComment, addPost, updatePost, deletePost, searchPosts,  }) => {
   const [newPost, setNewPost] = useState({ title: "", content: "" });
   const [editPost, setEditPost] = useState(null);
   const [showForm, setShowForm] = useState(false);
@@ -13,25 +10,18 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment }) =>
   const [commentText, setCommentText] = useState("");
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editingCommentText, setEditingCommentText] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const fetchPosts = async () => {
-    try {
-      const response = await axiosInstance.get("http://127.0.0.1:8080/board");
-      setPosts(response.data);
-    } catch (error) {
-      console.error("Error fetching posts:", error);
-    }
-  };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setNewPost({ ...newPost, [name]: value });
   };
 
+  // Board.js 파일 내부에 추가
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
     if (!localStorage.getItem('token')) {
       alert("로그인 후에 글 작성이 가능합니다.");
       return;
@@ -42,9 +32,37 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment }) =>
     const newPostWithDate = { ...newPost, date: formattedDate };
 
     if (editPost) {
-      updateBoard(editPost, newPostWithDate, setPosts);
+      try {
+        await axiosInstance.put(`http://127.0.0.1:8080/board/${editPost.id}`, {
+          author: newPostWithDate.author,
+          title: newPostWithDate.title,
+          content: newPostWithDate.content,
+          date: newPostWithDate.date,
+        });
+
+        const updatedPosts = posts.map((post) =>
+          post.id === editPost.id ? { ...editPost, ...newPostWithDate } : post
+        );
+        setPosts(updatedPosts);
+        setEditPost(null);
+      } catch (error) {
+        console.error("Error updating post:", error);
+      }
     } else {
-      postBoard(newPostWithDate, setPosts);
+      try {
+        
+        const response = await axiosInstance.post("http://127.0.0.1:8080/board", {
+          author: newPostWithDate.author,
+          title: newPostWithDate.title,
+          content: newPostWithDate.content,
+        });
+
+        if (response.data) {
+          setPosts([...posts, response.data]);
+        }
+      } catch (error) {
+        console.error("Error adding post:", error);
+      }
     }
 
     setNewPost({ title: "", content: "" });
@@ -58,7 +76,13 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment }) =>
   };
 
   const handleDelete = async (postId) => {
-    deleteBoard(postId, setPosts);
+    try {
+      await axiosInstance.delete(`http://127.0.0.1:8080/board/${postId}`);
+      const updatedPosts = posts.filter((post) => post.id !== postId);
+      setPosts(updatedPosts);
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
   };
 
   const togglePostContent = (postId) => {
@@ -81,11 +105,11 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment }) =>
     setEditingCommentText(commentContent);
   };
 
-  const handleCancel = () => {
-    setShowForm(false);
-    setEditPost(null);
-    setNewPost({ title: "", content: "" });
-  };
+  // const handleCancel = () => {
+  //   setShowForm(false);
+  //   setEditPost(null);
+  //   setNewPost({ title: "", content: "" });
+  // };
 
   const handleCommentEditChange = (event) => {
     setEditingCommentText(event.target.value);
@@ -115,7 +139,7 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment }) =>
         setEditingCommentId(null);
         setEditingCommentText("");
       } catch (error) {
-        console.error("댓글 수정 오류:", error);
+        console.error("Error updating comment:", error);
       }
     }
   };
@@ -125,20 +149,10 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment }) =>
     setEditingCommentText("");
   };
 
-  const [searchType, setSearchType] = useState("title");
-
-  const handleSearch = async () => {
-    if (searchQuery.trim() !== "") {
-      searchBoard(searchQuery, setPosts);
-    } else {
-      fetchPosts();
-    }
-  };
-
   return (
     <div className="board-container">
       <div className="board-write-form">
-        {!showForm && (
+        {/* {!showForm && (
           <button onClick={() => setShowForm(true)} className="board-add-button">
             글작성
           </button>
@@ -147,7 +161,7 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment }) =>
           <button onClick={handleCancel} className="board-cancel-button">
             취소
           </button>
-        )}
+        )} */}
       </div>
       {showForm && (
         <form className="board-form" onSubmit={handleSubmit}>
@@ -167,26 +181,12 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment }) =>
           <button type="submit">{editPost ? "수정" : "추가"}</button>
         </form>
       )}
-      <div className="board-search">
-        <select value={searchType} onChange={(e) => setSearchType(e.target.value)}>
-          <option value="title">제목</option>
-          <option value="author">작성자</option>
-          <option value="content">내용</option>
-        </select>
-        <input
-          type="text"
-          placeholder={`게시판 ${searchType} 검색`}
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <button onClick={handleSearch}>검색</button>
-      </div>
       <table className="board-table">
         <thead>
           <tr>
             <th>제목</th>
             <th>작성자</th>
-            <th>작성 일자</th>
+            <th>작성일</th>
           </tr>
         </thead>
         <tbody>
@@ -194,24 +194,33 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment }) =>
             <React.Fragment key={post.id}>
               <tr>
                 <td onClick={() => togglePostContent(post.id)}>
-                  {post.title}
+                <div className="post-title">
+                  <span>{post.title}</span>
+                  {post.comments.length > 0 && (
+                    <span className="comment-count">   {post.comments.length}</span>
+                  )}
+                </div>
                 </td>
                 <td>{post.author}</td>
-                <td>{new Date(post.createdAt).toLocaleDateString()}</td>
+                <td>{new Date(post.createdAt).toLocaleString()}</td>
               </tr>
               {expandedPostId === post.id && (
                 <tr>
                   <td colSpan={5}>
                     <div className="board-expanded-form">
-                      <h2>{post.title}</h2>
+                      <div className="post-section">
+                      <h3>{post.title}</h3>
                       <textarea readOnly>{post.content}</textarea>
                       <div>
                         <div className="post-buttons">
                           <button onClick={() => handleEdit(post)}>수정</button>
                           <button onClick={() => handleDelete(post.id)}>삭제</button>
+                          </div>
                         </div>
-                        <br></br>
-                        <h3>댓글</h3>
+                        <br />
+                        <br />
+                        <br />
+                        <h4>▪️ Comment</h4>
                         <div className="comments-section">
                           {post.comments.map((comment) => (
                             <div key={comment.id}>
@@ -227,16 +236,25 @@ const Board = ({ posts, setPosts, addComment, updateComment, deleteComment }) =>
                                 </div>
                               ) : (
                                 <div>
-                                  <p>{comment.content}</p>
-                                  <p>작성자: {comment.author}</p>
-                                  <p>작성 시간: {new Date(comment.createdAt).toLocaleString()}</p>
+                                  <p>
+                                    <span class="author-name">{comment.author}</span>
+                                  </p>
+                                  <p>
+                                    <span class="content-name">{comment.content}</span>
+                                  </p>
+                                  <p>
+                                    <span class="date-name" >{new Date(comment.createdAt).toLocaleString()}</span>
+                                  </p>
+                                  <div className="comment-buttons">
                                   <button onClick={() => handleEditComment(post.id, comment.id, comment.content)}>수정</button>
                                   <button onClick={() => deleteComment(post.id, comment.id)}>삭제</button>
+                                  </div>
                                 </div>
                               )}
                             </div>
                           ))}
                         </div>
+                        <h4>Add Comment</h4>
                         <div className="comment-input">
                           <textarea
                             placeholder="댓글을 입력하세요."

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Join.css';
 import axios from 'axios';
 
@@ -9,9 +9,13 @@ const Join = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [number, setNumber] = useState('');
-  const [email, setEmail] = useState(''); // Add email state
+  const [email, setEmail] = useState('');
   const [isUsernameChecked, setIsUsernameChecked] = useState(false);
   const [isNicknameChecked, setIsNicknameChecked] = useState(false);
+  const [passwordMatchError, setPasswordMatchError] = useState(false);
+
+
+  const navigate = useNavigate();
 
   const handleJoin = async () => {
     if (password !== confirmPassword) {
@@ -35,9 +39,10 @@ const Join = () => {
         nickname: nickname,
         password: password,
         number: number,
-        email: email, // Include email in the request
+        email: email,
       });
       alert("회원가입이 완료되었습니다.");
+      navigate('/login');
     } catch (error) {
       console.error('Error while joining:', error);
       alert("회원가입 중 오류가 발생했습니다.");
@@ -124,46 +129,51 @@ const Join = () => {
         />
         <label htmlFor="password">비밀번호</label>
       </div>
-
       <div className="join-input-container">
         <input
           id="confirm-password"
           type="password"
           value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
+          onChange={(e) => {
+            setConfirmPassword(e.target.value);
+            setPasswordMatchError(password !== e.target.value);
+          }}
           required
         />
         <label htmlFor="confirm-password">비밀번호 확인</label>
+        {passwordMatchError && <p className="error-message">비밀번호와 비밀번호 확인 입력값이 다릅니다.</p>}
       </div>
 
-      <div className="join-input-container">
-        <input
-          id="phone-number"
-          type="tel"
-          value={number}
-          onChange={(e) => setNumber(e.target.value)}
-          required
-        />
-        <label htmlFor="phone-number">전화번호</label>
-      </div>
-
-      <div className="join-input-container">
-        <input
-          id="email" // Add email input field
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <label htmlFor="email">이메일</label>
+      <div className="join-input-container double-input">
+        <div className="double-input-inner">
+          <input
+            id="number"
+            type="tel"
+            value={number}
+            onChange={(e) => setNumber(e.target.value)}
+            required
+          />
+          <label htmlFor="number">전화번호</label>
+          <p className="input-description">ex) 010-1234-5678</p>
+        </div>
+        <div className="double-input-inner">
+          <input
+            id="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <label htmlFor="email">이메일</label>
+        </div>
       </div>
 
       <button className="join-submit-button" onClick={handleJoin}>
         제출
       </button>
       <br />
-      <p>
-        이미 회원이신가요? <Link to="/login">로그인 페이지로 이동</Link>
+      <p className='login-link'>
+        이미 회원이신가요? <Link to="/login"> 로그인 페이지로 이동</Link>
       </p>
     </div>
   );

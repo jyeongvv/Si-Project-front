@@ -1,0 +1,54 @@
+/* CommunityPage.css */
+.search-community {
+    background-color: #f4f4f4;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    /* Add more styles as needed */
+  }
+  
+  .search-option {
+    /* Add styles for the select element */
+    padding: 8px;
+    font-size: 12px;
+    border: 1px solid #ac9e81;
+    border-radius: 10px;
+    margin-left: 30%;
+    margin-right: 10px;
+    background-color: #f9f5f5;
+    justify-content:  center;
+  }
+
+  .search-option option {
+    color:beige;
+  }
+
+  .search-option option:checked {
+    color: #ac9e81;
+  }
+  
+  .board-search {
+    /* Add styles for the input element */
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: rgb(254, 250, 240);
+    border-bottom: #ac9e81;
+    justify-content: center;
+  }
+  
+  .search-button {
+    /* Add styles for the search button */
+    padding: 8px 16px;
+    font-size: 14px;
+    background-color: #ac9e81;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-left: 1%;
+  }
+  
+  /* Add more styles as needed */
+  
