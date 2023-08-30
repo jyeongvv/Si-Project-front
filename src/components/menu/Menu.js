@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
@@ -10,30 +10,76 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import PersonIcon from '@mui/icons-material/Person';
-import Logout from '@mui/icons-material/Logout';
+import { Logout } from '@mui/icons-material';
 
 export default function AccountMenu() {
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event) => {
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login'); // 로그인 페이지로
+    handleMenuClose();
+    window.location.reload(); // 페이지 새로고침
+  };
+
+  const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+
+  const handleMenuClose = () => {
     setAnchorEl(null);
   };
+
+  const renderLoggedInItems = (
+    <>
+      <MenuItem onClick={handleMenuClose}>
+        <Avatar /> Profile
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <Avatar /> My account
+      </MenuItem>
+      <Divider />
+      <MenuItem onClick={handleLogout}>
+        <ListItemIcon>
+          <Logout fontSize="small" />
+        </ListItemIcon>
+        Logout
+      </MenuItem>
+    </>
+  );
+
+  const renderLoggedOutItems = (
+    <>
+      <MenuItem component={Link} to="/login" onClick={handleMenuClose}>
+        <ListItemIcon>
+          <PersonIcon fontSize="small" />
+        </ListItemIcon>
+        Login
+      </MenuItem>
+      <MenuItem component={Link} to="/join" onClick={handleMenuClose}>
+        <ListItemIcon>
+          <PersonAdd fontSize="small" />
+        </ListItemIcon>
+        Join
+      </MenuItem>
+    </>
+  );
+
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
         <Tooltip title="Account settings">
           <IconButton
-            onClick={handleClick}
+            onClick={handleMenuOpen}
             size="small"
             sx={{ ml: 2 }}
             aria-controls={open ? 'account-menu' : undefined}
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}></Avatar>
+            <Avatar sx={{ width: 40, height: 40 }}></Avatar>
           </IconButton>
         </Tooltip>
       </Box>
@@ -41,8 +87,8 @@ export default function AccountMenu() {
         anchorEl={anchorEl}
         id="account-menu"
         open={open}
-        onClose={handleClose}
-        onClick={handleClose}
+        onClose={handleMenuClose}
+        onClick={handleMenuClose}
         PaperProps={{
           elevation: 0,
           sx: {
@@ -72,32 +118,7 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleClose}>
-          <Avatar /> Profile
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Avatar /> My account
-        </MenuItem>
-        <Divider />
-        <MenuItem component={Link} to="/login" onClick={handleClose}>
-          <ListItemIcon>
-            <PersonIcon fontSize="small" />
-          </ListItemIcon>
-          Login
-        </MenuItem>
-        <MenuItem component={Link} to="/join" onClick={handleClose}>
-
-          <ListItemIcon>
-            <PersonAdd fontSize="small" />
-          </ListItemIcon>
-          Join
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
-          Logout
-        </MenuItem>
+        {localStorage.getItem('token') ? renderLoggedInItems : renderLoggedOutItems}
       </Menu>
     </React.Fragment>
   );

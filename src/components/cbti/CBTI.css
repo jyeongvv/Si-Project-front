@@ -1,0 +1,150 @@
+/* CBTI.css */
+@import url('//fonts.googleapis.com/css?family=Lato');
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+body {
+  /* background: linear-gradient(steelblue, beige); */
+  margin: 0;
+  overflow-x: hidden;
+  font-family: 'Lato', sans-serif;
+  background-attachment: fixed;
+  background-repeat: no-repeat; /* 배경 이미지 반복하지 않음 */
+  background-size: 100%; /* 배경 이미지를 화면에 가득 채움 */
+  /* text-align: center; */
+
+}
+
+#q-cont {
+  width: 400%;
+  height: 300px;
+  position: absolute;
+  top: 25%; /* 변경된 값 */
+  left: 0px;
+  transform: translateY(-150px);
+  transition: 0.5s 500ms;
+    /* text-align: center; */
+
+}
+
+.slide {
+  height: 200%;
+  width: 25%;
+  padding: 30px;
+  display: inline-block;
+  vertical-align: top;
+  /* border-left: solid 30px #ddd; */
+  /* border-right: solid 30px #ddd; */
+}
+
+.question {
+  width: 100%;
+  font-size: 2em;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 10px;
+  margin-top: 50px;
+  border-bottom: 2px solid #ccc; /* 댓글 사이에 선 추가 */
+  padding-bottom: 20px; /* 선과 댓글 간의 간격 설정 */
+}
+
+/* CBTI.css */
+/* 이전의 내용은 그대로 두세요 */
+
+.options {
+    width: 350px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* 가운데 정렬 */
+  }
+  
+  .op {
+    width: 45%;
+    margin: 5px; /* 각 옵션 사이의 간격을 설정합니다. */
+  }
+  
+  .op2 {
+    width: 100%;
+    margin: 5px; /* 각 옵션 사이의 간격을 설정합니다. */
+  }
+  
+  /* 이후의 내용은 그대로 두세요 */
+  
+
+.op, .re {
+  margin-top: 20px;
+  display: inline-block;
+  line-height: 3em;
+  text-align: center;
+  background: #6AAF5F;
+  border-radius: 20px;
+  font-weight: 450;
+  color: #fff;
+  transition: 0.2s;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+
+}
+
+.op {
+    width: 45%;
+    margin: 5px; /* 각 옵션 사이의 간격을 설정합니다. */
+  }
+  
+
+
+.re {
+  font-size: 0.5em;
+  width: 200px;
+  display: block;
+  margin: 10px auto;
+}
+
+.op2 {
+  float: right;
+}
+
+#slide4 {
+  text-align: center;
+  padding-top: 30px;
+  font-size: 3em;
+}
+
+.op.button_selected,
+.op2.button_selected {
+  background-color: #d90;
+}
+
+.selected-options {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+}
+  
+.selected-option {
+    display: inline-block;
+    margin: 5px;
+    padding: 5px 10px;
+    background-color: #5a6;
+    color: #fff;
+    border-radius: 20px;
+}
+.matching-cocktails {
+    text-align: center; /* 가운데 정렬 */
+  }
+
+.qconth2 {
+    text-align: center;
+    margin-top: 20em; /* 원하는 만큼 조절 */
+    font-size: 1.5em; /* 원하는 크기로 조절 */
+    margin-bottom: 20em; /* 원하는 만큼 조절 */
+    top: 50%; /* 변경된 값 */
+
+
+  }
+/* .selectp{
+  
+} */

@@ -56,12 +56,12 @@
 .myapp-login-box .user-box input:valid ~ label {
   top: -20px;
   font-size: 12px;
-  color: #6AAF5F;
+  color: #82745e;
 }
 
-p {
+/* p {
   color: #433d3d;
-}
+} */
 
 .myapp-login-box form button,
 .login-home-button {
@@ -70,7 +70,7 @@ p {
   display: block;
   width: 100%;
   padding: 10px 20px;
-  color: #6AAF5F;
+  color: #82745e;
   font-size: 16px;
   text-decoration: none;
   text-transform: uppercase;
@@ -82,7 +82,7 @@ p {
 
 .myapp-login-box form button:hover,
 .login-home-button:hover {
-  background: #6AAF5F;
+  background: #beac92;
   color: #ffffff;
   border-radius: 5px;
   box-shadow: none;

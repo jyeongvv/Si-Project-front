@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Join.css';
 import axios from 'axios';
 
 const Join = () => {
-  const [userid, setUserid] = useState('');
+  const [username, setUsername] = useState('');
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [number, setNumber] = useState('');
-  const [isUseridChecked, setIsUseridChecked] = useState(false);
+  const [email, setEmail] = useState('');
+  const [isUsernameChecked, setIsUsernameChecked] = useState(false);
   const [isNicknameChecked, setIsNicknameChecked] = useState(false);
+  const [passwordMatchError, setPasswordMatchError] = useState(false);
+
+
+  const navigate = useNavigate();
 
   const handleJoin = async () => {
     if (password !== confirmPassword) {
@@ -18,7 +23,7 @@ const Join = () => {
       return;
     }
 
-    if (!isUseridChecked) {
+    if (!isUsernameChecked) {
       alert("아이디 중복 확인을 해주세요.");
       return;
     }
@@ -30,36 +35,46 @@ const Join = () => {
 
     try {
       await axios.post('http://127.0.0.1:8080/join', {
-        userid: userid,
+        username: username,
         nickname: nickname,
         password: password,
-        number: number
+        number: number,
+        email: email,
       });
       alert("회원가입이 완료되었습니다.");
+      navigate('/login');
     } catch (error) {
       console.error('Error while joining:', error);
       alert("회원가입 중 오류가 발생했습니다.");
     }
   };
 
-  const handleUseridDuplicationCheck = async () => {
+  const handleUsernameDuplicationCheck = async () => {
     try {
-      const response = await axios.post(`http://127.0.0.1:8080/join/check-userid?userid=${userid}`);
+      const response = await axios.post(`http://127.0.0.1:8080/join/check-username`, null, {
+        params: {
+          username: username,
+        },
+      });
       if (response.data) {
-        setIsUseridChecked(true);
+        setIsUsernameChecked(true);
         alert("아이디를 사용할 수 있습니다.");
       } else {
         alert("아이디가 이미 사용중입니다.");
       }
     } catch (error) {
-      console.error('Error checking userid availability:', error);
+      console.error('Error checking username availability:', error);
       alert("아이디 중복 확인 중 오류가 발생했습니다.");
     }
   };
 
   const handleNicknameDuplicationCheck = async () => {
     try {
-      const response = await axios.post(`http://127.0.0.1:8080/join/check-nickname?nickname=${nickname}`);
+      const response = await axios.post(`http://127.0.0.1:8080/join/check-nickname`, null, {
+        params: {
+          nickname: nickname,
+        },
+      });
       if (response.data) {
         setIsNicknameChecked(true);
         alert("닉네임을 사용할 수 있습니다.");
@@ -77,17 +92,17 @@ const Join = () => {
       <h2>회원가입 페이지</h2>
 
       <div className="join-input-container">
-        <button className="join-check-button" onClick={handleUseridDuplicationCheck}>
+        <button className="join-check-button" onClick={handleUsernameDuplicationCheck}>
           ID 확인
         </button>
         <input
-          id="userid"
+          id="username"
           type="text"
-          value={userid}
-          onChange={(e) => setUserid(e.target.value)}
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           required
         />
-        <label htmlFor="userid">아이디</label>
+        <label htmlFor="username">아이디</label>
       </div>
 
       <div className="join-input-container">
@@ -114,35 +129,51 @@ const Join = () => {
         />
         <label htmlFor="password">비밀번호</label>
       </div>
-
       <div className="join-input-container">
         <input
           id="confirm-password"
           type="password"
           value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
+          onChange={(e) => {
+            setConfirmPassword(e.target.value);
+            setPasswordMatchError(password !== e.target.value);
+          }}
           required
         />
         <label htmlFor="confirm-password">비밀번호 확인</label>
+        {passwordMatchError && <p className="error-message">비밀번호와 비밀번호 확인 입력값이 다릅니다.</p>}
       </div>
 
-      <div className="join-input-container">
-        <input
-          id="phone-number"
-          type="tel"
-          value={number}
-          onChange={(e) => setNumber(e.target.value)}
-          required
-        />
-        <label htmlFor="phone-number">전화번호</label>
+      <div className="join-input-container double-input">
+        <div className="double-input-inner">
+          <input
+            id="number"
+            type="tel"
+            value={number}
+            onChange={(e) => setNumber(e.target.value)}
+            required
+          />
+          <label htmlFor="number">전화번호</label>
+          <p className="input-description">ex) 010-1234-5678</p>
+        </div>
+        <div className="double-input-inner">
+          <input
+            id="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <label htmlFor="email">이메일</label>
+        </div>
       </div>
 
       <button className="join-submit-button" onClick={handleJoin}>
         제출
       </button>
       <br />
-      <p>
-        이미 회원이신가요? <Link to="/login">로그인 페이지로 이동</Link>
+      <p className='login-link'>
+        이미 회원이신가요? <Link to="/login"> 로그인 페이지로 이동</Link>
       </p>
     </div>
   );

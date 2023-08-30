@@ -1,26 +1,67 @@
-// src/components/navigation/NavBar.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './NavBar.css';
-import HomeIcon from '@mui/icons-material/Home';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import AccountMenu from '../menu/Menu';
+import jwtDecode from 'jwt-decode';
+import homeIconImage from '../../img/KakaoTalk_Image_2023-08-27-23-38-29.png';
 
 const NavBar = () => {
+  const [decodedToken, setDecodedToken] = useState(null);
+  const [activeMenu, setActiveMenu] = useState('');
+
+  const location = useLocation();
+
+  useEffect(() => {
+    const localToken = localStorage.getItem('token');
+
+    if (localToken) {
+      try {
+        const decoded = jwtDecode(localToken);
+        setDecodedToken(decoded);
+        console.log('Decoded Token:', decoded);
+      } catch (error) {
+        console.error('Error decoding token:', error);
+      }
+    }
+  }, [location.pathname]);
+
+  useEffect(() => {
+    setActiveMenu(location.pathname);
+  }, [location.pathname]);
+
   return (
     <div className="nav-bg-container">
       <div className="content">
         <nav id="primary_nav_wrap">
           <ul>
-            <li><Link to="/community">Community</Link></li>
-            <li><Link to="/page2">Map</Link></li>
-            <a href='/'>
-            <li><HomeIcon fontSize="large" style={{ color: '#6AAF5F' }} /></li>
-            </a>
-            <li><Link to="/page3">CockBTI</Link></li>
-            <li><Link to="/page4">page4</Link></li>
+            <li>
+              <Link to="/">
+                <img src={homeIconImage} alt="Home" style={{ width: '40px'}} />
+              </Link>
+            </li>
+            <li className={activeMenu === '/Main' ? 'current-menu-item' : ''}>
+              <Link to="/main">Main</Link>
+            </li>
+            <li className={activeMenu === '/cocktailsearch' ? 'current-menu-item' : ''}>
+              <Link to="/cocktailsearch">Search</Link>
+            </li>
+            <li className={activeMenu === '/CBTI' ? 'current-menu-item' : ''}>
+              <Link to="/CBTI">CBTI</Link>
+            </li>
+            <li className={activeMenu === '/board' ? 'current-menu-item' : ''}>
+              <Link to="/board">Board</Link>
+            </li>
           </ul>
         </nav>
-        <AccountMenu />
+        <div className="user-info">
+          {decodedToken && decodedToken.nickname && (
+            <div className="user-info-wrapper">
+              <div className="user-info-image"></div> {/* 이미지 표시 */}
+              <div className="user-id">{`${decodedToken.nickname}`}</div>
+            </div>
+          )}
+          <AccountMenu />
+        </div>
       </div>
     </div>
   );

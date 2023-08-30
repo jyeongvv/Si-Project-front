@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Tangerine&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap&subset=korean');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&display=swap&subset=korean&noto.script=Kore');
+
+
+body {
+    background: #EEE;
+}
+
+#str {
+    width: 800px;
+    padding-top: 100px;
+    font-family: 'Tangerine', cursive;
+    font-size: 150px;
+    margin: 10px auto -450px;
+    color: #8a7d6f;
+    font-weight: bold;
+    text-align: center;
+}
+
+.small-font {
+    font-size: 50px;
+    margin-top: -200px;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+
+}
+
+@keyframes bounceUp {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.small-font .bounce {
+    display: inline-block;
+    animation: bounceUp 0.5s ease-in-out infinite alternate;
+}

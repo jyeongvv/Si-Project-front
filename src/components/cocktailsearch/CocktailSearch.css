@@ -1,0 +1,546 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+input[type="text"],
+input[type="button"] {
+  font-family: Raleway;
+}
+
+body {
+  margin: 1em 2em;
+}
+
+.cocktailsearch-container {
+  /* display: flex; */
+  flex-direction: column;
+  margin-top: 5rem;
+  flex-wrap: wrap; /* 여러 줄로 나타낼 수 있게 wrap으로 설정 */
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* 전체 너비를 차지하도록 설정 */
+  padding: 0 1em; /* 좌우 여백을 줄임 */
+
+}
+
+h1 {
+  font-size: 2em;
+  padding: 1em 0;
+  font-weight: 600;
+  text-align: center; /* 가운데 정렬을 추가 */
+  color : #594c3e;
+}
+
+input[type="text"] {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 2px solid black;
+}
+
+input[type="button"] {
+  font-size: 1em;
+  background-color: black;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  cursor: pointer;
+  margin: 1em 7em;
+  justify-items: center;
+}
+
+/* .recipieCards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+} */
+
+
+.flip-card {
+  background-color: transparent;
+  width: 300px;
+  /* height: 400px; */
+  perspective: 1000px;
+  margin: 1em;
+}
+
+.flip-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.flip-card-back {
+    background-image: url('https://cdn.pixabay.com/photo/2018/06/05/22/21/ice-cubes-3456598_1280.jpg');
+    background-size: cover; /* 배경 이미지 크기 조절 */
+    background-position: center center; /* 배경 이미지 가운데 정렬 */
+   color: white;
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1em;
+  box-sizing: border-box;
+}
+
+.flip-card-back p {
+  margin-top: 1em;
+  text-align: center;
+  line-height: 1.5em;
+}
+
+table {
+  width: calc(100% - 2em);
+  border-collapse: collapse;
+  border: 1px solid white;
+  margin: 3em 3em 1em 1em;
+}
+
+.fancySearchContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; /* 추가 */
+  margin-top: em; /* 원하는 만큼 조절하여 "fancySearchContainer"를 위로 옮김 */
+  border: none;
+
+}
+
+.fancySearchContainer input[type="button"] {
+  border-left: 2px solid transparent;
+  margin: 0;
+  background-color: black;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  cursor: pointer;
+  justify-items: center;
+  border-left: 2px solid white;
+  width: 15rem;
+  height: 4rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s ease;
+
+  &:hover {
+    color: white;
+    background: var(--primary);
+    box-shadow: inset 0.2rem 0.2rem 1rem var(--primary-light),
+      inset -0.2rem -0.2rem 1rem var(--primary-dark),
+      0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  &:active {
+    background: var(--primary);
+    box-shadow: inset 0.2rem 0.2rem 1rem var(--primary-dark),
+      inset -0.2rem -0.2rem 1rem var(--primary-light),
+      0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.btn__secondary {
+  width: 50px;
+  height: 50px;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s ease;
+  cursor: pointer;
+  margin: 1em 1em;
+  border: none;
+  color: var(--greyDark);
+  text-decoration: none;
+  background-color: transparent; /* 배경을 투명색으로 설정 */
+  background-image: url('https://img.icons8.com/?size=512&id=132&format=png');
+  background-repeat: no-repeat; /* 이미지 반복 방지 */
+  background-size: 30px; /* 이미지 크기 조절 */
+  background-position: center center; /* 이미지 가운데 정렬 */
+}
+
+  
+.btn__secondary:hover {
+  color: var(--primary);
+  background-color: transparent;
+  background-image: url('https://img.icons8.com/?size=512&id=12773&format=png'); /* 다른 이미지 URL로 변경 */
+  background-repeat: no-repeat;
+  background-size: 30px;
+  background-position: center center;
+  box-shadow: inset 0.2rem 0.2rem 1rem var(--primary-light),
+    inset -0.2rem -0.2rem 1rem var(--primary-dark),
+    0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn__secondary:active {
+  background: var(--primary);
+  box-shadow: inset 0.2rem 0.2rem 1rem var(--primary-dark),
+    inset -0.2rem -0.2rem 1rem var(--primary-light),
+    0 4px 6px rgba(0, 0, 0, 0.1);
+}
+  
+.fancySearchContainer {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+  }
+  
+  .fancySearchContainer input {
+	border-bottom: 2px solid black;
+	padding: 16px 20px;
+  }
+  
+  .fancySearchContainer select {
+    padding: 16px 20px;
+    background: #a59172;
+    color: white;
+    border-radius: 10px; /* 추가된 부분 */
+    text-align: center; /* 추가된 부분 */
+    margin-right: 15px;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+
+  }
+  
+  
+  .fancySearchContainer input[type="button"] {
+	border-left: 2px solid transparent;
+	margin: 0;
+	background-color: #a59172;
+	border: none;
+	color: white;
+	padding: 16px 32px;
+	text-decoration: none;
+	cursor: pointer;
+	justify-content: center;
+	border-left: 2px solid white;
+  }
+  
+/* Autosuggest Styles */
+.react-autosuggest__container {
+  position: relative;
+}
+
+.react-autosuggest__input {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 2px solid #a59172;
+}
+
+.react-autosuggest__suggestions-container {
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  max-width: 400px;
+  border: 2px solid white;
+
+
+  background-color: white;
+  z-index: 1;
+}
+
+.react-autosuggest__suggestion {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.react-autosuggest__suggestion--highlighted {
+  background-color: #a59172;
+  
+}
+/* Main Styles */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+  }
+
+  body {
+	margin: 1em 2em;
+  }
+  
+  .container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 102vh;
+	width: 100%; /* 전체 너비를 차지하도록 설정 */
+  }
+  
+/*   
+  h1 {
+	font-size: 2em;
+	padding: 1em 0;
+	font-weight: 600;
+  } */
+  
+  input[type="text"] {
+	width: 100%;
+	max-width: 400px;
+	padding: 12px 100px;
+	margin: 8px 0;
+	box-sizing: border-box;
+	border: none;
+	border-bottom: 2px solid #a59172;
+  }
+  
+  input[type="button"] {
+	font-size: 1em;
+	background-color: black;
+	border: none;
+	color: white;
+	padding: 16px 32px;
+	text-decoration: none;
+	cursor: pointer;
+	margin: 1em 7em;
+	justify-items: center;
+  }
+  
+  .flip-card-front {
+	background-color: black;
+	color: white;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 1em;
+	box-sizing: border-box;
+background-size: cover; 
+background-position: center center;
+/* position: relative;  */
+  }
+  
+  .flip-card-back {
+	background-color: black;
+	color: white;
+	transform: rotateY(180deg);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 1em;
+	box-sizing: border-box;
+  }
+  
+  .flip-card-back p {
+	margin-top: 1em;
+	text-align: center;
+	line-height: 1.5em;
+  }
+  
+  table {
+	width: calc(100% - 2em);
+	border-collapse: collapse;
+	border: 1px solid white;
+	margin: 3em 3em 1em 1em;
+	th {
+	  border-bottom: solid 1px white;
+	}
+	th,
+	td {
+	  padding: 0.3em;
+	}
+  }
+  
+  */
+  /* Autosuggest Styles */
+  .react-autosuggest__container {
+	position: relative;
+  }
+  
+  .react-autosuggest__input {
+	width: 100%;
+	max-width: 400px;
+	padding: 12px 20px;
+	margin: 8px 0;
+	box-sizing: border-box;
+	border: none;
+	border-bottom: 2px solid #a59172;
+  }
+  
+  .react-autosuggest__suggestions-container {
+	position: absolute;
+	top: 100%;
+	width: 100%;
+	max-width: 400px;
+	max-height: 300px;
+	overflow-y: auto;
+	border: 2px solid #a59172;
+	background-color: white;
+	z-index: 1;
+  }
+  
+  .react-autosuggest__suggestion {
+	padding: 8px 12px;
+	cursor: pointer;
+  }
+  
+  .react-autosuggest__suggestion--highlighted {
+	background-color: #fadfb5;
+  }
+  
+  /* Media Query for Small Screens */
+  @media only screen and (max-width: 550px) {
+	body {
+	  display: block;
+	}
+	.container {
+	  width: 100%;
+	}
+  }
+  
+  .recipieCards {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	grid-auto-rows: minmax(400px, auto); /* 네 줄로 보이게 설정 */
+	gap: 20px;
+	overflow-y: auto;
+	max-height: 60vh;
+  margin-left: 0; /* 여백 제거 */
+
+  }
+
+.highlight {
+	/* background-color: coral;  */
+	font-weight: bold; /* 강조된 텍스트를 두껍게 표시 */
+	color: white;
+
+  }
+  .spacer {
+	margin-top: 20px; /* 공백 크기 조정 */
+  }
+  .flip-card-front.combined {
+	-webkit-text-stroke: 0.01px black;
+	font-size: 20px; /* 원하는 폰트 크기로 조절해보세요 */
+	
+	color: white;
+	text-shadow:
+		2px  2px 0 #000,
+	   -1px -1px 0 #000,  
+		1px -1px 0 #000,
+	   -1px  1px 0 #000,
+		1px  1px 0 #000;
+  }
+  .flip-card-front.highlight {
+	box-shadow: none; /* 하이라이트될 때 box-shadow 없애기 */
+  }
+  .cockp {
+    /* display: flex; */
+    /* justify-content: flex-end;  */
+    text-align: center; /* 세로 가운데 정렬 */
+    margin-top: 100px;
+    font-size : 20px;
+    /* height: 100vh;  */
+  }
+  /* 모달 스타일 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 80%;
+  max-height: 80%;
+  overflow-y: auto;
+  text-align: center; /* 가운데 정렬을 추가 */
+  line-height: 50px; /* 텍스트 사이 간격을 추가 */
+  
+
+}
+
+.modal-close {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+modalh3{
+  font-size: 20px;
+}
+cardh2,
+.flip-card-back p
+  {
+
+-webkit-text-stroke: 0.01px black;
+font-size: 30px; /* 원하는 폰트 크기로 조절해보세요 */
+
+color: white;
+text-shadow:
+  2px  2px 0 #000,
+    -1px -1px 0 #000,  
+  1px -1px 0 #000,
+    -1px  1px 0 #000,
+  1px  1px 0 #000;
+    
+}
+.flip-card-back .ingredients 
+  {
+
+-webkit-text-stroke: 0.01px rgb(79, 79, 79);
+font-size: 20px; /* 원하는 폰트 크기로 조절해보세요 */
+
+color: white;
+text-shadow:
+  2px  2px 0 #333333,
+    -1px -1px 0 #000,  
+  1px -1px 0 #000,
+    -1px  1px 0 #000,
+  1px  1px 0 #000;
+    
+}

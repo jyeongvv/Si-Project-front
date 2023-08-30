@@ -1,0 +1,41 @@
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  margin: 0 auto;
+  width: 75%;
+  text-align: center;
+  padding-bottom: 3em;
+  max-height: 400px; /* 스크롤을 생성하도록 설정 */
+  overflow-y: auto; /* 내용이 넘칠 경우 스크롤 생성 */
+  justify-content: center;
+}
+
+.card-container {
+  width: 90%;
+  height: 90%;
+  transition: ease 0.3s;
+  color: #fff;
+  opacity: 1; /* 바로 보이도록 설정 */
+  letter-spacing: 0.2em;
+}
+
+.card-img {
+  height: 200px;
+  width : 250px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.card-name {
+  background-color: #000;
+  text-align: center;
+  padding: 1em;
+  outline: 1px dotted #fff;
+  outline-offset: -0.25em;
+  margin-top: 0.25em;
+  margin-bottom: 1em;
+  max-width: 250px; /* 최대 가로 길이 설정 */
+
+}
