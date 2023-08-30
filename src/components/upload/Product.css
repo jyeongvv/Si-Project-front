@@ -2,6 +2,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Tangerine&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Nanum+Pen+Script:400');
 @import url('https://fonts.google.com/specimen/Bree+Serif');
+@import url('https://fonts.googleapis.com/css2?family=Orbit:wght@400;500;700&display=swap');
+@import url('https://fonts.google.com/specimen/Gowun+Batang?subset=korean&noto.script=Kore');
+
+
+/* Method 스타일 */
+.method-container {
+  margin-top: 2rem; /* 위에 여백 추가 */
+  border-top: 0.0625rem solid #e3dddd; /* 섹션 위에 border 추가 */
+  padding-top: 1rem; /* 위에 padding 추가 */
+  padding-bottom: 5%;
+}
+.method-container h3 {
+  color: rgb(6, 6, 6); /* 간식 제목 색상 변경 */
+  font-size: 25px;
+  margin-top: 1.5rem; /* 제목 위에 여백 추가 */
+}
+
+.method-container p {
+  color: black; /* 설명 텍스트 색상 변경 */
+  font-size: 17px;
+  /* padding : 0.05rem; */
+}
+
 
 /* 기본 스타일 */
 .custom-product-container body {
@@ -500,18 +523,18 @@ footer {
 }
 /* 한글 폰트 설정 */
 .nps-body, .nps-h1, .nps-h2, .nps-h3, .nps-h4, .nps-p, .nps-li, .nps-a {
-  font-family: 'Nanum Pen Script', sans-serif; /* 나눔 펜 폰트 적용 */
+  font-family:   'Gowun Batang', serif; 
 }
 .nps-h1{
   font-size: 60px;
 }
 .nps-h2{
-  font-size: 40px;
+  font-size: 30px;
   padding : 0.5rem;
 }
 
 .nps-p{
-  font-size : 25px;
+  font-size : 17px;
   /* padding : 0.05rem; */
 }
 /* 영어 폰트 설정 */
@@ -520,6 +543,9 @@ footer {
   font-family: 'Bree Serif', serif; /* Bree Serif 폰트 적용 */
   font-weight: bold; /* 폰트를 bold로 지정 */
 
+}
+.tangerine-h2{
+  text-align: center;
 }
 .tangerine-h3{
   margin-top: 1rem;

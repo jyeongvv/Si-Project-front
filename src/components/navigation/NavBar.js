@@ -7,6 +7,8 @@ import homeIconImage from '../../img/KakaoTalk_Image_2023-08-27-23-38-29.png';
 
 const NavBar = () => {
   const [decodedToken, setDecodedToken] = useState(null);
+  const [activeMenu, setActiveMenu] = useState('');
+
   const location = useLocation();
 
   useEffect(() => {
@@ -23,6 +25,10 @@ const NavBar = () => {
     }
   }, [location.pathname]);
 
+  useEffect(() => {
+    setActiveMenu(location.pathname);
+  }, [location.pathname]);
+
   return (
     <div className="nav-bg-container">
       <div className="content">
@@ -33,9 +39,15 @@ const NavBar = () => {
                 <img src={homeIconImage} alt="Home" style={{ width: '40px'}} />
               </Link>
             </li>
-            <li><Link to="/cocktailsearch">Search</Link></li>
-            <li><Link to="/CBTI">CBTI</Link></li>
-            <li><Link to="/board">Board</Link></li>
+            <li className={activeMenu === '/cocktailsearch' ? 'current-menu-item' : ''}>
+              <Link to="/cocktailsearch">Search</Link>
+            </li>
+            <li className={activeMenu === '/CBTI' ? 'current-menu-item' : ''}>
+              <Link to="/CBTI">CBTI</Link>
+            </li>
+            <li className={activeMenu === '/board' ? 'current-menu-item' : ''}>
+              <Link to="/community">Community</Link>
+            </li>
           </ul>
         </nav>
         <div className="user-info">

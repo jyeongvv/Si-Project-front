@@ -1,23 +1,21 @@
 import React from 'react';
 import './Team.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGoogle, faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons';
 
 const TeamMember = ({ name, title, imageUrl, githubUsername, googleEmail }) => (
-  <div className="col-12 col-sm-6 col-md-4 col-lg-3">
-    <div className="our-team">
-      <div className="picture">
-        <img className="img-fluid" src={imageUrl} alt={name} />
-      </div>
-      <div className="team-content">
-        <h3 className="name">{name}</h3>
-        <h4 className="title">{title}</h4>
-      </div>
-      <ul className="social">
-        {githubUsername && <li><a href={`https://github.com/${githubUsername}`}><FontAwesomeIcon icon={faGithub} /></a></li>}
-        {googleEmail && <li><a href={`mailto:${googleEmail}`}><FontAwesomeIcon icon={faGoogle} /></a></li>}
-      </ul>
+  <div className="col-12 col-sm-6 col-md-4 col-lg-3 our-team">
+    <div className="picture">
+      <img className="img-fluid" src={imageUrl} alt={name} />
     </div>
+    <div className="team-content">
+      <h3 className="name">{name}</h3>
+      <h4 className="title">{title}</h4>
+    </div>
+    <ul className="social">
+      {githubUsername && <li><a href={`https://github.com/${githubUsername}`}><FontAwesomeIcon icon={faGithub} /></a></li>}
+      {googleEmail && <li><a href={`mailto:${googleEmail}`}><FontAwesomeIcon icon={faGoogle} /></a></li>}
+    </ul>
   </div>
 );
 
@@ -43,7 +41,7 @@ const TEAM = () => (
         title="DB&Data Engineer"
         imageUrl="https://i.imgur.com/1HYkCGk.png"
         githubUsername="zihvvan"
-        googleEmail="kimji21758@gmai.com"
+        googleEmail="kimji21758@gmail.com"
       />
       <TeamMember
         name="서동준"

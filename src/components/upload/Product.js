@@ -6,30 +6,34 @@ const Product = ({ responseData }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const imagesPerPage = 8; // 한 페이지당 표시할 이미지 수
 
+  // 현재 페이지 변경 시 activeIndex를 조정하는 효과
   useEffect(() => {
-    // 페이지 변경 시 activeIndex를 조정합니다
     const startIndex = (currentPage - 1) * imagesPerPage;
     setActiveIndex(0); // 페이지가 변경될 때 마다 첫 번째 이미지로 activeIndex를 초기화합니다.
   }, [currentPage]);
 
+  // 새로운 응답 데이터가 들어올 때 activeIndex와 currentPage 초기화
   useEffect(() => {
-    setActiveIndex(0); // 새로운 응답 데이터가 들어올 때마다 0번 인덱스의 product를 보여줍니다.
-    setCurrentPage(1); // 페이지를 첫 페이지로 초기화합니다.
+    setActiveIndex(0);
+    setCurrentPage(1);
   }, [responseData]);
 
-  // 새로운 응답 데이터가 들어올 때마다 페이지를 1페이지로 설정합니다.
+  // 새로운 응답 데이터가 들어올 때마다 페이지를 1페이지로 설정
   useEffect(() => {
     setCurrentPage(1);
   }, [responseData]);
 
+  // 이미지 클릭 시 activeIndex 업데이트
   const handleImageItemClick = (index) => {
     setActiveIndex(index);
   };
 
+  // 이전 페이지로 이동
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => prevPage - 1);
   };
 
+  // 다음 페이지로 이동
   const handleNextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1);
   };
@@ -92,6 +96,10 @@ const Product = ({ responseData }) => {
                       </div>
                     )}
                   </div>
+                </div>
+                <div className="method-container">
+                  <h3 className="tangerine-h3">Method</h3>
+                  <p className="nps-p">{visibleImages[activeIndex]?.method}</p>
                 </div>
               </div>
             </div>

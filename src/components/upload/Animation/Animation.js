@@ -28,8 +28,8 @@ const Marquee = () => {
                 style={{ backgroundImage: `url(${cocktail.image})` }}
               >
                 <div className="animation-overlay">
-                  <div className="animation-cardh4">{cocktail.englishName}</div>
-                  <div className="animation-cardp">{cocktail.koreanName}</div>
+                  <div className="animation-cardh4">{cocktail.englishCocktailName}</div>
+                  <div className="animation-cardp">{cocktail.koreanCocktailName}</div>
                 </div>
               </div>
             </div>

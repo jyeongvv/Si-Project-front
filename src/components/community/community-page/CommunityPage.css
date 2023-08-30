@@ -13,7 +13,7 @@
     font-size: 12px;
     border: 1px solid #ac9e81;
     border-radius: 10px;
-    margin-left: 430px;
+    margin-left: 30%;
     margin-right: 10px;
     background-color: #f9f5f5;
     justify-content:  center;
@@ -47,7 +47,7 @@
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    margin-left: 10px;
+    margin-left: 1%;
   }
   
   /* Add more styles as needed */

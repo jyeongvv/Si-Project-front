@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Tangerine&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap&subset=korean');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&display=swap&subset=korean&noto.script=Kore');
 
 
 body {
@@ -19,6 +21,8 @@ body {
 .small-font {
     font-size: 50px;
     margin-top: -200px;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+
 }
 
 @keyframes bounceUp {

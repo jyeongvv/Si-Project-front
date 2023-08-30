@@ -68,6 +68,11 @@ const CommunityPage = () => {
     // Open the edit popup here
   };
   
+  useEffect(() => {
+    // posts 상태가 변경될 때마다 실행될 코드
+    refreshPosts();
+  }, [posts]); // posts 상태가 변경될 때만 실행
+
 
   const addPost = async (newPost) => {
     console.log(auth.isAuthenticated);
@@ -89,8 +94,8 @@ const CommunityPage = () => {
             ...response.data,
             date: response.data.createdAt,
           };
-          setPosts([...posts, newPostWithCreatedAt]);
-          refreshPosts();
+          setPosts((prevPosts) => [...prevPosts, newPostWithCreatedAt]);
+          
         }
       } catch (error) {
         console.error("Error adding post:", error);
@@ -114,6 +119,8 @@ const CommunityPage = () => {
               ? { ...post, title: updatedPost.title, content: updatedPost.content }
               : post
           );
+
+          
           setPosts(updatedPosts);
           refreshPosts();
         }

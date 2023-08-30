@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Join.css';
 import axios from 'axios';
 
@@ -13,6 +13,9 @@ const Join = () => {
   const [isUsernameChecked, setIsUsernameChecked] = useState(false);
   const [isNicknameChecked, setIsNicknameChecked] = useState(false);
   const [passwordMatchError, setPasswordMatchError] = useState(false);
+
+
+  const navigate = useNavigate();
 
   const handleJoin = async () => {
     if (password !== confirmPassword) {
@@ -39,6 +42,7 @@ const Join = () => {
         email: email,
       });
       alert("회원가입이 완료되었습니다.");
+      navigate('/login');
     } catch (error) {
       console.error('Error while joining:', error);
       alert("회원가입 중 오류가 발생했습니다.");
@@ -168,8 +172,8 @@ const Join = () => {
         제출
       </button>
       <br />
-      <p>
-        이미 회원이신가요? <Link to="/login">로그인 페이지로 이동</Link>
+      <p className='login-link'>
+        이미 회원이신가요? <Link to="/login"> 로그인 페이지로 이동</Link>
       </p>
     </div>
   );

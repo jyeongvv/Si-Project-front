@@ -40,7 +40,8 @@
   height: 100vh;
   
   display: flex;
-  
+  z-index: 9999; /* 모달 팝업이 맨 앞으로 나타나도록 z-index 설정 */
+
   position: fixed;
   top: 0;
   right: 0;  
@@ -59,9 +60,9 @@
   
   .popup::after{
   content: "";
-  width: 0;
-  height: 2px;
-  background-color: #f0f0f0;
+  width: 10px;
+  height: 4px;
+  background-color: #a59172;
   
   position: absolute;
   top: 50%;
@@ -231,6 +232,8 @@
     cursor: pointer;
     font-size: 14px;
     margin-top: 10px;
+    margin-left: 50%;
+
   }
   .popup__content {
     text-align: center; /* 내용을 가운데 정렬 */

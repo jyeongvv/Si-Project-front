@@ -76,6 +76,7 @@
   background-image: url('https://img.icons8.com/?size=512&id=oZ1zFlxIGRV8&format=png');
   background-size: cover;
   background-repeat: no-repeat; /* 이미지 반복 제거 */
+  margin-bottom: 50px;
 
 }
 
@@ -106,8 +107,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 200px;
-  height: 200px;
+  width: 250px;
+  height: 250px;
   border: 2px dashed #d4b98e;
   border-radius: 5px;
   cursor: pointer;
@@ -139,7 +140,7 @@
 .image-preview img {
   max-width: 100%;
   max-height: 100%;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .upload-form-container li::marker {
@@ -148,5 +149,10 @@
 /* ... */
 
 
-
+.dropzone img {
+  /* 이미지가 드롭존에 꽉 차도록 설정합니다. */
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: fill; /* 또는 "cover" 사용 가능 */
+}
 /* ... */

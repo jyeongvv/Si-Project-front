@@ -236,3 +236,8 @@ z-index: 2;
      transform: rotate(30deg);
   }
 }
+.additional-text{
+  text-align: center;
+  font-size : 30px;
+  margin-top: 15%;
+}

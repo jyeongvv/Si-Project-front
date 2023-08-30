@@ -3,7 +3,7 @@ import axios from 'axios';
 import Autosuggest from 'react-autosuggest';
 import './CocktailSearch.css';
 
-const MIN_SEARCH_LENGTH = 2;
+const MIN_SEARCH_LENGTH = 1;
 
 function CocktailSearch() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -23,12 +23,25 @@ function CocktailSearch() {
       return;
     }
 
-    const response = await axios.post(`http://localhost:8080/search/keyword?keyword=${searchTerm}`);
-    console.log('Search Response:', response.data);
-    if (response.status === 200) {
-      setFilteredRecipes(response.data);
-    } else {
-      console.error('Error fetching recipes:', response.statusText);
+    const response = await axios.post(
+      `http://localhost:8080/search/keyword`,
+      null,
+      {
+        params: {
+          keywordType: category,
+          keyword: searchTerm,
+        },
+      }
+    );
+
+    try {
+      if (response.status === 200) {
+        setFilteredRecipes(response.data);
+      } else {
+        console.error('Error fetching recipes:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching recipes:', error.message);
     }
   };
 
@@ -42,8 +55,17 @@ function CocktailSearch() {
     setLoading(false);
   }, []);
 
+  let inputPlaceholder = 'ex) 앱솔루트, malibu';
+  if (category === '베이스술') {
+    inputPlaceholder = 'ex) 앱솔루트, malibu';
+  } else if (category === '재료') {
+    inputPlaceholder = 'ex) 보드카, 말리부';
+  } else if (category === '칵테일명') {
+    inputPlaceholder = 'ex) 모히토, 도하';
+  }
+
   const inputProps = {
-    placeholder: 'Search for a cocktail...',
+    placeholder: inputPlaceholder,
     value: searchTerm,
     onChange: (event, { newValue }) => setSearchTerm(newValue),
     onKeyPress: handleKeyPress,
@@ -53,11 +75,25 @@ function CocktailSearch() {
     setSearchTerm(value);
 
     if (value.length >= MIN_SEARCH_LENGTH) {
-      const response = await axios.post(`http://localhost:8080/search/keyword?keyword=${value}`);
-      if (response.status === 200) {
-        setFilteredRecipes(response.data);
-      } else {
-        console.error('Error fetching suggestions:', response.statusText);
+      const response = await axios.post(
+        `http://localhost:8080/search/keyword`,
+        null,
+        {
+          params: {
+            keywordType: category,
+            keyword: value,
+          },
+        }
+      );
+
+      try {
+        if (response.status === 200) {
+          setFilteredRecipes(response.data);
+        } else {
+          console.error('Error fetching suggestions:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching suggestions:', error.message);
       }
     } else {
       setFilteredRecipes([]);
@@ -68,9 +104,9 @@ function CocktailSearch() {
     setFilteredRecipes([]);
   };
 
-  const getSuggestionValue = suggestion => suggestion.koreanName;
+  const getSuggestionValue = suggestion => suggestion.koreanCocktailName;
 
-  const renderSuggestion = suggestion => <span>{suggestion.koreanName}</span>;
+  const renderSuggestion = suggestion => <span>{suggestion.koreanCocktailName}</span>;
 
   return (
     <div className="cocktailsearch-container">
@@ -78,8 +114,9 @@ function CocktailSearch() {
       <div className="center">
         <div className="fancySearchContainer">
           <select className="btn" value={category} onChange={e => setCategory(e.target.value)}>
-            <option value="name">Name</option>
-            <option value="ingredients">Ingredients</option>
+            <option value="베이스술">술이름</option>
+            <option value="재료">재료</option>
+            <option value="칵테일명">칵테일이름</option>
           </select>
           <Autosuggest
             suggestions={filteredRecipes}
@@ -90,21 +127,37 @@ function CocktailSearch() {
             inputProps={inputProps}
           />
           <button className="btn btn__secondary" onClick={handleSearch}>
-            <span className="button-text"></span>
+            
           </button>
         </div>
-        {filteredRecipes.length === 0 && <div className="cockp center">No search results found.</div>}
+        {filteredRecipes.length === 0 && (
+          <div className="cockp center">
+           
+            
+                <br />
+                일치하는 칵테일이 없어!<br />
+                <img
+                  src="https://cdn.pixabay.com/photo/2017/02/01/10/25/falling-2029463_1280.png"
+                  alt="No results"
+                  width="200"
+                  height="200"
+                />
+              
+            
+          </div>
+        )}
       </div>
+
 
       <div className="center">
         <div className="recipieCards" style={{ width: '100%' }}>
           {loading ? (
             <p>Loading...</p>
-          ) : (
-            filteredRecipes.map(recipe => (
+          ) : Array.isArray(filteredRecipes) ? (
+            filteredRecipes.map((recipe, index) => (
               <div
                 className="flip-card"
-                key={recipe.id}
+                key={recipe.id + '-' + index}  // 고유한 키 할당
                 onClick={() => setSelectedCocktail(recipe)}
               >
                 <div className="flip-card-inner">
@@ -112,8 +165,8 @@ function CocktailSearch() {
                     className="flip-card-front combined"
                     style={{ backgroundImage: `url(${recipe.image})` }}
                   >
-                    <h2 className="highlight">{recipe.englishName}</h2>
-                    <h3>{recipe.koreanName}</h3>
+                    <h2 className="highlight">{recipe.englishCocktailName}</h2>
+                    <h3>{recipe.koreanCocktailName}</h3>
                   </div>
                   <div className="flip-card-back">
                     <h2>Ingredients</h2>
@@ -129,6 +182,8 @@ function CocktailSearch() {
                 </div>
               </div>
             ))
+          ) : (
+            <p></p>
           )}
         </div>
       </div>
@@ -136,12 +191,21 @@ function CocktailSearch() {
       {selectedCocktail && (
         <div className="modal">
           <div className="modal-content">
-            <h2>{selectedCocktail.englishName}</h2>
+            <h2>{selectedCocktail.englishCocktailName}</h2>
+            {/* <h2>{selectedCocktail.koreanAlcohol}</h2> */}
+            <h3>Alcohol</h3>
+      
+        {Array.isArray(selectedCocktail.englishAlcohol)
+          ? selectedCocktail.englishAlcohol.map((alcohol, index) => (
+              <p key={index}>{alcohol}</p>
+            ))
+          : null}
+      
             <h3>Method</h3>
-            <br></br>
+            <br />
             <p>{selectedCocktail.method}</p>
             <h3>Garnish</h3>
-            <br></br>
+            <br />
             <p>{selectedCocktail.garnish}</p>
             <button className="modal-close" onClick={closeModal}>
               Close

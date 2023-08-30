@@ -33,7 +33,7 @@ h1 {
   padding: 1em 0;
   font-weight: 600;
   text-align: center; /* 가운데 정렬을 추가 */
-
+  color : #594c3e;
 }
 
 input[type="text"] {
@@ -135,7 +135,7 @@ table {
   align-items: center;
   justify-content: center; /* 추가 */
   margin-top: em; /* 원하는 만큼 조절하여 "fancySearchContainer"를 위로 옮김 */
-
+  border: none;
 
 }
 
@@ -231,10 +231,13 @@ table {
   
   .fancySearchContainer select {
     padding: 16px 20px;
-    background: black;
+    background: #a59172;
     color: white;
     border-radius: 10px; /* 추가된 부분 */
     text-align: center; /* 추가된 부분 */
+    margin-right: 15px;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
 
   }
   
@@ -242,7 +245,7 @@ table {
   .fancySearchContainer input[type="button"] {
 	border-left: 2px solid transparent;
 	margin: 0;
-	background-color: black;
+	background-color: #a59172;
 	border: none;
 	color: white;
 	padding: 16px 32px;
@@ -264,7 +267,7 @@ table {
   margin: 8px 0;
   box-sizing: border-box;
   border: none;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid #a59172;
 }
 
 .react-autosuggest__suggestions-container {
@@ -272,7 +275,9 @@ table {
   top: 100%;
   width: 100%;
   max-width: 400px;
-  border: 2px solid black;
+  border: 2px solid white;
+
+
   background-color: white;
   z-index: 1;
 }
@@ -283,7 +288,7 @@ table {
 }
 
 .react-autosuggest__suggestion--highlighted {
-  background-color: #20e8c6;
+  background-color: #a59172;
   
 }
 /* Main Styles */
@@ -306,12 +311,12 @@ table {
 	width: 100%; /* 전체 너비를 차지하도록 설정 */
   }
   
-  
+/*   
   h1 {
 	font-size: 2em;
 	padding: 1em 0;
 	font-weight: 600;
-  }
+  } */
   
   input[type="text"] {
 	width: 100%;
@@ -320,7 +325,7 @@ table {
 	margin: 8px 0;
 	box-sizing: border-box;
 	border: none;
-	border-bottom: 2px solid black;
+	border-bottom: 2px solid #a59172;
   }
   
   input[type="button"] {
@@ -392,7 +397,7 @@ background-position: center center;
 	margin: 8px 0;
 	box-sizing: border-box;
 	border: none;
-	border-bottom: 2px solid black;
+	border-bottom: 2px solid #a59172;
   }
   
   .react-autosuggest__suggestions-container {
@@ -402,7 +407,7 @@ background-position: center center;
 	max-width: 400px;
 	max-height: 300px;
 	overflow-y: auto;
-	border: 2px solid black;
+	border: 2px solid #a59172;
 	background-color: white;
 	z-index: 1;
   }
@@ -413,7 +418,7 @@ background-position: center center;
   }
   
   .react-autosuggest__suggestion--highlighted {
-	background-color: #35d5ab;
+	background-color: #fadfb5;
   }
   
   /* Media Query for Small Screens */
@@ -527,12 +532,12 @@ text-shadow:
 .flip-card-back .ingredients 
   {
 
--webkit-text-stroke: 0.01px black;
+-webkit-text-stroke: 0.01px rgb(79, 79, 79);
 font-size: 20px; /* 원하는 폰트 크기로 조절해보세요 */
 
 color: white;
 text-shadow:
-  2px  2px 0 #000,
+  2px  2px 0 #333333,
     -1px -1px 0 #000,  
   1px -1px 0 #000,
     -1px  1px 0 #000,

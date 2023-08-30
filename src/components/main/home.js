@@ -1,6 +1,6 @@
 import React from 'react';
 import './home.css';
-// import UploadForm from '../upload/Upload';
+import UploadForm from '../upload/Upload';
 import CockBanner from './CockBanner';
 // import CockTitle from './CockTitle';
 import Info from '../footer/Info';
@@ -10,7 +10,7 @@ const Home = () => {
         <div>
             {/* <CockTitle/> */}
             <CockBanner/>
-            {/* <UploadForm /> */}
+            <UploadForm />
             <Info />
         </div>
     )
