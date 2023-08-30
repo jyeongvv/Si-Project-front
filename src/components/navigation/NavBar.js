@@ -39,9 +39,6 @@ const NavBar = () => {
                 <img src={homeIconImage} alt="Home" style={{ width: '40px'}} />
               </Link>
             </li>
-            <li className={activeMenu === '/Main' ? 'current-menu-item' : ''}>
-              <Link to="/main">Main</Link>
-            </li>
             <li className={activeMenu === '/cocktailsearch' ? 'current-menu-item' : ''}>
               <Link to="/cocktailsearch">Search</Link>
             </li>
@@ -49,7 +46,7 @@ const NavBar = () => {
               <Link to="/CBTI">CBTI</Link>
             </li>
             <li className={activeMenu === '/board' ? 'current-menu-item' : ''}>
-              <Link to="/board">Board</Link>
+              <Link to="/community">Community</Link>
             </li>
           </ul>
         </nav>
