@@ -4,6 +4,10 @@
 @import url('https://fonts.google.com/specimen/Bree+Serif');
 @import url('https://fonts.googleapis.com/css2?family=Orbit:wght@400;500;700&display=swap');
 @import url('https://fonts.google.com/specimen/Gowun+Batang?subset=korean&noto.script=Kore');
+@import url('https://fonts.googleapis.com/css2?family=Tangerine&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap&subset=korean');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&display=swap&subset=korean&noto.script=Kore');
+@import url('//fonts.googleapis.com/css?family=Lato');
 
 
 /* Method 스타일 */
@@ -523,7 +527,8 @@ footer {
 }
 /* 한글 폰트 설정 */
 .nps-body, .nps-h1, .nps-h2, .nps-h3, .nps-h4, .nps-p, .nps-li, .nps-a {
-  font-family:   'Gowun Batang', serif; 
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
 }
 .nps-h1{
   font-size: 60px;
@@ -540,7 +545,7 @@ footer {
 /* 영어 폰트 설정 */
 /* Tangerine 폰트는 영어로만 적용하므로 영어로 표기된 요소에만 적용 */
 .tangerine-h1, .tangerine-h2, .tangerine-h3, .tangerine-h4, .tangerine-p, .tangerine-li, .tangerine-a {
-  font-family: 'Bree Serif', serif; /* Bree Serif 폰트 적용 */
+  font-family: 'Lato', sans-serif;
   font-weight: bold; /* 폰트를 bold로 지정 */
 
 }
