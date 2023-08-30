@@ -1,4 +1,8 @@
 /* CockLoad.css */
+@import url('https://fonts.googleapis.com/css2?family=Tangerine&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap&subset=korean');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&display=swap&subset=korean&noto.script=Kore');
+
 .wrapper {
     display: grid;
     align-items: center;
@@ -248,7 +252,10 @@
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 18px;
+    font-size: 40px;
+    font-weight: 500;
     color: black;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+
   }
   

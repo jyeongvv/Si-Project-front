@@ -80,17 +80,17 @@
     margin: 0;
     padding: 0;
     border-radius: 8px;
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: 'Lato', sans-serif;
 
     padding: 5px 10px;
-    -webkit-text-stroke: 0.01px black;
+    -webkit-text-stroke: 0.01px #313030;
     color: white;
     text-shadow:
-      2px 2px 0 #000,
-      -1px -1px 0 #000,
-      1px -1px 0 #000,
-      -1px 1px 0 #000,
-      1px 1px 0 #000;
+      1px 1px 0 #313030,
+      -1px -1px 0 #313030,
+      1px -1px 0 #313030,
+      -1px 1px 0 #313030,
+      1px 1px 0 #313030;
   }
   
   .animation-marquee-group .animation-card .animation-cardp {
@@ -102,14 +102,14 @@
     border-radius: 8px;
     padding: 5px 10px;
     margin-top: 150px;
-    -webkit-text-stroke: 0.01px black;
+    -webkit-text-stroke: 0.01px #313030;
     color: white;
     text-shadow:
-      2px 2px 0 #000,
-      -1px -1px 0 #000,
-      1px -1px 0 #000,
-      -1px 1px 0 #000,
-      1px 1px 0 #000;
+      1px 1px 0 #313030,
+      -1px -1px 0 #313030,
+      1px -1px 0 #313030,
+      -1px 1px 0 #313030,
+      1px 1px 0 #313030;
   }
   
   @keyframes animation-scroll {

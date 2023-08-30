@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Dropzone from 'react-dropzone';
 import './Upload.css';
-import Cocktail from './CockLoad'; // Cocktail 컴포넌트를 임포트합니다.
-import Product from './Product'; // Product 컴포넌트를 임포트합니다.
-import Modal from './Modal/Modal'; // Modal 컴포넌트를 임포트합니다.
-import Animation from './Animation/Animation'
+import Cocktail from './CockLoad';
+import Product from './Product';
+import Modal from './Modal/Modal';
+import Animation from './Animation/Animation';
 
 const UploadForm = () => {
   const [textData, setTextData] = useState(Array(1).fill(''));
@@ -69,15 +69,23 @@ const UploadForm = () => {
         setResponseData(response.data);
         setErrorText('');
         console.log(response.data);
+
+        const animationElement = document.querySelector('.animation-container');
+        if (animationElement) {
+          window.scrollTo({
+            top: animationElement.offsetTop,
+            behavior: 'smooth',
+          });
+        }
       } else {
         setResponseData([]);
-        setErrorText('잘못된 사진 혹은 텍스트를 입력하셨습니다.');
+        alert('잘못된 사진을 입력하셨습니다.');
       }
 
       setIsLoading(false);
     } catch (error) {
       console.error('Error:', error);
-      
+
       if (error.response && error.response.data) {
         if (typeof error.response.data.message === 'string') {
           alert(error.response.data.message);
@@ -95,24 +103,8 @@ const UploadForm = () => {
         <div className="loading-overlay">
           <Cocktail />
         </div>
-      )}         
-       <Modal />
-      {/* <h2>Text Input</h2> */}
-      {/* <div className="text-input-container">
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          {textData.map((text, index) => (
-            <div key={index} className="text-input-wrapper">
-              <input
-                type="text"
-                value={text}
-                onChange={(event) => handleTextChange(index, event.target.value)}
-                placeholder={`Put Your Liqour! `}
-                className="text-input"
-              />
-            </div>
-          ))}
-        </div>
-      </div> */}
+      )}
+      <Modal />
       <div className="image-upload-container">
         {pictureData.map((picture, index) => (
           <div key={`picture${index}`} className="image-upload-wrapper">
@@ -138,12 +130,12 @@ const UploadForm = () => {
         ))}
       </div>
       <button onClick={handleSubmit} className="submit-button">
+        
       </button>
       <Animation />
 
       {responseData.length > 0 && (
-        <div>
-          {/* <h2>Response Data</h2> */}
+        <div className="animation-container">
           <Product responseData={responseData} />
         </div>
       )}
